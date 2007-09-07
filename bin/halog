@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+begin
+    require 'halog'
+rescue LoadError => le
+    $: << File.expand_path(File.join(File.dirname(__FILE__),"..","lib"))
+    require 'halog'
+end
+
+HALog::Application.new(ARGV).run

@@ -1,0 +1,51 @@
+require 'rubygems'
+require 'halog/specification'
+require 'halog/version'
+require 'rake'
+
+# The Gem Specification plus some extras for halog.
+module HALog
+    SPEC = HALog::Specification.new do |spec|
+                spec.name               = "halog"
+                spec.version            = HALog::VERSION
+                spec.rubyforge_project  = "halog"
+                spec.author             = "Jeremy Hinegardner"
+                spec.email              = "jeremy@hinegardner.org"
+                spec.homepage           = "http://halog.rubyforge.org/"
+
+                spec.summary            = "A Summary of halog."
+                spec.description        = <<-DESC
+                A longer more detailed description of halog.
+                DESC
+
+                spec.extra_rdoc_files   = FileList["[A-Z]*"]
+                spec.has_rdoc           = true
+                spec.rdoc_main          = "README"
+                spec.rdoc_options       = [ "--line-numbers" , "--inline-source" ]
+
+                spec.test_files         = FileList["spec/**/*.rb", "test/**/*.rb"]
+                spec.files              = spec.test_files + spec.extra_rdoc_files + 
+                                          FileList["lib/**/*.rb", "resources/**/*"]
+                
+                spec.executable         = spec.name
+                
+
+                # add dependencies
+                # spec.add_dependency("somegem", ">= 0.4.2")
+                
+                spec.add_dependency("mkrf")
+                spec.extensions << "ext/halog/ext/mkrf_conf.rb"
+                
+                spec.platform           = Gem::Platform::RUBY
+
+                spec.local_rdoc_dir     = "doc/rdoc"
+                spec.remote_rdoc_dir    = "#{spec.name}/rdoc"
+                spec.local_coverage_dir = "doc/coverage"
+                spec.remote_coverage_dir= "#{spec.name}/coverage"
+
+                spec.remote_site_dir    = "#{spec.name}/"
+
+           end
+end
+
+
