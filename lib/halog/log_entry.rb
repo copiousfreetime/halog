@@ -1,12 +1,15 @@
 require 'date'
 module HALog
+    class InvalidLogEntryError < ::StandardError; end
+    
+    # represents  a single log entry from an HAproxy log.  Every line in the log should evaluate to this
     class LogEntry
                 
         REGEX = %r/\A(\w{3})\s+(\d+)\s(\d\d):(\d\d):(\d\d)\s+(\S+)\s+([^\s\[]+)\[(\d+)\]:\s+(.*)\Z/
         
         def initialize(line)
             @md = REGEX.match(line)
-            raise "#{line} is not a LogEntry" if not @md
+            raise InvalidLogEntryError.new("#{line} is not a LogEntry") if not @md
         end
         
         # integer month of the log entry

@@ -59,6 +59,14 @@ describe HALog::LogEntry do
             ])
     end
     
+    it "raises an expception if the line cannot be parsed" do
+        lambda { HALog::LogEntry.new(" this should not parse ") }.should raise_error(HALog::InvalidLogEntryError)
+        lambda { HALog::LogEntry.parse!(" this should not parse2")}.should raise_error(HALog::InvalidLogEntryError)
+    end
     
-        
+    it "should return nil if using non alerting parser" do
+        HALog::LogEntry.parse(" this also does not parse ").should == nil
+    end
+    
+    
 end

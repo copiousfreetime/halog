@@ -1,5 +1,5 @@
 module HALog
-    class TCPLogEntry
+    class TCPLogMessage
         REGEX = 
         def initialize(line)
         end
