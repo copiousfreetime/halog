@@ -22,4 +22,4 @@ module HALog
 
 end
 
-Halog.require_all_libs_relative_to(__FILE__)
+HALog.require_all_libs_relative_to(__FILE__)

@@ -8,10 +8,10 @@ module HALog
     SPEC = HALog::Specification.new do |spec|
                 spec.name               = "halog"
                 spec.version            = HALog::VERSION
-                spec.rubyforge_project  = "halog"
+                spec.rubyforge_project  = "copiousfreetime"
                 spec.author             = "Jeremy Hinegardner"
                 spec.email              = "jeremy@hinegardner.org"
-                spec.homepage           = "http://halog.rubyforge.org/"
+                spec.homepage           = "http://copiousfreetime.rubyforge.org/"
 
                 spec.summary            = "A Summary of halog."
                 spec.description        = <<-DESC
@@ -29,21 +29,18 @@ module HALog
                 
                 spec.executable         = spec.name
                 
-
                 # add dependencies
-                # spec.add_dependency("somegem", ">= 0.4.2")
-                
-                spec.add_dependency("mkrf")
-                spec.extensions << "ext/halog/ext/mkrf_conf.rb"
+                spec.add_dependency("sqlite3-ruby", ">= 1.2.1")
                 
                 spec.platform           = Gem::Platform::RUBY
 
                 spec.local_rdoc_dir     = "doc/rdoc"
-                spec.remote_rdoc_dir    = "#{spec.name}/rdoc"
+                spec.remote_rdoc_dir    = "rdoc"
                 spec.local_coverage_dir = "doc/coverage"
-                spec.remote_coverage_dir= "#{spec.name}/coverage"
+                spec.remote_coverage_dir= "coverage"
 
-                spec.remote_site_dir    = "#{spec.name}/"
+                spec.remote_user        = "jjh"
+                spec.remote_site_dir    = ""
 
            end
 end

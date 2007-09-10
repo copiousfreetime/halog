@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__),"spec_helper.rb")
 
-describe Halog do
+describe HALog do
     before(:each) do
         # some setup
     end

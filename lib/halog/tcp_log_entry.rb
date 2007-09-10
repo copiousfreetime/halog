@@ -1,8 +1,7 @@
 module HALog
     class TCPLogEntry
-        attr_reader :syslog_data
+        REGEX = 
         def initialize(line)
         end
     end
-    
 end

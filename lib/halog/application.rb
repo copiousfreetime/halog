@@ -1,12 +1,14 @@
+require 'optparse'
 require 'ostruct'
 require 'halog'
 
 module HALog
     class Application
+        
+        attr_reader :options
+        
         def initialize(argv = [])
             argv ||= []
-
-            set_io
 
             @options        = default_options
             @parsed_options = ::OpenStruct.new
@@ -29,9 +31,8 @@ module HALog
                 @default_options.show_help      = false
                 @default_options.input_file     = nil
                 @default_options.output_file    = nil
-                @default_options.syslog_regex   = /\A(\w+\s+\d+\s+\d\d:\d\d:\d\d\s+\S+)/
                 @default_options.cache_file     = nil
-                @default_options.report_type    = nil
+                @default_options.report_type    = :none
             end
             return @default_options
         end
@@ -48,20 +49,17 @@ module HALog
                     @parsed_options.show_help = true
                 end
                 
-                op.on("-i", "--input-file FILE", "File to parse, default is stdin.") do |infile|
+                op.on("-i", "--input-file FILE", "File to parse.", "  Default: stdin") do |infile|
                     @parsed_options.input_file = infile
                 end
                 
-                op.on("-o", "--output-file FILE", "Where the output information should be sent.", "Default is stdout") do |outfile|
+                op.on("-o", "--output-file FILE", "Where the output information should be sent.", "  Default: stdout") do |outfile|
                     @parsed_options.output_file = outfile
                 end
 
-                op.on("-r", "--report TYPE", "Display one of the available report types") do |report|
+                op.on("-r", "--report TYPE", Report.types, "Display one of the available report types",
+                                        "  #{Report.types.join(',')}") do |report|
                     @parsed_options.report = report
-                end
-                
-                op.on("-s", "--syslog-regex REGEX", "Regular expression to match the syslog data portion of the entry") do |r|
-                    @parsed_options.syslog_regex = Regexp.new(r)
                 end
                 
                 op.on("-v", "--version", "Show version") do 
@@ -83,13 +81,13 @@ module HALog
         # running the server.
         def error_version_help
             if @parsed_options.show_version then
-                @stdout.puts "#{@parser.program_name}: version #{Heel::VERSION}"
+                $stdout.puts "#{@parser.program_name}: version #{HALog::VERSION}"
                 exit 0
             elsif @parsed_options.show_help then
-                @stdout.puts @parser.to_s
+                $stdout.puts @parser.to_s
                 exit 0
             elsif @error_message then
-                @stdout.puts @error_message
+                $stdout.puts @error_message
                 exit 1
             end
         end
@@ -98,14 +96,13 @@ module HALog
             error_version_help
             merge_options
             
+            input_log_stream = @options.input_file ? File.open(@options.input_file) : $stdin
             
-            infile = @options.input_file ? File.open(@options.input_file) : $stdin
-            
-            ds = DataStore.connect(@options.database)
-            ds.import(infile)
+            ds = DataStore.open(@options.database)
+            ds.import(input_log_stream)
             if @options.report then
                 outfile = @options.output_file ? File.open(@options.output_file,"w+") : $stdout
-                outfile.write Report.run_type(@options.report).on(ds).to_s
+                outfile.write Report.run(@options.report).on(ds).to_s
                 outfile.close
             end
         end
