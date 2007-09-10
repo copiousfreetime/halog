@@ -14,50 +14,63 @@ module HALog
         
         # integer month of the log entry
         # the log entry is in teh Abbreviated form so we convert to the numerical form
-        def log_month
-            @log_month ||= Date::ABBR_MONTHNAMES.index(@md[1])
+        def month
+            @month ||= Date::ABBR_MONTHNAMES.index(@md[1])
         end
         
         # convert from String to Integer format for the day of the month
-        def log_day
-            @log_day ||= Integer(@md[2])
+        def day
+            @day ||= Integer(@md[2])
         end
         
-        def log_year
-            log_date.year
+        def year
+            date.year
         end
         
         # create a full Date instance, year is not in the log entry so use the year the log was parsed
-        def log_date
-            @log_date ||= Date.civil(Date.today.year, log_month, log_day)
+        def date
+            @date ||= Date.civil(Date.today.year, month, day)
         end
         
-        def log_hour
-            @log_hour ||= Integer(@md[3])
+        def hour
+            @hour ||= Integer(@md[3])
         end
         
-        def log_minute
-            @log_minute ||= Integer(@md[4])
+        def minute
+            @minute ||= Integer(@md[4])
         end
         
-        def log_second
-            @log_second ||= Integer(@md[5])
+        def second
+            @second ||= Integer(@md[5])
         end
         
-        def log_host
-            @log_host ||= @md[6]
+        def host
+            @host ||= @md[6]
         end
         
-        def log_process_name
-            @log_process ||= @md[7]
+        def process_name
+            @process ||= @md[7]
         end
         
-        def log_pid
-            @log_pid ||= Integer(@md[8])
+        def pid
+            @pid ||= Integer(@md[8])
         end
         
-        def log_message
-            @log_message || @md[9].strip
+        def raw_message
+            @raw_message ||= @md[9].strip
+        end
+        
+        # convert the text of the message into a more knowledgable class
+        # StringLogMessage is a failsafe, it just wraps up a String with a 
+        # dukctype call for parse
+        def message
+            if not @message then
+                [HTTPLogMessage, TCPLogMessage, StringLogMessage].each do |klass|
+                    @message = klass.parse(raw_message)
+                    break if @message
+                end
+            end
+            return @message
         end
         
         class << self

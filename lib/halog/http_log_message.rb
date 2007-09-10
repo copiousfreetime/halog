@@ -1,15 +1,14 @@
 module HALog
-    class TCPLogMessage
+    class HTTPLogMessage
         def initialize(line)
         end
-        
         class << self
             def parse(msg)
-                TCPLogMessage.parse!(msg) rescue nil
+                HTTPLogMessage.parse!(msg) rescue nil
             end
             
             def parse!(msg)
-                TCPLogMessage.new(msg)
+                HTTPLogMessage.new(msg)
             end
         end
     end

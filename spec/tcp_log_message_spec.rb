@@ -1,15 +1,9 @@
 require File.join(File.dirname(__FILE__),"spec_helper.rb")
 
-describe HALog::TCPLogEntry do
+describe HALog::TCPLogMessage do
     before(:each) do
-        @row_data = "Oct 15 15:24:28 localhost.localdomain haproxy[18989]: 127.0.0.1:34550 [15/Oct/2007:15:24:28] relais-tcp Srv1 0/0/5007 0 -- 1/1/1 0/0\n"
-        @entry = HALog::TCPLogEntry.new(@row_data)
-    end
-    
-    it "captures the process name" do
-    end
-    
-    it "captures the process id" do
+        @row_data = "127.0.0.1:34550 [15/Oct/2007:15:24:28] relais-tcp Srv1 0/0/5007 0 -- 1/1/1 0/0\n"
+        @entry = HALog::TCPLogMessage.new(@row_data)
     end
     
     it "captures the client ip" do
