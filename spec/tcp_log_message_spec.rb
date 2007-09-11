@@ -8,11 +8,11 @@ describe HALog::TCPLogMessage do
     end
     
     it "captures the client ip" do
-        @msg.client_server.should == "127.0.0.1"
+        @msg.client_address.should == "127.0.0.1"
     end
     
     it "captures the client port" do
-        @msg.client_port == 53407
+        @msg.client_port.should == 53407
     end
     
     it "captures the year" do
@@ -98,5 +98,13 @@ describe HALog::TCPLogMessage do
 
     it "captures the proxy queue size" do
         @msg.proxy_queue_size.should == 0
+    end
+    
+    it "can parse at the class level" do
+        HALog::TCPLogMessage.parse(@row_data).class.should == HALog::TCPLogMessage
+    end
+    
+    it "can raise an exception on a bad message" do
+        lambda { HALog::TCPLogMessage.parse!(" bad message " ) }.should raise_error(HALog::InvalidLogMessageError)
     end
 end

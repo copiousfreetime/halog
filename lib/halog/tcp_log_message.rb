@@ -1,17 +1,27 @@
 module HALog
     class TCPLogMessage
-        @row_data = '127.0.0.1:53407 [11/Sep/2007:00:15:30.010] smtp-forward smtp-forward/smtp0 0/0/7061 21 -- 0/0/0/0 0/0'
-        
-        #REGEX = %r|\A([-\w\.]+):(\d+)\s+\[(\d+)/(\w{3})/(\d{4})\]\s+(\S+)\s+(\S+)/(\S+)\s+(\d+)/(\d+)/(\d+)\s+(\d+)\s+(..)\s+|
+        # sample row '127.0.0.1:53407 [11/Sep/2007:00:15:30.010] smtp-forward smtp-forward/smtp0 0/0/7061 21 -- 0/0/0/0 0/0'
+        #   client address                                              127.0.0.1
+        #   client port                                                 53407
+        #   day, month, year                                            DD-MMM-YYYY - month converted to an integer
+        #   hour, minute, second, micro second                          HH:MM:SS.UUU
+        #   frontend                                                    smtp-forward
+        #   backend / server                                            smtp-forward/smtp0
+        #   queue_time / connection_time / total time                   0/0/7061
+        #   total bytes                                                 21
+        #   termination state                                           --
+        #   active / frontend / backend / server connection counts      0/0/0/0
+        #   incoming queue size / server queue size                     0/0
+                
         REGEX = %r|\A([^\s:]+):(\d+)\s+\[(\d+)/(\w{3})/(\d{4}):(\d\d):(\d\d):(\d\d)\.(\d{3})\]\s+(\S+)\s+([^\s/]+)/(\S+)\s+(\d+)/(\d+)/(\d+)[+]?\s+(\d+)\s+(\S+)\s+(\d+)/(\d+)/(\d+)/(\d+)\s+(\d+)/(\d+)\Z|
         
         def initialize(line)
             @md = REGEX.match(line)
-            raise InvalidLogEntryError.new("#{line} is not a LogEntry") if not @md
+            raise InvalidLogMessageError.new("#{line} is not a TCPLogMessage") if not @md
         end
         
-        def client_server
-            @client_server ||= @md[1]
+        def client_address
+            @client_address ||= @md[1]
         end
         
         def client_port

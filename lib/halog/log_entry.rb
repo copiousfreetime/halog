@@ -3,9 +3,24 @@ module HALog
     class InvalidLogEntryError < ::StandardError; end
     class InvalidLogMessageError < ::StandardError; end
     
-    # represents  a single log entry from an HAproxy log.  Every line in the log should evaluate to this
+    # represents  a single log entry from an HAproxy log.  Every line in the log should match this.
     class LogEntry
                 
+        #   'Sep  8 02:14:41 127.0.0.1 haproxy[14679]: listener for_assets has no server available !'
+        #   month           Sep
+        #   day             8
+        #   year            (current year)
+        #   date            (made from year, month, day)
+        #   hour            2
+        #   minute          14
+        #   second          41
+        #   time            (generated from year,month,day,hour,minute,second)
+        #   host            127.0.0.1 - host that is emitting the log entry
+        #   process_name    haproxy
+        #   pid             14679
+        #   raw_message     'listener for_assets has no server available !' 
+        #   message         One of HTTPLogMessage, TCPLogMessage, StringLogMessage, parsed version of raw_message
+        
         REGEX = %r/\A(\w{3})\s+(\d+)\s(\d\d):(\d\d):(\d\d)\s+(\S+)\s+([^\s\[]+)\[(\d+)\]:\s+(.*)\Z/
         
         def initialize(line)
@@ -43,6 +58,10 @@ module HALog
         
         def second
             @second ||= @md[5].to_i
+        end
+        
+        def time
+            @time ||= Time.mktime(year,month,day,hour,minute,second)
         end
         
         def host

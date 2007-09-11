@@ -24,6 +24,22 @@ describe HALog::LogEntry do
         method_results_compare(:day,[ 15, 6, 8, 8, 8, 8 ])
     end
     
+    it "creates a valid year" do
+        method_results_compare(:year, Array.new(6) { Date.today.year })
+    end
+    
+    it "creates the correct date" do
+        this_year = Date.today.year
+        method_results_compare(:date,[
+            Date.new(this_year,10,15),
+            Date.new(this_year,9,6),
+            Date.new(this_year,9,8),
+            Date.new(this_year,9,8),
+            Date.new(this_year,9,8),
+            Date.new(this_year,9,8),
+            ])
+    end
+    
     it "captures the hour correctly" do
         method_results_compare(:hour,[15,0,2,2,2,2])
     end
@@ -35,6 +51,18 @@ describe HALog::LogEntry do
     it "captures the seconds" do
         method_results_compare(:second,[28,41,41,41,15,15])
     end
+    
+    it "creates the correct time" do
+        this_year = Date.today.year
+        method_results_compare(:time,[
+            Time.mktime(this_year,10,15,15,24,28),
+            Time.mktime(this_year,9,6,0,24,41),
+            Time.mktime(this_year,9,8,2,14,41),
+            Time.mktime(this_year,9,8,2,14,41),
+            Time.mktime(this_year,9,8,2,54,15),
+            Time.mktime(this_year,9,8,2,54,15),            
+            ])
+        end
     
     it "captures the host" do
         method_results_compare(:host,%w[ localhost.localdomain localhost.localdomain 127.0.0.1 127.0.0.1 127.0.0.1 127.0.0.1 ])
@@ -57,6 +85,12 @@ describe HALog::LogEntry do
             '10.10.11.20:56196 [08/Sep/2007:02:54:14.852] incoming static/asset0 2/0/2/5/18 200 121 - - ---- 1036/1036/999/99 0/0 "GET /images/rails.png HTTP/1.0"',
             '10.10.11.20:56742 [08/Sep/2007:02:54:14.949] incoming static/asset0 3/0/3/4/18 200 121 - - ---- 1020/1020/999/99 0/0 "GET /images/rails.png HTTP/1.0"'
             ])
+    end
+    
+    it "creates the correct message class" do
+        result_klasses = [HALog::TCPLogMessage, HALog::StringLogMessage, HALog::StringLogMessage, 
+                        HALog::StringLogMessage, HALog::HTTPLogMessage, HALog::HTTPLogMessage]
+        @row_data.collect { |row| HALog::LogEntry.parse(row).message.class }.should == result_klasses
     end
     
     it "raises an expception if the line cannot be parsed" do
