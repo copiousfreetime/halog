@@ -1,6 +1,7 @@
 require 'date'
 module HALog
     class InvalidLogEntryError < ::StandardError; end
+    class InvalidLogMessageError < ::StandardError; end
     
     # represents  a single log entry from an HAproxy log.  Every line in the log should evaluate to this
     class LogEntry
@@ -20,7 +21,7 @@ module HALog
         
         # convert from String to Integer format for the day of the month
         def day
-            @day ||= Integer(@md[2])
+            @day ||= @md[2].to_i
         end
         
         def year
@@ -33,15 +34,15 @@ module HALog
         end
         
         def hour
-            @hour ||= Integer(@md[3])
+            @hour ||= @md[3].to_i
         end
         
         def minute
-            @minute ||= Integer(@md[4])
+            @minute ||= @md[4].to_i
         end
         
         def second
-            @second ||= Integer(@md[5])
+            @second ||= @md[5].to_i
         end
         
         def host
@@ -53,7 +54,7 @@ module HALog
         end
         
         def pid
-            @pid ||= Integer(@md[8])
+            @pid ||= @md[8].to_i
         end
         
         def raw_message

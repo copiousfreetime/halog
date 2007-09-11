@@ -1,4 +1,6 @@
 module HALog
+    # stub class to hold as a default any message that isn't parsed by one of the more
+    # important Log Message classes.
     class StringLogMessage
         def initialize(msg)
             @msg = msg
