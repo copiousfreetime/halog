@@ -22,8 +22,10 @@ module HALog
                     (\d+)/          # connect time (time to connect to backend)                 - 0
                     [+]?(\d+)\s+    # total_time from accept to connection close                - 7061
                                     # this may start with a '+' indicating 'option logasap' was used
+                                    
                     [+]?(\d+)\s+    # bytes read                                                - 130
                                     # this may start with a '+' indicating 'option logasap' was used
+                                    
                     (\S\S)\s+       # termination state, 2 coded values, read the haproxy docs  - '--'
                     (\d+)/          # count of active sessions                                  - 0
                     (\d+)/          # count of frontend connections                             - 0

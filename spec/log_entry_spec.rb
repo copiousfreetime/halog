@@ -3,11 +3,11 @@ require File.join(File.dirname(__FILE__),"spec_helper.rb")
 describe HALog::LogEntry do
     before(:each) do
         @row_data = [
-            "Oct 15 15:24:28 localhost.localdomain haproxy[18989]: 127.0.0.1:34550 [15/Oct/2007:15:24:28] relais-tcp Srv1 0/0/5007 0 -- 1/1/1 0/0\n",
+            "Oct 15 15:24:28 localhost.localdomain haproxy[18989]: 127.0.0.1:34550 [15/Oct/2007:15:24:28.123] relais-tcp relais-backend/Srv1 0/0/5007 0 -- 1/1/1/1 0/0\n",
             "Sep  6 00:24:41 localhost.localdomain haproxy[7211]: Proxy proxy1 started. ",
             "Sep  8 02:14:41 127.0.0.1 haproxy[14679]: Server for_assets/asset0 is DOWN. 0 active and 0 backup servers left. 0 sessions active, 0 requeued, 0 remaining in queue.",
             "Sep  8 02:14:41 127.0.0.1 haproxy[14679]: listener for_assets has no server available !",
-            'Sep  8 02:54:15 127.0.0.1 haproxy[15226]: 10.10.11.20:56196 [08/Sep/2007:02:54:14.852] incoming static/asset0 2/0/2/5/18 200 121 - - ---- 1036/1036/999/99 0/0 "GET /images/rails.png HTTP/1.0"',
+            'Sep  8 02:54:15 127.0.0.1 haproxy[15226]: 10.10.11.20:56196 [08/Sep/2007:02:54:14.852] incoming static/asset0 2/0/2/5/18 200 121 - - ---- 1036/1036/999/99 0/0 {|} {close} "GET /images/rails.png HTTP/1.0"',
             'Sep  8 02:54:15 127.0.0.1 haproxy[15226]: 10.10.11.20:56742 [08/Sep/2007:02:54:14.949] incoming static/asset0 3/0/3/4/18 200 121 - - ---- 1020/1020/999/99 0/0 "GET /images/rails.png HTTP/1.0"'
             ]
     end
@@ -78,11 +78,11 @@ describe HALog::LogEntry do
     
     it "captures the message" do
         method_results_compare(:raw_message, [
-            '127.0.0.1:34550 [15/Oct/2007:15:24:28] relais-tcp Srv1 0/0/5007 0 -- 1/1/1 0/0',
+            '127.0.0.1:34550 [15/Oct/2007:15:24:28.123] relais-tcp relais-backend/Srv1 0/0/5007 0 -- 1/1/1/1 0/0',
             'Proxy proxy1 started.',
             'Server for_assets/asset0 is DOWN. 0 active and 0 backup servers left. 0 sessions active, 0 requeued, 0 remaining in queue.',
             'listener for_assets has no server available !',
-            '10.10.11.20:56196 [08/Sep/2007:02:54:14.852] incoming static/asset0 2/0/2/5/18 200 121 - - ---- 1036/1036/999/99 0/0 "GET /images/rails.png HTTP/1.0"',
+            '10.10.11.20:56196 [08/Sep/2007:02:54:14.852] incoming static/asset0 2/0/2/5/18 200 121 - - ---- 1036/1036/999/99 0/0 {|} {close} "GET /images/rails.png HTTP/1.0"',
             '10.10.11.20:56742 [08/Sep/2007:02:54:14.949] incoming static/asset0 3/0/3/4/18 200 121 - - ---- 1020/1020/999/99 0/0 "GET /images/rails.png HTTP/1.0"'
             ])
     end

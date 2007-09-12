@@ -25,9 +25,11 @@ module HALog
                     (\d+)/          # response time (time from connect to response start)       - 58
                     [+]?(\d+)\s+    # total_time from accept to connection close                - 1203
                                     # this may start with a '+' indicating 'option logasap'' was used
+                                    
                     (\d+)\s+        # http status code                                          - 200
                     [+]?(\d+)\s+    # bytes read                                                - 130
                                     # this may start with a '+' indicating 'option logasap' was used
+                                    
                     (\S+)\s+        # captured request cookie                                   - '-'
                     (\S+)\s+        # captured response cookie                                  - 'JSESSIONID=96BB0AB0AEC812CAFBDDC'
                     (\S{4})\s+      # termination state, 4 coded values, read the haproxy docs  - '----'
@@ -37,10 +39,15 @@ module HALog
                     (\d+)\s+        # count of server connections                               - 0
                     (\d+)/          # incoming queue size                                       - 0
                     (\d+)\s+        # server queue size                                         - 0
-                    \{([^}]*)\}\s+  # captured request header values, pipe delimited            - '|curl/7.16.2 (i386-apple-darwin8.|*/*'   
-                    \{([^}]*)\}\s+  # captured response header values, pipe delimited           - 'no-cache||0|Apache-Coyote/1.1|NSC_MC_QH_XFCBQQ=e2422cb129a0;ex'
+                    
+                    (\{[^}]*\})?\s* # captured request header values, pipe delimited            - '{|curl/7.16.2 (i386-apple-darwin8.|*/*}'   
+                                    # may not exist if no request headers are being captured if so, request_headers returns nil
+                                    
+                    (\{[^}]*\})?\s* # captured response header values, pipe delimited           - '{no-cache||0|Apache-Coyote/1.1|NSC_MC_QH_XFCBQQ=e2422cb129a0;ex}'
+                                    # may not exist if no response headers are being captured if so, response_headers returns nil
+                                    
                     "(.*)"\Z        # the http request                                          - 'GET / HTTP/1.1'
-                    >x                  
+                  >x                  
         
         # Using concat, just so I can get full code coverage stats
         FIELDS =      %w[ client_address client_port day month year hour minute second usecond frontend backend server ]
