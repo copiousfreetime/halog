@@ -10,8 +10,8 @@ CREATE TABLE imports (
 	start_offset			INTEGER, 	-- byte offset in the file of the starting point of the run
 	end_offset				INTEGER, 	-- byte offset in the file of the ending pont of the run.
 	);
-	
--- TODO: add index by import_date on imports
+CREATE INDEX imports_import_date_idx ON imports(import_date);
+
 	
 -- The basic information from every line of the log file
 CREATE TABLE log_entries (
@@ -24,9 +24,8 @@ CREATE TABLE log_entries (
 	pid						INTEGER,
 	message					TEXT NOT NULL
 	);
--- TODO: add index by import_id
--- TODO: add index by recorded_on_date
-
+CREATE INDEX log_entries_import_id_idx ON log_entries(import_id);
+CREATE INDEX log_entries_recorded_on_date_idx ON log_entries(recorded_on_date)
 	
 -- The messages that are  TCP logs
 CREATE TABLE tcp_log_messages (
@@ -57,10 +56,10 @@ CREATE TABLE tcp_log_messages (
 	server_queue_size		INTEGER NOT NULL,
 	proxy_queue_size		INTEGER NOT NULL
 	);
--- TODO: add index by log_entry_id
--- TODO: add index by recorded_on_date
--- TODO: add index by frontend
--- TODO: add index by backend
+CREATE INDEX tcp_log_messages_log_entry_id_idx ON tcp_log_messages(log_entry_id);
+CREATE INDEX tcp_log_messages_recorded_on_date_idx ON tcp_log_messages(recorded_on_date);
+CREATE INDEX tcp_log_messages_frontend_idx ON tcp_log_messages(frontend);
+CREATE INDEX tcp_log_messages_backend_idx ON tcp_log_messages(backend);
 
 	
 -- The messages that are HTTP Logs	
@@ -104,9 +103,9 @@ CREATE TABLE http_log_messages (
 		
 		http_request			TEXT NOT NULL
 		);
--- TODO: add index by log_entry_id
--- TODO: add index by recorded_on_date
--- TODO: add index by frontend
--- TODO: add index by backend
--- TODO: add index by server
--- TODO: add index by status
+CREATE INDEX http_log_messages_log_entry_id_idx ON http_log_messages(log_entry_id);
+CREATE INDEX http_log_messages_recorded_on_date_idx ON http_log_messages(recorded_on_date);
+CREATE INDEX http_log_messages_frontend_idx ON http_log_messages(frontend);
+CREATE INDEX http_log_messages_backend_idx ON http_log_messages(backend);
+CREATE INDEX http_log_messages_server_idx ON http_log_messages(server);
+CREATE INDEX http_log_messages_status_idx ON http_log_messages(status);
