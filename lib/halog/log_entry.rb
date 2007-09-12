@@ -5,23 +5,24 @@ module HALog
     
     # represents  a single log entry from an HAproxy log.  Every line in the log should match this.
     class LogEntry
-                
-        #   'Sep  8 02:14:41 127.0.0.1 haproxy[14679]: listener for_assets has no server available !'
-        #   month           Sep
-        #   day             8
-        #   year            (current year)
-        #   date            (made from year, month, day)
-        #   hour            2
-        #   minute          14
-        #   second          41
-        #   time            (generated from year,month,day,hour,minute,second)
-        #   host            127.0.0.1 - host that is emitting the log entry
-        #   process_name    haproxy
-        #   pid             14679
-        #   raw_message     'listener for_assets has no server available !' 
-        #   message         One of HTTPLogMessage, TCPLogMessage, StringLogMessage, parsed version of raw_message
-        
-        REGEX = %r/\A(\w{3})\s+(\d+)\s(\d\d):(\d\d):(\d\d)\s+(\S+)\s+([^\s\[]+)\[(\d+)\]:\s+(.*)\Z/
+
+        # Regular expression to match this whole log entry
+        #
+        #   'Sep  8 02:14:41 127.0.0.1 haproxy[14679]: listener for_assets has no server available !'        
+        #
+        REGEX = %r|
+                \A
+                (\w{3})\s+      # month of the year its a 3 letter month, we convert to int     - Sep
+                (\d+)\s         # day of the month                                              - 8
+                (\d\d):         # hour                                                          - 2
+                (\d\d):         # minute                                                        - 14
+                (\d\d)\s+       # second                                                        - 41
+                (\S+)\s+        # host that is emitting the log entry                           - 127.0.0.1
+                ([^\s\[]+)\[    # process name emitting the log entry                           - haproxy
+                (\d+)\]:\s+     # process id of the process emitting the log entry              - 14679
+                (.*)            # everything else                                               - 'listener for_assets has no server available !'
+                \Z
+                |x
         
         def initialize(line)
             @md = REGEX.match(line)
