@@ -7,98 +7,48 @@ describe HALog::TCPLogMessage do
         @msg = HALog::TCPLogMessage.new(@row_data)
     end
     
-    it "captures the client ip" do
-        @msg.client_address.should == "127.0.0.1"
+    RESULTS = {
+        :client_address         => "127.0.0.1",
+        :client_port            => 53407,
+        :year                   => 2007,
+        :month                  => 9,
+        :day                    => 11,
+        :hour                   => 0,
+        :minute                 => 15,
+        :second                 => 30,
+        :usecond                => 10,
+        :frontend               => "smtp-forward",
+        :backend                => "smtp-forward",
+        :server                 => "smtp0",
+        :queue_time             => 0,
+        :connection_time        => 0,
+        :total_time             => 7061,
+        :bytes_read             => 21,
+        :termination_state      => "--",
+        :active_sessions        => 0,
+        :frontend_connections   => 0,
+        :backend_connections    => 0,
+        :server_connections     => 0,
+        :server_queue_size      => 0,
+        :proxy_queue_size       => 0
+    }
+    
+    RESULTS.each_pair do |meth,result|
+        it "captures the #{meth}" do
+            @msg.send(meth).should == result
+        end
     end
     
-    it "captures the client port" do
-        @msg.client_port.should == 53407
-    end
     
-    it "captures the year" do
-        @msg.year.should == 2007
-    end
-    
-    it "captures the month" do
-        @msg.month.should == 9
-    end
-    it "captures the day" do
-        @msg.day.should == 11
-    end
+
     it "captures the date" do
         @msg.date.should == Date.new(2007,9,11)
     end
-    it "captures the hour" do
-        @msg.hour.should == 0
-    end
-    it "captures the minute" do
-        @msg.minute.should == 15
-    end
-    it "captures the second" do
-        @msg.second.should == 30
-    end
-    it "captures the microsecond" do
-        @msg.usecond.should == 10
-    end
+
     it "captures the time" do
         @msg.time.should == Time.mktime(2007,9,11,0,15,30,10)
     end
     
-    it "captures the frontend name" do
-        @msg.frontend.should == "smtp-forward"
-    end
-    
-    it "captures the backend name" do
-        @msg.backend.should == "smtp-forward"
-    end
-    
-    it "captures the server name" do
-        @msg.server.should == "smtp0"
-    end
-    
-    it "captures the queue time " do
-        @msg.queue_time.should == 0
-    end
-    
-    it "captures the connection time" do
-        @msg.connection_time.should == 0
-    end
-    
-    it "captures the total time" do
-        @msg.total_time.should == 7061
-    end
-    
-    it "captures the number of bytes read" do
-        @msg.byte_count.should == 21
-    end
-    
-    it "captures the termination state" do
-        @msg.termination_state.should == "--"
-    end
-    
-    it "captures the count of sessions" do
-        @msg.active_sessions.should == 0
-    end
-    
-    it "captures the count of frontend connections" do
-        @msg.frontend_connections.should == 0
-    end
-    
-    it "catpures the count of backend connections" do
-        @msg.backend_connections.should == 0
-    end
-    
-    it "captures the count of per_server_connections" do
-        @msg.server_connections.should == 0
-    end
-    
-    it "captures the server queue size" do
-        @msg.server_queue_size.should == 0
-    end
-
-    it "captures the proxy queue size" do
-        @msg.proxy_queue_size.should == 0
-    end
     
     it "can parse at the class level" do
         HALog::TCPLogMessage.parse(@row_data).class.should == HALog::TCPLogMessage
