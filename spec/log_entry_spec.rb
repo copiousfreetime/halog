@@ -68,8 +68,8 @@ describe HALog::LogEntry do
         method_results_compare(:host,%w[ localhost.localdomain localhost.localdomain 127.0.0.1 127.0.0.1 127.0.0.1 127.0.0.1 ])
     end
     
-    it "captures the process name" do
-        method_results_compare(:process_name,Array.new(6) { "haproxy" })
+    it "captures the process" do
+        method_results_compare(:process,Array.new(6) { "haproxy" })
     end
     
     it "captures the process id" do

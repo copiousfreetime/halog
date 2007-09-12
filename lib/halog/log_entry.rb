@@ -23,21 +23,29 @@ module HALog
                 (.*)            # everything else                                               - 'listener for_assets has no server available !'
                 \Z
                 |x
+
+        FIELDS = %w[ month day hour minute second host process pid raw_message ]
+        INT_FIELDS = %w[ day hour minute second pid ]
+        
+        FIELDS.each_with_index do |field,idx|
+            to_i = INT_FIELDS.include?(field) ? ".to_i" : ""
+            module_eval <<-code
+              def #{ field }
+                  @#{ field } ||= @md[#{ idx + 1 }]#{ to_i }
+              end
+            code
+        end
         
         def initialize(line)
             @md = REGEX.match(line)
             raise InvalidLogEntryError.new("#{line} is not a LogEntry") if not @md
         end
         
+        # this overwrites the automatically generated method above.
         # integer month of the log entry
         # the log entry is in teh Abbreviated form so we convert to the numerical form
         def month
             @month ||= Date::ABBR_MONTHNAMES.index(@md[1])
-        end
-        
-        # convert from String to Integer format for the day of the month
-        def day
-            @day ||= @md[2].to_i
         end
         
         def year
@@ -49,36 +57,13 @@ module HALog
             @date ||= Date.civil(Date.today.year, month, day)
         end
         
-        def hour
-            @hour ||= @md[3].to_i
-        end
-        
-        def minute
-            @minute ||= @md[4].to_i
-        end
-        
-        def second
-            @second ||= @md[5].to_i
-        end
-        
         def time
             @time ||= Time.mktime(year,month,day,hour,minute,second)
         end
-        
-        def host
-            @host ||= @md[6]
-        end
-        
-        def process_name
-            @process ||= @md[7]
-        end
-        
-        def pid
-            @pid ||= @md[8].to_i
-        end
-        
+
+        # this ovewrites the eval'd method of the same name
         def raw_message
-            @raw_message ||= @md[9].strip
+            @raw_message ||= @md[FIELDS.index('raw_message') + 1].strip
         end
         
         # convert the text of the message into a more knowledgable class
