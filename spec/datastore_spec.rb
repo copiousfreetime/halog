@@ -3,8 +3,8 @@ require File.join(File.dirname(__FILE__),"spec_helper.rb")
 describe HALog::DataStore do
     before(:each) do
         @ds = HALog::DataStore.new(":memory:")
-        @log_lines = IO.readlines(File.join(File.dirname(__FILE__),'haproxy-short.log'))
-        @io = File.open(File.join(File.dirname(__FILE__), 'haproxy-short.log'))
+        @log_lines = IO.readlines(testing_logfile)
+        @io = File.open(testing_logfile)
        # @ds.db.trace() { |data,stmt| puts "sql stmt : #{stmt} "}
     end
     

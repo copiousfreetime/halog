@@ -27,6 +27,7 @@ module HALog
         def default_options
             if @default_options.nil? then
                 @default_options                = ::OpenStruct.new
+                @default_options.database       = ":memory:"
                 @default_options.show_version   = false
                 @default_options.show_help      = false
                 @default_options.input_file     = nil
@@ -41,7 +42,7 @@ module HALog
             OptionParser.new do |op|
                 op.separator ""
                 
-                op.on("-d", "--database", "Location of the sqlite database to record the information in.") do |db|
+                op.on("-d", "--database FILE", "Location of the sqlite database to record the information in.") do |db|
                     @parsed_options.database = db
                 end
                 
@@ -62,7 +63,7 @@ module HALog
                     @parsed_options.report = report
                 end
                 
-                op.on("-v", "--version", "Show version") do 
+                op.on("-V", "--version", "Show version") do 
                     @parsed_options.show_version = true
                 end
             end
@@ -87,7 +88,7 @@ module HALog
                 $stdout.puts @parser.to_s
                 exit 0
             elsif @error_message then
-                $stdout.puts @error_message
+                $stderr.puts @error_message
                 exit 1
             end
         end
@@ -96,12 +97,22 @@ module HALog
             error_version_help
             merge_options
             
-            input_log_stream = @options.input_file ? File.open(@options.input_file) : $stdin
-            
+            input_log_stream = $stdin
+            if @options.input_file then
+                input_log_stream = File.open(@options.input_file)
+                $stderr.puts "Reading input from #{@options.input_file}"
+            end
+                            
+            $stderr.puts "Using #{@options.database} database."
+
             DataStore.open(@options.database) do |ds|
                 ds.import(input_log_stream)
                 if @options.report then
-                    outfile = @options.output_file ? File.open(@options.output_file,"w+") : $stdout
+                    outfile = $stdout
+                    if @options.output_file then
+                        outfile = File.open(@options.output_file,"w+")
+                        $stderr.puts "Writing report to #{@options.output_file}"
+                    end
                     outfile.write Report.run(@options.report).on(ds).to_s
                     outfile.close
                 end
