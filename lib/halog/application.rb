@@ -50,7 +50,7 @@ module HALog
                     @parsed_options.show_help = true
                 end
                 
-                op.on("-i", "--input-file FILE", "File to parse.", "  Default: stdin") do |infile|
+                op.on("-i", "--input-file FILE", "File to parse.", "  Use '-' to indicate stdin") do |infile|
                     @parsed_options.input_file = infile
                 end
                 
@@ -93,29 +93,34 @@ module HALog
             end
         end
         
+        def import_new_data(datastore)
+            if @options.input_file then
+                input_log_stream = (@options.input_file == "-") ? $stdin : File.open(@options.input_file)
+                $stderr.puts "Reading input from #{@options.input_file}"
+                datastore.import(input_log_stream)
+            end 
+        end
+        
+        def run_report(datastore)
+            if @options.report then
+                outfile = $stdout
+                if @options.output_file then
+                    outfile = File.open(@options.output_file,"w+")
+                    $stderr.puts "Writing report to #{@options.output_file}"
+                end
+                outfile.write Report.run(@options.report).on(datastore).to_s
+                outfile.close                
+            end
+        end
+        
         def run
             error_version_help
             merge_options
-            
-            input_log_stream = $stdin
-            if @options.input_file then
-                input_log_stream = File.open(@options.input_file)
-                $stderr.puts "Reading input from #{@options.input_file}"
-            end
-                            
-            $stderr.puts "Using #{@options.database} database."
 
             DataStore.open(@options.database) do |ds|
-                ds.import(input_log_stream)
-                if @options.report then
-                    outfile = $stdout
-                    if @options.output_file then
-                        outfile = File.open(@options.output_file,"w+")
-                        $stderr.puts "Writing report to #{@options.output_file}"
-                    end
-                    outfile.write Report.run(@options.report).on(ds).to_s
-                    outfile.close
-                end
+                $stderr.puts "Using #{@options.database} database."
+                import_new_data(ds)
+                run_report(ds)
             end
         end
     end

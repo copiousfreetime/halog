@@ -38,4 +38,4 @@ module HALog
     end
 end
 
-require 'halog/report/error'
+require 'halog/report/http_error'

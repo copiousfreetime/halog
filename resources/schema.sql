@@ -81,6 +81,7 @@ CREATE TABLE tcp_log_messages (
     proxy_queue_size        INTEGER NOT NULL
     )
 ;
+CREATE INDEX tcp_log_messages_import_id_idx ON tcp_log_messages(import_id);
 CREATE INDEX tcp_log_messages_log_entry_id_idx ON tcp_log_messages(log_entry_id);
 CREATE INDEX tcp_log_messages_date_idx ON tcp_log_messages(date);
 CREATE INDEX tcp_log_messages_frontend_idx ON tcp_log_messages(frontend);
@@ -136,6 +137,7 @@ CREATE TABLE http_log_messages (
     http_request            TEXT NOT NULL
         )
 ;
+CREATE INDEX http_log_messages_import_id_idx ON http_log_messages(import_id);
 CREATE INDEX http_log_messages_log_entry_id_idx ON http_log_messages(log_entry_id);
 CREATE INDEX http_log_messages_date_idx ON http_log_messages(date);
 CREATE INDEX http_log_messages_frontend_idx ON http_log_messages(frontend);

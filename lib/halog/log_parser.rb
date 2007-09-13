@@ -36,6 +36,11 @@ module HALog
                     $stderr.puts "Failure to parse line : #{line.rstrip}"
                 end
                 
+                if @entry_count % 1000 == 0 then
+                    $stderr.print "."
+                    $stderr.flush
+                end
+                
             end # io.each
             return self
         end
