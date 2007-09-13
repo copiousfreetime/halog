@@ -1,14 +1,14 @@
 -- holds meta informationa about each import run.
 CREATE TABLE imports (
-	id 						INTEGER PRIMARY KEY AUTOINCREMENT,
-	import_started_on		TIMESTAMP,	-- timestamp of when the run was started
-	import_ended_on			TIMESTAMP, 	-- timestamp of when the run was finished
-	import_date				TEXT, 		-- inserted with trigger
-	entry_started_on		TIMESTAMP,  -- timestamp in the first log entry processed
-	entry_ended_on			TIMESTAMP,	-- timestamp in the last log entry processed
-	entry_start_offset		INTEGER,
-	entry_end_offset		INTEGER,
-	entry_count				INTEGER, 	-- line count of rows entered into the database
+	id 					INTEGER PRIMARY KEY AUTOINCREMENT,
+	import_started_on	TIMESTAMP,	-- timestamp of when the run was started
+	import_ended_on		TIMESTAMP, 	-- timestamp of when the run was finished
+	import_date			TEXT, 		-- inserted with trigger
+	first_entry_time	TIMESTAMP,  -- timestamp in the first log entry processed
+	last_entry_time		TIMESTAMP,	-- timestamp in the last log entry processed
+	starting_offset		INTEGER,
+	byte_count			INTEGER,
+	entry_count			INTEGER, 	-- line count of rows entered into the database
 	);
 CREATE INDEX imports_import_date_idx ON imports(import_date);
 CREATE TRIGGER imports_date_trigger AFTER INSERT ON imports

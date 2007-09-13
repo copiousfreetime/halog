@@ -69,13 +69,14 @@ module HALog
                 import_ended_on             = datetime('now','localtime'),
                 first_entry_time            = :first_entry_time,
                 last_entry_time             = :last_entry_time,
-                first_entry_start_offset    = :first_entry_start_offset,
-                last_entry_end_offset       = :last_entry_end_offset,
+                starting_offset             = :starting_offset
+                byte_count                  = :byte_count
                 entry_count                 = :entry_count
+                error_count                 = :error_count
             WHERE id = #{import_id}
             SQL
-            handle.execute(update_sql,parser.hash_of_fields(%w[ first_entry_time last_entry_time first_entry_start_offset
-                                                                last_entry_end_offset entry_count]))
+            handle.execute(update_sql,parser.hash_of_fields(%w[ first_entry_time last_entry_time starting_offset
+                                                                byte_count entry_count error_count]))
         end
         
         def import(io,options = {})
