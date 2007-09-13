@@ -9,7 +9,8 @@ CREATE TABLE imports (
     starting_offset     INTEGER,
     byte_count          INTEGER,
     entry_count         INTEGER     -- line count of rows entered into the database
-    );
+    )
+;
 CREATE INDEX imports_import_date_idx ON imports(import_date);
 CREATE TRIGGER imports_date_trigger AFTER INSERT ON imports
     FOR EACH ROW
@@ -33,7 +34,8 @@ CREATE TABLE log_entries (
     process                 TEXT NOT NULL,
     pid                     INTEGER,
     raw_message             TEXT NOT NULL
-    );
+    )
+;
     
 CREATE INDEX log_entries_import_id_idx ON log_entries(import_id);
 CREATE INDEX log_entries_date_idx ON log_entries(date);
