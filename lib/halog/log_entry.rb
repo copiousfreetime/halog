@@ -26,9 +26,7 @@ module HALog
 
         FIELDS = %w[ month day hour minute second hostname process pid raw_message ]
         INT_FIELDS = %w[ day hour minute second pid ]
-        
-        INSERT_SQL = "INSERT INTO log_entries()"
-        
+                
         FIELDS.each_with_index do |field,idx|
             to_i = INT_FIELDS.include?(field) ? ".to_i" : ""
             module_eval <<-code
@@ -80,16 +78,6 @@ module HALog
             end
             return @message
         end
-        
-        # assuming a table of the appropriate format, this can insert into the database.
-        def insert_into(db)
-            db.execute("INSERT INTO log_entries()")
-        end
-        
-        def to_h
-            
-        end
-        
         
         class << self
             def parse(line)
