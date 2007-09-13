@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__),"spec_helper.rb")
 describe HALog::TCPLogMessage do
     before(:each) do
         @old_row_data = "127.0.0.1:34550 [15/Oct/2007:15:24:28.254] relais-tcp Srv1 0/0/5007 0 -- 1/1/1 0/0\n"
-        @row_data = '127.0.0.1:53407 [11/Sep/2007:00:15:30.010] smtp-forward smtp-forward/smtp0 0/0/7061 21 -- 0/0/0/0 0/0'
+        @row_data = '127.0.0.1:53407 [11/Sep/2007:00:15:30.010] smtp-forward smtp-forward/smtp0 0/-1/7061 21 -- 0/0/0/0 0/0'
         @msg = HALog::TCPLogMessage.new(@row_data)
     end
     
@@ -21,7 +21,7 @@ describe HALog::TCPLogMessage do
         :backend                => "smtp-forward",
         :server                 => "smtp0",
         :queue_time             => 0,
-        :connect_time           => 0,
+        :connect_time           => -1,
         :total_time             => 7061,
         :bytes_read             => 21,
         :termination_state      => "--",

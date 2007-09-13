@@ -8,7 +8,8 @@ CREATE TABLE imports (
     last_entry_time     TIMESTAMP,  -- timestamp in the last log entry processed
     starting_offset     INTEGER,
     byte_count          INTEGER,
-    entry_count         INTEGER     -- line count of rows entered into the database
+    entry_count         INTEGER,     -- line count of rows entered into the database
+    error_count         INTEGER     -- count of error lines skipped from input
     )
 ;
 CREATE INDEX imports_import_date_idx ON imports(import_date);
@@ -29,7 +30,7 @@ CREATE TABLE log_entries (
     id                      INTEGER PRIMARY KEY AUTOINCREMENT,
     import_id               INTEGER NOT NULL,
     iso_time                TIMESTAMP NOT NULL,
-    date                    TEXT NOT NULL, -- inserted with trigger
+    date                    TEXT, -- inserted with trigger
     hostname                TEXT NOT NULL,
     process                 TEXT NOT NULL,
     pid                     INTEGER,
@@ -39,7 +40,7 @@ CREATE TABLE log_entries (
     
 CREATE INDEX log_entries_import_id_idx ON log_entries(import_id);
 CREATE INDEX log_entries_date_idx ON log_entries(date);
-CREATE TRIGGER log_entry_date_trigger AFTER INSERT ON log_entries
+CREATE TRIGGER log_entry_date_trigger BEFORE INSERT ON log_entries
     FOR EACH ROW
     BEGIN
         UPDATE log_entries SET date = date(new.iso_time) WHERE id = new.id
@@ -58,7 +59,7 @@ CREATE TABLE tcp_log_messages (
     client_port             INTEGER NOT NULL,
     
     iso_time                TIMESTAMP NOT NULL,
-    date                    TEXT NOT NULL, -- inserted with trigger
+    date                    TEXT, -- inserted with trigger
     
     frontend                TEXT NOT NULL,
     backend                 TEXT NOT NULL,
@@ -101,7 +102,7 @@ CREATE TABLE http_log_messages (
     client_port             INTEGER NOT NULL,
     
     iso_time                TIMESTAMP NOT NULL,
-    date                    TEXT NOT NULL, -- inserted with trigger
+    date                    TEXT, -- inserted with trigger
     
     frontend                TEXT NOT NULL,
     backend                 TEXT NOT NULL,

@@ -1,0 +1,201 @@
+Sep  6 00:07:11 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2629 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:07:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2630 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:07:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2632 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:08:11 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2635 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:08:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2636 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:08:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2637 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:08:40 localhost.localdomain haproxy[22031]: Connect from 213.206.122.68:53015 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:08:40 localhost.localdomain haproxy[22031]: Connect from 213.206.122.68:53016 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:09:07 localhost.localdomain haproxy[22031]: Connect from 209.234.229.11:53046 to 10.10.14.203:90 (datafeed/HTTP) 
+Sep  6 00:09:11 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2644 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:09:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2645 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:09:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2647 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:09:36 localhost.localdomain haproxy[22031]: Connect from 209.234.229.11:53507 to 10.10.14.203:90 (datafeed/HTTP) 
+Sep  6 00:10:11 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2649 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:10:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2651 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:10:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2652 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:10:48 localhost.localdomain haproxy[22031]: Connect from 66.214.12.157:11233 to 10.10.14.203:90 (datafeed/HTTP) 
+Sep  6 00:10:54 localhost.localdomain haproxy[22031]: Connect from 66.214.12.157:11278 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:10:54 localhost.localdomain haproxy[22031]: Connect from 66.214.12.157:11280 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:11:00 localhost.localdomain haproxy[22031]: Connect from 10.10.11.14:47460 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:11:00 localhost.localdomain haproxy[22031]: Connect from 10.10.11.14:47461 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:11:01 localhost.localdomain haproxy[22031]: Connect from 10.10.11.14:47462 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:11:01 localhost.localdomain haproxy[22031]: Connect from 10.10.11.14:47463 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:11:11 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2657 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:11:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2658 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:11:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2659 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:12:11 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2663 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:12:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2664 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:12:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2665 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:13:11 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2668 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:13:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2669 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:13:18 localhost.localdomain haproxy[22031]: Connect from 74.132.35.153:49946 to 10.10.14.203:90 (datafeed/HTTP) 
+Sep  6 00:13:20 localhost.localdomain haproxy[22031]: Connect from 74.132.35.153:49962 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:13:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2670 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:13:30 localhost.localdomain haproxy[22031]: Connect from 74.132.35.153:49993 to 10.10.14.203:90 (datafeed/HTTP) 
+Sep  6 00:14:11 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2675 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:14:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2677 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:14:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2678 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:15:11 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2683 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:15:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2685 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:15:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2688 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:15:29 localhost.localdomain haproxy[22031]: Connect from 10.10.11.14:44458 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:15:29 localhost.localdomain haproxy[22031]: Connect from 10.10.11.14:44459 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:15:30 localhost.localdomain haproxy[22031]: Connect from 10.10.11.14:44460 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:15:30 localhost.localdomain haproxy[22031]: Connect from 10.10.11.14:44461 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:16:11 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2693 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:16:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2694 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:16:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2696 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:17:11 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2699 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:17:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2700 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:17:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2701 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:18:12 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2707 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:18:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2711 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:18:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2712 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:19:12 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2715 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:19:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2716 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:19:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2718 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:20:08 localhost.localdomain haproxy[22031]: Connect from 209.234.229.11:59794 to 10.10.14.203:90 (datafeed/HTTP) 
+Sep  6 00:20:12 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2720 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:20:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2722 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:20:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2723 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:20:30 localhost.localdomain haproxy[22031]: Connect from 209.234.229.11:60085 to 10.10.14.203:90 (datafeed/HTTP) 
+Sep  6 00:20:43 localhost.localdomain haproxy[22031]: Connect from 10.10.11.14:34463 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:20:43 localhost.localdomain haproxy[22031]: Connect from 10.10.11.14:34464 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:20:44 localhost.localdomain haproxy[22031]: Connect from 10.10.11.14:34465 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:20:44 localhost.localdomain haproxy[22031]: Connect from 10.10.11.14:34466 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:21:12 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2730 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:21:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2731 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:21:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2733 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:22:12 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2735 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:22:17 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2737 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:22:22 localhost.localdomain haproxy[22031]: Connect from 12.160.61.2:2738 to 10.10.14.121:80 (proxy1/HTTP) 
+Sep  6 00:22:53 localhost.localdomain haproxy[22031]: Stopping proxy datafeed in 3000 ms. 
+Sep  6 00:22:53 localhost.localdomain haproxy[22031]: Stopping proxy datafeed in 3000 ms. 
+Sep  6 00:22:53 localhost.localdomain haproxy[22031]: Stopping proxy proxy1 in 3000 ms. 
+Sep  6 00:22:56 localhost.localdomain haproxy[22031]: Proxy datafeed stopped. 
+Sep  6 00:22:56 localhost.localdomain haproxy[22031]: Proxy datafeed stopped. 
+Sep  6 00:22:56 localhost.localdomain haproxy[22031]: Proxy proxy1 stopped. 
+Sep  6 00:24:41 localhost.localdomain haproxy[7211]: Proxy datafeed started. 
+Sep  6 00:24:41 localhost.localdomain haproxy[7211]: Proxy datafeed started. 
+Sep  6 00:24:41 localhost.localdomain haproxy[7211]: Proxy proxy1 started. 
+Sep  6 00:25:11 localhost.localdomain haproxy[7212]: 10.10.11.14:59490 [06/Sep/2007:00:25:11.173] proxy1 proxy1/mi 0/0/0/23/+23 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 00:25:12 localhost.localdomain haproxy[7212]: 10.10.11.14:59491 [06/Sep/2007:00:25:11.198] proxy1 proxy1/mi 0/0/0/1147/+1147 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=831228b4db6fe494f7d948fc2b04b88e HTTP/1.1" 
+Sep  6 00:25:12 localhost.localdomain haproxy[7212]: 10.10.11.14:59492 [06/Sep/2007:00:25:12.375] proxy1 proxy1/mi 0/0/0/21/+21 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 00:25:13 localhost.localdomain haproxy[7212]: 10.10.11.14:59493 [06/Sep/2007:00:25:12.399] proxy1 proxy1/mi 0/0/0/796/+796 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=9dd07c625892fc31113e2cf46aeac81c HTTP/1.1" 
+Sep  6 00:30:11 localhost.localdomain haproxy[7212]: 10.10.11.14:49096 [06/Sep/2007:00:30:11.425] proxy1 proxy1/mi 0/0/3/35/+38 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 00:30:12 localhost.localdomain haproxy[7212]: 10.10.11.14:49097 [06/Sep/2007:00:30:11.465] proxy1 proxy1/mi 0/0/0/1123/+1123 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=bc53352aaa64751b4d89d28fe1021c8c HTTP/1.1" 
+Sep  6 00:30:12 localhost.localdomain haproxy[7212]: 10.10.11.14:49098 [06/Sep/2007:00:30:12.618] proxy1 proxy1/mi 0/0/0/24/+24 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 00:30:13 localhost.localdomain haproxy[7212]: 10.10.11.14:49099 [06/Sep/2007:00:30:12.643] proxy1 proxy1/mi 0/0/0/749/+749 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=c39497ec951106e386bd6d8769f2bb0e HTTP/1.1" 
+Sep  6 00:32:22 localhost.localdomain haproxy[7212]: 209.234.229.11:1431 [06/Sep/2007:00:31:16.586] datafeed datafeed/www8 0/0/3/65627/+65630 200 +252 - - ---- 2/2/2/2 0/0 "GET /datafeed/messages/content?boards=true&limit=200&ci_agent=true&ci_rank=2&start_time=1189052043&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 00:32:36 localhost.localdomain haproxy[7212]: 209.234.229.11:1592 [06/Sep/2007:00:31:30.691] datafeed datafeed/www8 0/0/0/65621/+65621 200 +252 - - ---- 1/1/1/1 0/0 "GET /datafeed/messages/content?blogs=true&limit=200&ci_agent=true&ci_rank=1&start_time=1189048693&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 00:36:02 localhost.localdomain haproxy[7212]: 10.10.11.14:54285 [06/Sep/2007:00:36:02.924] proxy1 proxy1/mi 0/0/0/27/+27 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 00:36:04 localhost.localdomain haproxy[7212]: 10.10.11.14:54286 [06/Sep/2007:00:36:02.952] proxy1 proxy1/mi 0/0/0/1149/+1149 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=12c04a76c542077f904854c8adcf1a6e HTTP/1.1" 
+Sep  6 00:36:04 localhost.localdomain haproxy[7212]: 10.10.11.14:54287 [06/Sep/2007:00:36:04.130] proxy1 proxy1/mi 0/0/0/30/+30 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 00:36:04 localhost.localdomain haproxy[7212]: 10.10.11.14:54288 [06/Sep/2007:00:36:04.162] proxy1 proxy1/mi 0/0/0/820/+820 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=cfbcc13eaf1cc34e5e4363828f416f6c HTTP/1.1" 
+Sep  6 00:40:18 localhost.localdomain haproxy[7212]: 10.10.11.14:36719 [06/Sep/2007:00:40:18.454] proxy1 proxy1/mi 0/0/4/26/+30 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 00:40:19 localhost.localdomain haproxy[7212]: 10.10.11.14:36720 [06/Sep/2007:00:40:18.486] proxy1 proxy1/mi 0/0/0/1094/+1094 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=c733ac2f6be2e4204dacff8e2512e3e7 HTTP/1.1" 
+Sep  6 00:40:19 localhost.localdomain haproxy[7212]: 10.10.11.14:36721 [06/Sep/2007:00:40:19.611] proxy1 proxy1/mi 0/0/0/30/+30 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 00:40:20 localhost.localdomain haproxy[7212]: 10.10.11.14:36722 [06/Sep/2007:00:40:19.642] proxy1 proxy1/mi 0/0/0/764/+764 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=7e6811f17edb96f7aaf3a97b38c23dfe HTTP/1.1" 
+Sep  6 00:43:33 localhost.localdomain haproxy[7212]: 209.234.229.11:7077 [06/Sep/2007:00:42:27.034] datafeed datafeed/www8 0/0/4/66649/+66653 200 +252 - - ---- 2/2/2/2 0/0 "GET /datafeed/messages/content?boards=true&limit=200&ci_agent=true&ci_rank=2&start_time=1189052043&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 00:43:46 localhost.localdomain haproxy[7212]: 209.234.229.11:7317 [06/Sep/2007:00:42:40.037] datafeed datafeed/www8 0/0/0/66741/+66741 200 +252 - - ---- 1/1/1/1 0/0 "GET /datafeed/messages/content?blogs=true&limit=200&ci_agent=true&ci_rank=1&start_time=1189048693&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 00:44:57 localhost.localdomain haproxy[7212]: 10.10.11.14:51082 [06/Sep/2007:00:44:57.024] proxy1 proxy1/mi 0/0/0/28/+28 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 00:44:58 localhost.localdomain haproxy[7212]: 10.10.11.14:51083 [06/Sep/2007:00:44:57.053] proxy1 proxy1/mi 0/0/0/1099/+1099 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=183e6d4bc8e897bf3fb9850f27af530b HTTP/1.1" 
+Sep  6 00:44:58 localhost.localdomain haproxy[7212]: 10.10.11.14:51084 [06/Sep/2007:00:44:58.182] proxy1 proxy1/mi 0/0/0/21/+21 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 00:44:58 localhost.localdomain haproxy[7212]: 10.10.11.14:51085 [06/Sep/2007:00:44:58.206] proxy1 proxy1/mi 0/0/0/751/+751 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=c6e6188f4bad75b132b0878bc8980276 HTTP/1.1" 
+Sep  6 00:49:58 localhost.localdomain haproxy[7212]: 10.10.11.14:55525 [06/Sep/2007:00:49:57.949] proxy1 proxy1/mi 0/0/3/51/+54 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 00:49:59 localhost.localdomain haproxy[7212]: 10.10.11.14:55526 [06/Sep/2007:00:49:58.004] proxy1 proxy1/mi 0/0/0/1064/+1064 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=2e4b29f8e8cb54b2b9e2d671e0c61f40 HTTP/1.1" 
+Sep  6 00:49:59 localhost.localdomain haproxy[7212]: 10.10.11.14:55527 [06/Sep/2007:00:49:59.099] proxy1 proxy1/mi 0/0/0/29/+29 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 00:49:59 localhost.localdomain haproxy[7212]: 10.10.11.14:55528 [06/Sep/2007:00:49:59.130] proxy1 proxy1/mi 0/0/0/756/+756 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=4753212e0ce7d2b194385342362b92d6 HTTP/1.1" 
+Sep  6 00:52:24 localhost.localdomain haproxy[7212]: 71.118.96.163:2092 [06/Sep/2007:00:52:24.187] datafeed datafeed/www8 5/0/3/148/+156 200 +298 - - ---- 1/1/1/1 0/0 "GET /community/widget_js/awSrutheDlylpvHv67HP4z.js HTTP/1.1" 
+Sep  6 00:52:27 localhost.localdomain haproxy[7212]: 71.118.96.163:2107 [06/Sep/2007:00:52:27.060] proxy1 proxy1/mi 6/0/0/2/+8 200 +249 - - ---- 1/1/1/1 0/0 "GET /favicon.ico HTTP/1.1" 
+Sep  6 00:54:45 localhost.localdomain haproxy[7212]: 209.234.229.11:12871 [06/Sep/2007:00:53:38.369] datafeed datafeed/www8 0/0/1/66921/+66922 200 +252 - - ---- 2/2/2/2 0/0 "GET /datafeed/messages/content?boards=true&limit=200&ci_agent=true&ci_rank=2&start_time=1189052043&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 00:54:58 localhost.localdomain haproxy[7212]: 10.10.11.14:34973 [06/Sep/2007:00:54:58.900] proxy1 proxy1/mi 0/0/0/51/+51 302 +451 - - ---- 2/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 00:54:59 localhost.localdomain haproxy[7212]: 209.234.229.11:12992 [06/Sep/2007:00:53:50.566] datafeed datafeed/www8 0/0/0/69304/+69304 200 +254 - - ---- 2/1/1/1 0/0 "GET /datafeed/messages/content?blogs=true&limit=200&ci_agent=true&ci_rank=1&start_time=1189048693&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 00:55:00 localhost.localdomain haproxy[7212]: 10.10.11.14:34974 [06/Sep/2007:00:54:58.953] proxy1 proxy1/mi 0/0/0/1088/+1088 200 +341 - - ---- 2/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=f017960ea412db0be4dc5ed65e5d3868 HTTP/1.1" 
+Sep  6 00:55:00 localhost.localdomain haproxy[7212]: 10.10.11.14:34975 [06/Sep/2007:00:55:00.071] proxy1 proxy1/mi 0/0/0/49/+49 302 +451 - - ---- 2/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 00:55:00 localhost.localdomain haproxy[7212]: 10.10.11.14:34976 [06/Sep/2007:00:55:00.122] proxy1 proxy1/mi 0/0/0/767/+767 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=3029d83b2aa341952b5448962b19a8d0 HTTP/1.1" 
+Sep  6 00:55:03 localhost.localdomain haproxy[7212]: 216.109.124.81:21019 [06/Sep/2007:00:55:03.466] datafeed datafeed/www8 0/0/0/54/+54 200 +393 - - ---- 1/1/1/1 0/0 "GET /login/get_session_key?user_name=yahoofeed&password=y@hoo!&commit=1 HTTP/1.1" 
+Sep  6 00:55:03 localhost.localdomain haproxy[7212]: 216.109.124.81:21020 [06/Sep/2007:00:55:03.629] datafeed datafeed/www8 1/0/0/1/+2 200 +220 - - ---- 1/1/1/1 0/0 "GET /datafeed/message_stats/yahoo_stats?_session_id=efb919c83352a0446ee6c67366bd36dc HTTP/1.1" 
+Sep  6 00:59:57 localhost.localdomain haproxy[7212]: 10.10.11.14:37381 [06/Sep/2007:00:59:57.341] proxy1 proxy1/mi 0/0/4/24/+28 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 00:59:58 localhost.localdomain haproxy[7212]: 10.10.11.14:37382 [06/Sep/2007:00:59:57.371] proxy1 proxy1/mi 0/0/0/1112/+1112 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=fe1f6255f2d562382a6d4157c05f6b2c HTTP/1.1" 
+Sep  6 00:59:58 localhost.localdomain haproxy[7212]: 10.10.11.14:37383 [06/Sep/2007:00:59:58.513] proxy1 proxy1/mi 0/0/0/22/+22 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 00:59:59 localhost.localdomain haproxy[7212]: 10.10.11.14:37384 [06/Sep/2007:00:59:58.537] proxy1 proxy1/mi 0/0/0/769/+769 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=b7c1c6e4cd9a866fc731d4fcc7ce1211 HTTP/1.1" 
+Sep  6 01:04:58 localhost.localdomain haproxy[7212]: 10.10.11.14:44071 [06/Sep/2007:01:04:58.017] proxy1 proxy1/mi 0/0/4/26/+30 302 +451 - - ---- 2/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 01:04:59 localhost.localdomain haproxy[7212]: 10.10.11.14:44072 [06/Sep/2007:01:04:58.048] proxy1 proxy1/mi 0/0/0/1064/+1064 200 +341 - - ---- 2/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=c991cd0d5c7d70b7466c9a450afbfe2c HTTP/1.1" 
+Sep  6 01:04:59 localhost.localdomain haproxy[7212]: 10.10.11.14:44073 [06/Sep/2007:01:04:59.143] proxy1 proxy1/mi 0/0/0/21/+21 302 +451 - - ---- 2/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 01:05:00 localhost.localdomain haproxy[7212]: 10.10.11.14:44074 [06/Sep/2007:01:04:59.166] proxy1 proxy1/mi 0/0/0/860/+860 200 +341 - - ---- 2/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=833d11839d66f44fa7c309438a2d05cc HTTP/1.1" 
+Sep  6 01:05:31 localhost.localdomain haproxy[7212]: 209.234.229.11:19974 [06/Sep/2007:01:04:49.776] datafeed datafeed/www8 0/0/4/41633/+41637 200 +252 - - ---- 2/2/2/2 0/0 "GET /datafeed/messages/content?boards=true&limit=200&ci_agent=true&ci_rank=2&start_time=1189053972&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 01:06:09 localhost.localdomain haproxy[7212]: 209.234.229.11:20469 [06/Sep/2007:01:05:27.691] datafeed datafeed/www8 0/0/0/41509/+41509 200 +253 - - ---- 1/1/1/1 0/0 "GET /datafeed/messages/content?blogs=true&limit=200&ci_agent=true&ci_rank=1&start_time=1189053959&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 01:09:59 localhost.localdomain haproxy[7212]: 10.10.11.14:53008 [06/Sep/2007:01:09:59.178] proxy1 proxy1/mi 0/0/3/34/+37 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 01:10:00 localhost.localdomain haproxy[7212]: 10.10.11.14:53009 [06/Sep/2007:01:09:59.217] proxy1 proxy1/mi 0/0/0/955/+955 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=3d1b27a12c72f34b4ece71a306023183 HTTP/1.1" 
+Sep  6 01:10:00 localhost.localdomain haproxy[7212]: 10.10.11.14:53010 [06/Sep/2007:01:10:00.202] proxy1 proxy1/mi 0/0/0/57/+57 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 01:10:01 localhost.localdomain haproxy[7212]: 10.10.11.14:53011 [06/Sep/2007:01:10:00.261] proxy1 proxy1/mi 0/0/0/842/+842 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=b4a2144ff68fb5dfb010b9179f2e1248 HTTP/1.1" 
+Sep  6 01:14:03 localhost.localdomain haproxy[7212]: 71.237.88.106:4616 [06/Sep/2007:01:14:03.449] datafeed datafeed/www8 7/0/1/321/+329 200 +298 - - ---- 1/1/1/1 0/0 "GET /community/widget_js/awSrutheDlylpvHv67HP4z.js HTTP/1.1" 
+Sep  6 01:14:29 localhost.localdomain haproxy[7212]: 71.237.88.106:4659 [06/Sep/2007:01:14:29.102] proxy1 proxy1/mi 5/0/0/2/+7 200 +249 - - ---- 1/1/1/1 0/0 "GET /favicon.ico HTTP/1.1" 
+Sep  6 01:15:00 localhost.localdomain haproxy[7212]: 10.10.11.14:45607 [06/Sep/2007:01:15:00.730] proxy1 proxy1/mi 0/0/0/75/+75 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 01:15:01 localhost.localdomain haproxy[7212]: 10.10.11.14:45608 [06/Sep/2007:01:15:00.808] proxy1 proxy1/mi 0/0/0/1168/+1168 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=9579d7902fddfa4e7ef665b75ddf4fd3 HTTP/1.1" 
+Sep  6 01:15:02 localhost.localdomain haproxy[7212]: 10.10.11.14:45609 [06/Sep/2007:01:15:02.006] proxy1 proxy1/mi 0/0/0/48/+48 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 01:15:02 localhost.localdomain haproxy[7212]: 10.10.11.14:45610 [06/Sep/2007:01:15:02.056] proxy1 proxy1/mi 0/0/0/819/+819 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=e44aa04c9aab4ec2f1ecd9f525adb726 HTTP/1.1" 
+Sep  6 01:16:18 localhost.localdomain haproxy[7212]: 209.234.229.11:26300 [06/Sep/2007:01:15:34.933] datafeed datafeed/www8 0/0/1/43363/+43364 200 +254 - - ---- 2/2/2/2 0/0 "GET /datafeed/messages/content?boards=true&limit=200&ci_agent=true&ci_rank=2&start_time=1189053972&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 01:16:56 localhost.localdomain haproxy[7212]: 209.234.229.11:26789 [06/Sep/2007:01:16:13.647] datafeed datafeed/www8 0/0/0/42395/+42395 200 +253 - - ---- 1/1/1/1 0/0 "GET /datafeed/messages/content?blogs=true&limit=200&ci_agent=true&ci_rank=1&start_time=1189053959&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 01:20:19 localhost.localdomain haproxy[7212]: 10.10.11.14:35067 [06/Sep/2007:01:20:19.727] proxy1 proxy1/mi 0/0/1/51/+52 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 01:20:31 localhost.localdomain haproxy[7212]: 10.10.11.14:35068 [06/Sep/2007:01:20:19.780] proxy1 proxy1/mi 0/0/0/12110/+12110 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=1758c27c33c227b61890969a4111ad53 HTTP/1.1" 
+Sep  6 01:20:32 localhost.localdomain haproxy[7212]: 10.10.11.14:35069 [06/Sep/2007:01:20:31.926] proxy1 proxy1/mi 0/0/0/254/+254 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 01:20:35 localhost.localdomain haproxy[7212]: 10.10.11.14:35070 [06/Sep/2007:01:20:32.181] proxy1 proxy1/mi 0/0/0/3269/+3269 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=247e3299db8272bc4453ed9e2f97e9bb HTTP/1.1" 
+Sep  6 01:24:58 localhost.localdomain haproxy[7212]: 10.10.11.14:55816 [06/Sep/2007:01:24:58.619] proxy1 proxy1/mi 0/0/0/30/+30 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 01:24:59 localhost.localdomain haproxy[7212]: 10.10.11.14:55817 [06/Sep/2007:01:24:58.650] proxy1 proxy1/mi 0/0/0/1157/+1157 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=5c5c4cae74655eb9a7aa9a0db58cdc46 HTTP/1.1" 
+Sep  6 01:24:59 localhost.localdomain haproxy[7212]: 10.10.11.14:55818 [06/Sep/2007:01:24:59.840] proxy1 proxy1/mi 0/0/0/58/+58 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 01:25:00 localhost.localdomain haproxy[7212]: 10.10.11.14:55819 [06/Sep/2007:01:24:59.900] proxy1 proxy1/mi 0/0/0/750/+750 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=b4d9f77a613279010febf39d5ae4133e HTTP/1.1" 
+Sep  6 01:25:29 localhost.localdomain haproxy[7212]: 65.214.39.180:44434 [06/Sep/2007:01:25:29.741] datafeed datafeed/www8 0/0/4/140/+144 200 +298 - - ---- 1/1/1/1 0/0 "GET /community/widget_js/awSrutheDlylpvHv67HP4z.js HTTP/1.1" 
+Sep  6 01:28:03 localhost.localdomain haproxy[7212]: 209.234.229.11:36670 [06/Sep/2007:01:26:50.078] datafeed datafeed/www8 0/0/0/73495/+73495 200 +254 - - ---- 2/2/2/2 0/0 "GET /datafeed/messages/content?boards=true&limit=200&ci_agent=true&ci_rank=2&start_time=1189055649&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 01:28:14 localhost.localdomain haproxy[7212]: 209.234.229.11:36841 [06/Sep/2007:01:26:59.648] datafeed datafeed/www8 0/0/0/74765/+74765 200 +254 - - ---- 1/1/1/1 0/0 "GET /datafeed/messages/content?blogs=true&limit=200&ci_agent=true&ci_rank=1&start_time=1189053959&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 01:30:04 localhost.localdomain haproxy[7212]: 10.10.11.14:52328 [06/Sep/2007:01:30:04.795] proxy1 proxy1/mi 0/0/3/36/+39 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 01:30:05 localhost.localdomain haproxy[7212]: 10.10.11.14:52329 [06/Sep/2007:01:30:04.836] proxy1 proxy1/mi 0/0/0/1101/+1101 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=00d33f0b8f352bbe2c0586588eaf1bf5 HTTP/1.1" 
+Sep  6 01:30:05 localhost.localdomain haproxy[7212]: 10.10.11.14:52330 [06/Sep/2007:01:30:05.968] proxy1 proxy1/mi 0/0/0/24/+24 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 01:30:06 localhost.localdomain haproxy[7212]: 10.10.11.14:52331 [06/Sep/2007:01:30:05.994] proxy1 proxy1/mi 0/0/0/776/+776 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=fbb311b374de5854bf2cd8a680862066 HTTP/1.1" 
+Sep  6 01:34:57 localhost.localdomain haproxy[7212]: 10.10.11.14:53949 [06/Sep/2007:01:34:57.541] proxy1 proxy1/mi 0/0/0/37/+37 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 01:34:58 localhost.localdomain haproxy[7212]: 10.10.11.14:53950 [06/Sep/2007:01:34:57.580] proxy1 proxy1/mi 0/0/0/1140/+1140 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=9b0be9db7e5f0644afeef6ae91098164 HTTP/1.1" 
+Sep  6 01:34:58 localhost.localdomain haproxy[7212]: 10.10.11.14:53951 [06/Sep/2007:01:34:58.753] proxy1 proxy1/mi 0/0/0/28/+28 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 01:34:59 localhost.localdomain haproxy[7212]: 10.10.11.14:53952 [06/Sep/2007:01:34:58.782] proxy1 proxy1/mi 0/0/0/641/+641 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=3912765c85079ed7dbbec5c0d7c11611 HTTP/1.1" 
+Sep  6 01:39:48 localhost.localdomain haproxy[7212]: 209.234.229.11:48736 [06/Sep/2007:01:38:32.191] datafeed datafeed/www8 0/0/2/76418/+76420 200 +254 - - ---- 2/2/2/2 0/0 "GET /datafeed/messages/content?boards=true&limit=200&ci_agent=true&ci_rank=2&start_time=1189056143&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 01:39:51 localhost.localdomain haproxy[7212]: 209.234.229.11:48871 [06/Sep/2007:01:38:37.630] datafeed datafeed/www8 0/0/0/74355/+74355 200 +253 - - ---- 1/1/1/1 0/0 "GET /datafeed/messages/content?blogs=true&limit=200&ci_agent=true&ci_rank=1&start_time=1189056052&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 01:40:00 localhost.localdomain haproxy[7212]: 10.10.11.14:52401 [06/Sep/2007:01:40:00.619] proxy1 proxy1/mi 0/0/4/28/+32 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 01:40:01 localhost.localdomain haproxy[7212]: 10.10.11.14:52402 [06/Sep/2007:01:40:00.652] proxy1 proxy1/mi 0/0/0/1111/+1111 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=4d1e0ce69b803f77660ff48cdc4eb87c HTTP/1.1" 
+Sep  6 01:40:01 localhost.localdomain haproxy[7212]: 10.10.11.14:52403 [06/Sep/2007:01:40:01.798] proxy1 proxy1/mi 0/0/0/21/+21 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 01:40:02 localhost.localdomain haproxy[7212]: 10.10.11.14:52404 [06/Sep/2007:01:40:01.821] proxy1 proxy1/mi 0/0/0/711/+711 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=629609ab2883d94732cc56f26252f524 HTTP/1.1" 
+Sep  6 01:44:57 localhost.localdomain haproxy[7212]: 10.10.11.14:57173 [06/Sep/2007:01:44:57.124] proxy1 proxy1/mi 0/0/0/24/+24 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 01:44:58 localhost.localdomain haproxy[7212]: 10.10.11.14:57174 [06/Sep/2007:01:44:57.149] proxy1 proxy1/mi 0/0/0/1437/+1437 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=a926f28fb8fa0586e7b989087c370cc2 HTTP/1.1" 
+Sep  6 01:44:58 localhost.localdomain haproxy[7212]: 10.10.11.14:57175 [06/Sep/2007:01:44:58.618] proxy1 proxy1/mi 0/0/0/22/+22 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 01:44:59 localhost.localdomain haproxy[7212]: 10.10.11.14:57176 [06/Sep/2007:01:44:58.642] proxy1 proxy1/mi 0/0/0/786/+786 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=39b29d0331e29c88a5cea9385b4b0d4b HTTP/1.1" 
+Sep  6 01:50:23 localhost.localdomain haproxy[7212]: 10.10.11.14:53696 [06/Sep/2007:01:50:22.495] proxy1 proxy1/mi 0/0/3/833/+836 302 +451 - - ---- 3/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 01:50:24 localhost.localdomain haproxy[7212]: 10.10.11.14:53697 [06/Sep/2007:01:50:23.332] proxy1 proxy1/mi 0/0/0/1099/+1099 200 +341 - - ---- 3/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=69fdd045ba7b43f96f447c97ca848647 HTTP/1.1" 
+Sep  6 01:50:24 localhost.localdomain haproxy[7212]: 10.10.11.14:53698 [06/Sep/2007:01:50:24.464] proxy1 proxy1/mi 0/0/0/23/+23 302 +451 - - ---- 3/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 01:50:25 localhost.localdomain haproxy[7212]: 10.10.11.14:53699 [06/Sep/2007:01:50:24.489] proxy1 proxy1/mi 0/0/0/776/+776 200 +341 - - ---- 3/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=465ec8af0e6bf0d0ff1d4db3de9f0cad HTTP/1.1" 
+Sep  6 01:51:07 localhost.localdomain haproxy[7212]: 209.234.229.11:62452 [06/Sep/2007:01:49:55.955] datafeed datafeed/www8 0/0/2/71847/+71849 200 +253 - - ---- 2/2/2/2 0/0 "GET /datafeed/messages/content?blogs=true&limit=200&ci_agent=true&ci_rank=1&start_time=1189056052&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 01:51:17 localhost.localdomain haproxy[7212]: 209.234.229.11:62989 [06/Sep/2007:01:50:07.336] datafeed datafeed/www8 0/0/1/70089/+70090 200 +253 - - ---- 1/1/1/1 0/0 "GET /datafeed/messages/content?boards=true&limit=200&ci_agent=true&ci_rank=2&start_time=1189056967&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 01:54:58 localhost.localdomain haproxy[7212]: 10.10.11.14:53433 [06/Sep/2007:01:54:58.668] proxy1 proxy1/mi 0/0/0/38/+38 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 01:54:59 localhost.localdomain haproxy[7212]: 10.10.11.14:53434 [06/Sep/2007:01:54:58.707] proxy1 proxy1/mi 0/0/0/1159/+1159 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=9c9e9e97c5713ae5012630bd7e4150b1 HTTP/1.1" 
+Sep  6 01:54:59 localhost.localdomain haproxy[7212]: 10.10.11.14:53435 [06/Sep/2007:01:54:59.899] proxy1 proxy1/mi 0/0/0/48/+48 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 01:55:00 localhost.localdomain haproxy[7212]: 10.10.11.14:53436 [06/Sep/2007:01:54:59.948] proxy1 proxy1/mi 0/0/0/805/+805 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=b8aede95dbb86d4c7836300254b92ba6 HTTP/1.1" 
+Sep  6 01:55:06 localhost.localdomain haproxy[7212]: 216.109.124.81:27712 [06/Sep/2007:01:55:06.483] datafeed datafeed/www8 1/0/0/37/+38 200 +393 - - ---- 1/1/1/1 0/0 "GET /login/get_session_key?user_name=yahoofeed&password=y@hoo!&commit=1 HTTP/1.1" 
+Sep  6 01:55:06 localhost.localdomain haproxy[7212]: 216.109.124.81:27713 [06/Sep/2007:01:55:06.631] datafeed datafeed/www8 0/0/0/2/+2 200 +220 - - ---- 1/1/1/1 0/0 "GET /datafeed/message_stats/yahoo_stats?_session_id=ede30fdf9dc6dbe49fd3bcb45fde403a HTTP/1.1" 
+Sep  6 01:59:57 localhost.localdomain haproxy[7212]: 10.10.11.14:59936 [06/Sep/2007:01:59:57.517] proxy1 proxy1/mi 0/0/4/22/+26 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 01:59:58 localhost.localdomain haproxy[7212]: 10.10.11.14:59937 [06/Sep/2007:01:59:57.544] proxy1 proxy1/mi 0/0/0/1043/+1043 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=51f7a5cf3491a7ea340354a9f5380d7e HTTP/1.1" 
+Sep  6 01:59:58 localhost.localdomain haproxy[7212]: 10.10.11.14:59938 [06/Sep/2007:01:59:58.619] proxy1 proxy1/mi 0/0/0/23/+23 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 01:59:59 localhost.localdomain haproxy[7212]: 10.10.11.14:59939 [06/Sep/2007:01:59:58.644] proxy1 proxy1/mi 0/0/0/796/+796 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=0b9f0a6146349f5a8558f63111f171fa HTTP/1.1" 
+Sep  6 02:03:23 localhost.localdomain haproxy[7212]: 209.234.229.11:12617 [06/Sep/2007:02:02:16.981] datafeed datafeed/www8 0/0/4/66322/+66326 200 +253 - - ---- 2/2/2/2 0/0 "GET /datafeed/messages/content?blogs=true&limit=200&ci_agent=true&ci_rank=1&start_time=1189056052&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 02:03:44 localhost.localdomain haproxy[7212]: 209.234.229.11:12761 [06/Sep/2007:02:02:31.387] datafeed datafeed/www8 0/0/0/73115/+73115 200 +253 - - ---- 2/2/2/2 0/0 "GET /datafeed/messages/content?boards=true&limit=200&ci_agent=true&ci_rank=2&start_time=1189057734&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 02:04:37 localhost.localdomain haproxy[7212]: 209.234.229.11:13415 [06/Sep/2007:02:03:29.399] datafeed datafeed/www8 2/0/0/67837/+67839 200 +253 - - ---- 2/2/2/2 0/0 "GET /datafeed/messages/content?blogs=true&limit=200&ci_agent=true&ci_rank=1&start_time=1189056052&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 02:04:56 localhost.localdomain haproxy[7212]: 209.234.229.11:13668 [06/Sep/2007:02:03:56.899] datafeed datafeed/www8 0/0/1/59514/+59515 200 +253 - - ---- 1/1/1/1 0/0 "GET /datafeed/messages/content?boards=true&limit=200&ci_agent=true&ci_rank=2&start_time=1189058395&_session_id=9d125ec92ea862adc1837beb4ce87b1a HTTP/1.0" 
+Sep  6 02:04:58 localhost.localdomain haproxy[7212]: 10.10.11.14:43479 [06/Sep/2007:02:04:58.244] proxy1 proxy1/mi 0/0/0/30/+30 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 02:04:59 localhost.localdomain haproxy[7212]: 10.10.11.14:43480 [06/Sep/2007:02:04:58.276] proxy1 proxy1/mi 0/0/0/1131/+1131 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=9815916376ba23bdddba4490344f2d11 HTTP/1.1" 
+Sep  6 02:04:59 localhost.localdomain haproxy[7212]: 10.10.11.14:43481 [06/Sep/2007:02:04:59.438] proxy1 proxy1/mi 0/0/0/25/+25 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 02:05:00 localhost.localdomain haproxy[7212]: 10.10.11.14:43482 [06/Sep/2007:02:04:59.464] proxy1 proxy1/mi 0/0/0/764/+764 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=020e4a20bbb671b9f91367c639cbe3a8 HTTP/1.1" 
+Sep  6 02:10:02 localhost.localdomain haproxy[7212]: 10.10.11.14:38709 [06/Sep/2007:02:10:02.086] proxy1 proxy1/mi 0/0/4/33/+37 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 02:10:03 localhost.localdomain haproxy[7212]: 10.10.11.14:38710 [06/Sep/2007:02:10:02.125] proxy1 proxy1/mi 0/0/0/933/+933 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=7cbc3a0c0825edbe0b5eb069375e4362 HTTP/1.1" 
+Sep  6 02:10:03 localhost.localdomain haproxy[7212]: 10.10.11.14:38711 [06/Sep/2007:02:10:03.087] proxy1 proxy1/mi 0/0/0/29/+29 302 +451 - - ---- 1/1/1/1 0/0 "GET /?user_name=miloadtest2&password=ci HTTP/1.1" 
+Sep  6 02:10:03 localhost.localdomain haproxy[7212]: 10.10.11.14:38712 [06/Sep/2007:02:10:03.119] proxy1 proxy1/mi 0/0/0/788/+788 200 +341 - - ---- 1/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=69acf1cab4284b46960c85b0ed70933f HTTP/1.1" 
+Sep  6 02:14:58 localhost.localdomain haproxy[7212]: 10.10.11.14:57413 [06/Sep/2007:02:14:58.096] proxy1 proxy1/mi 0/0/0/38/+38 302 +451 - - ---- 2/1/1/1 0/0 "GET /?user_name=miloadtest1&password=ci HTTP/1.1" 
+Sep  6 02:14:59 localhost.localdomain haproxy[7212]: 10.10.11.14:57414 [06/Sep/2007:02:14:58.136] proxy1 proxy1/mi 0/0/0/1078/+1078 200 +341 - - ---- 2/1/1/1 0/0 "GET /media_intel/refresh/?load_test=true&_session_id=540cd22578174125ffea8d7b36f97abd HTTP/1.1" 
+Sep  6 03:45:56 localhost.localdomain haproxy[7344]: 127.0.0.1:53407 [11/Sep/2007:00:15:30.010] smtp-forward smtp-forward/smtp0 0/0/7061 21 -- 0/0/0/0 0/0

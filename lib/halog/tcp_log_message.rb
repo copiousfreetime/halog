@@ -18,12 +18,12 @@ module HALog
                     (\S+)\s+        # frontend                                                  - smtp-forward
                     ([^\s/]+)/      # backend                                                   - smtp-forward
                     (\S+)\s+        # server                                                    - smtp0
-                    (\d+)/          # queue time (time the inbound connection is queue)         - 0
-                    (\d+)/          # connect time (time to connect to backend)                 - 0
-                    [+]?(\d+)\s+    # total_time from accept to connection close                - 7061
+                    (-?\d+)/        # queue time (time the inbound connection is queue)         - 0
+                    (-?\d+)/        # connect time (time to connect to backend)                 - 0
+                    [+-]?(\d+)\s+   # total_time from accept to connection close                - 7061
                                     # this may start with a '+' indicating 'option logasap' was used
                                     
-                    [+]?(\d+)\s+    # bytes read                                                - 130
+                    [+-]?(\d+)\s+   # bytes read                                                - 130
                                     # this may start with a '+' indicating 'option logasap' was used
                                     
                     (\S\S)\s+       # termination state, 2 coded values, read the haproxy docs  - '--'

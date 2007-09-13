@@ -19,14 +19,14 @@ module HALog
                     \s+(\S+)\s+     # frontend                                                  - http-forward
                     ([^\s/]+)/      # backend                                                   - http-forward
                     (\S+)\s+        # server                                                    - http0
-                    (\d+)/          # request time (time from accept() to last header)          - 0
-                    (\d+)/          # queue time (time the inbound connection is queue)         - 0
-                    (\d+)/          # connect time (time to connect to backend)                 - 39
-                    (\d+)/          # response time (time from connect to response start)       - 58
+                    (-?\d+)/        # request time (time from accept() to last header)          - 0
+                    (-?\d+)/        # queue time (time the inbound connection is queue)         - 0
+                    (-?\d+)/        # connect time (time to connect to backend)                 - 39
+                    (-?\d+)/        # response time (time from connect to response start)       - 58
                     [+]?(\d+)\s+    # total_time from accept to connection close                - 1203
                                     # this may start with a '+' indicating 'option logasap'' was used
                                     
-                    (\d+)\s+        # http status code                                          - 200
+                    (-?\d+)\s+      # http status code                                          - 200
                     [+]?(\d+)\s+    # bytes read                                                - 130
                                     # this may start with a '+' indicating 'option logasap' was used
                                     
@@ -52,12 +52,13 @@ module HALog
         # Using concat, just so I can get full code coverage stats
         FIELDS =      %w[ client_address client_port day month year hour minute second usecond frontend backend server ]
         FIELDS.concat %w[ request_time queue_time connect_time response_time total_time http_status bytes_read ]
-        FIELDS.concat %w[ request_cookie response_cookie termination_state active_sessions frontends backends servers ]
+        FIELDS.concat %w[ request_cookie response_cookie termination_state active_sessions frontend_connections backend_connections server_connections ]
         FIELDS.concat %w[ incoming_queue_size server_queue_size request_headers response_headers http_request ]
         FIELDS.freeze
                     
         INT_FIELDS =      %w[ client_port day year hour minute second usecond request_time queue_time connect_time response_time total_time ]
-        INT_FIELDS.concat %w[ http_status bytes_read active_sessions frontends backends servers incoming_queue_size server_queue_size ]
+        INT_FIELDS.concat %w[ http_status bytes_read active_sessions frontend_connections backend_connections server_connections ]
+        INT_FIELDS.concat %w[ incoming_queue_size server_queue_size ]
         INT_FIELDS.freeze
                          
         def initialize(line)

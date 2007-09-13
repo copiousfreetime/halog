@@ -8,6 +8,7 @@ describe HALog::LogParser do
             "Sep  8 02:14:41 127.0.0.1 haproxy[14679]: listener for_assets has no server available !",
             'Sep  8 02:54:15 127.0.0.1 haproxy[15226]: 10.10.11.20:56196 [08/Sep/2007:02:54:14.852] incoming static/asset0 2/0/2/5/18 200 121 - - ---- 1036/1036/999/99 0/0 {|} {close} "GET /images/rails.png HTTP/1.0"',
             'Sep  8 02:54:15 127.0.0.1 haproxy[15226]: 10.10.11.20:56742 [08/Sep/2007:02:54:14.949] incoming static/asset0 3/0/3/4/18 200 121 - - ---- 1020/1020/999/99 0/0 "GET /images/rails.png HTTP/1.0"',
+            'Sep 10 12:34:56 127.0.0.1 haproxy[12346]: 67.173.244.232:52924 [06/Sep/2007:12:32:52.916] proxy1 proxy1/mi 15/0/-1/-1/+15 -1 +390 - - CC-- 0/0/0/0 0/0 "GET /analysis/email_report/tag/dXNlcj1zdGV2ZUBjb2xsZWN0aXZlaW50ZWxsZWN0LmNvbSxyZXBvcnRfaWQ9MjEwMA==.png HTTP/1.1"',
             "Oct 15 15:24:28 localhost.localdomain haproxy[18989]: 127.0.0.1:34550 [15/Oct/2007:15:24:28.123] relais-tcp relais-backend/Srv1 0/0/5007 0 -- 1/1/1/1 0/0",
             ]
         @input = StringIO.new
@@ -19,7 +20,7 @@ describe HALog::LogParser do
         lp = HALog::LogParser.new.parse(@input) { |entry| nil }
         lp.starting_offset.should == 0
         lp.byte_count.should == @good_bytes
-        lp.entry_count.should == 6
+        lp.entry_count.should == 7
         lp.error_count.should == 0
         lp.first_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2007-09-06 00:24:41"
         lp.last_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2007-10-15 15:24:28"
@@ -36,7 +37,7 @@ describe HALog::LogParser do
         lp = HALog::LogParser.new.parse(@input) { |entry| nil }
         lp.starting_offset.should == 0
         lp.byte_count.should == @good_bytes + bad_line.size + 1
-        lp.entry_count.should == 6
+        lp.entry_count.should == 7
         lp.error_count.should == 1
         lp.first_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2007-09-06 00:24:41"
         lp.last_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2007-10-15 15:24:28"

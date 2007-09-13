@@ -3,14 +3,14 @@ require File.join(File.dirname(__FILE__),"spec_helper.rb")
 describe HALog::DataStore do
     before(:each) do
         @ds = HALog::DataStore.new(":memory:")
-        @log_lines = IO.readlines(File.join(File.dirname(__FILE__),'haproxy.log'))
-        @io = File.open(File.join(File.dirname(__FILE__), 'haproxy.log'))
-        @ds.db.trace("xx") { |data,stmt| puts "sql stmt : #{stmt.inspect} " }
+        @log_lines = IO.readlines(File.join(File.dirname(__FILE__),'haproxy-short.log'))
+        @io = File.open(File.join(File.dirname(__FILE__), 'haproxy-short.log'))
+       # @ds.db.trace() { |data,stmt| puts "sql stmt : #{stmt} "}
     end
     
     after(:each) do
-        @ds.close
         @io.close
+        @ds.close
     end
     
     it "creates or attaches to a valid SQLite database" do
@@ -35,8 +35,18 @@ describe HALog::DataStore do
     end
     
     it "can import rows" do
-        @ds.import(@io) 
-        @ds.db.execute("SELECT count(1 cnt FROM imports").first['cnt'].should == 1
+        @ds.import(@io)
+        row_counts = {
+            'imports' => 1,
+            'log_entries' => 201,
+            'tcp_log_messages' => 1,
+            'http_log_messages' => 119,
+
+        } 
+        
+        row_counts.each_pair do |table,count|
+            @ds.db.execute("SELECT count(1) cnt FROM #{table}").first['cnt'].to_i.should == count
+        end
     end
     
     

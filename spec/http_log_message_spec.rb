@@ -2,7 +2,8 @@ require File.join(File.dirname(__FILE__),"spec_helper.rb")
 
 describe HALog::HTTPLogMessage do
     before(:each) do
-        @row_data = '127.0.0.1:59791 [11/Sep/2007:16:46:47.787] http-forward http-forward/http0 2/7/39/58/1203 200 130 - JSESSIONID=96BB0AB0AEC812CAFBDDC ---- 3/5/7/9 11/13 {|curl/7.16.2 (i386-apple-darwin8.|*/*} {no-cache||0|Apache-Coyote/1.1|NSC_MC_QH_XFCBQQ=e2422cb129a0;ex} "GET / HTTP/1.1"'
+        @row_data = '127.0.0.1:59791 [11/Sep/2007:16:46:47.787] http-forward http-forward/http0 2/7/-1/58/1203 200 130 - JSESSIONID=96BB0AB0AEC812CAFBDDC ---- 3/5/7/9 11/13 {|curl/7.16.2 (i386-apple-darwin8.|*/*} {no-cache||0|Apache-Coyote/1.1|NSC_MC_QH_XFCBQQ=e2422cb129a0;ex} "GET / HTTP/1.1"'
+        @row_data2 = '67.173.244.232:52924 [06/Sep/2007:12:32:52.916] proxy1 proxy1/mi 15/0/-1/-1/+15 -1 +390 - - CC-- 0/0/0/0 0/0 "GET /analysis/email_report/tag/dXNlcj1zdGV2ZUBjb2xsZWN0aXZlaW50ZWxsZWN0LmNvbSxyZXBvcnRfaWQ9MjEwMA==.png HTTP/1.1"'
         @msg = HALog::HTTPLogMessage.new(@row_data)
     end
     
@@ -21,7 +22,7 @@ describe HALog::HTTPLogMessage do
         :server                 => "http0",
         :request_time           => 2,
         :queue_time             => 7,
-        :connect_time           => 39,
+        :connect_time           => -1,
         :response_time          => 58,
         :total_time             => 1203,
         :http_status            => 200,
@@ -30,9 +31,9 @@ describe HALog::HTTPLogMessage do
         :response_cookie        => "JSESSIONID=96BB0AB0AEC812CAFBDDC",
         :termination_state      => "----",
         :active_sessions        => 3,
-        :frontends              => 5,
-        :backends               => 7,
-        :servers                => 9,
+        :frontend_connections   => 5,
+        :backend_connections    => 7,
+        :server_connections     => 9,
         :incoming_queue_size    => 11,
         :server_queue_size      => 13,
         :request_headers        => "{|curl/7.16.2 (i386-apple-darwin8.|*/*}",
@@ -47,8 +48,8 @@ describe HALog::HTTPLogMessage do
     end
     
     it "can create a hash of fields" do
-        @msg.hash_of_fields(%w[ backend frontend server frontends ]).should == { 'backend' => 'http-forward', 'frontend' => 'http-forward',
-                                                                                  'server' => 'http0', 'frontends' => 5}
+        @msg.hash_of_fields(%w[ backend frontend server frontend_connections ]).should == { 'backend' => 'http-forward', 'frontend' => 'http-forward',
+                                                                                  'server' => 'http0', 'frontend_connections' => 5}
     end
     
     it "has an iso time string" do

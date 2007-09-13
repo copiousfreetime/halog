@@ -31,7 +31,7 @@ module HALog
             end
             
             def log_entries_fields
-                @log_entries_fields ||= %w[ iso_time hostname process pid]
+                @log_entries_fields ||= %w[ iso_time hostname process pid raw_message ]
             end
             
             def tcp_log_messages_fields
@@ -62,18 +62,18 @@ module HALog
         
         def finalize_import(handle,import_id,parser)
             update_sql = <<-SQL
-            UPDATE import SET
+            UPDATE imports SET
                 import_ended_on             = datetime('now','localtime'),
                 first_entry_time            = :first_entry_time,
                 last_entry_time             = :last_entry_time,
-                starting_offset             = :starting_offset
-                byte_count                  = :byte_count
-                entry_count                 = :entry_count
+                starting_offset             = :starting_offset,
+                byte_count                  = :byte_count,
+                entry_count                 = :entry_count,
                 error_count                 = :error_count
             WHERE id = #{import_id}
             SQL
-            handle.execute(update_sql,parser.hash_of_fields(%w[ first_entry_time last_entry_time starting_offset
-                                                                byte_count entry_count error_count]))
+            fields = %w[ first_entry_time last_entry_time starting_offset byte_count entry_count error_count ]
+            handle.execute(update_sql,parser.hash_of_fields(fields))
         end
         
         def import(io,options = {})
@@ -81,9 +81,7 @@ module HALog
             # to the point to start the parsing.
             
             import_transaction(io) do |import_id,handle,stmts,last_import_info|
-                
-                puts "handle is active" if handle.transaction_active?
-                
+                                
                 parse_options       = options[:incremental] ? last_import_info : {}
                 log_entry_values    = { 'import_id' => import_id }
                 results             = {}
@@ -91,27 +89,20 @@ module HALog
                 last_entry          = nil
                 
                 LogParser.new.parse(io,parse_options) do |entry|
-                    params = log_entry_values.merge(entry.hash_of_fields(HALog::DataStore::log_entries_fields))
-                    puts params.inspect
-                    stmts['log_entries'].bind_params(params)
-                    puts "bind worked"
-                    puts stmts["log_entries"].inspect
-                    stmts['log_entries'].execute
-                    puts "insert worked"
-                    stmts['log_entries'].execute( log_entry_values.merge(entry.hash_of_fields(HALog::DataStore::log_entries_fields)) )
+                    stmts['log_entries'].execute!( log_entry_values.merge(entry.hash_of_fields(HALog::DataStore::log_entries_fields)) )
                     log_entry_id = handle.last_insert_row_id
                     
                     message_values = { 'import_id' => import_id, 'log_entry_id' => log_entry_id }
                     case entry.message
                     when HTTPLogMessage
-                        stmts['http_log_messages'].execute( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::http_log_messages_fields)) )
+                        stmts['http_log_messages'].execute!( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::http_log_messages_fields)) )
                     when TCPLogMessage
-                        stmts['tcp_log_messages'].execute( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::tcp_log_messages_fields)) )
-                    else
-                        ptus "Unknown message type of #{entry.message.class.name}"
+                        stmts['tcp_log_messages'].execute!( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::tcp_log_messages_fields)) )
+                    when StringLogMessage
+                        # do nothing
+                        nil
                     end
                 end
-                # returning the log parser from the yield
             end
             
         end        
@@ -120,7 +111,13 @@ module HALog
         
         def import_transaction(io) 
             db.transaction do |trans_handle|
-                last_import_info    = trans_handle.query("SELECT * FROM imports WHERE id = (SELECT max(id) FROM imports)")
+                last_import_info    = {}
+                trans_handle.query("SELECT * FROM imports WHERE id = (SELECT max(id) FROM imports)") do |result|
+                    row = result.next 
+                    result.columns.each do |c|
+                        last_import_info[c] = (row.nil?) ? nil : row[c]
+                    end
+                end
                 import_id           = next_import_id(trans_handle)
                 
                 stmts               = {}
@@ -128,11 +125,9 @@ module HALog
                     stmts[table] = trans_handle.prepare( HALog::DataStore::insert_sql_for(table) )
                 end
                 
-                puts "statements prepared, moving on"
                 parser = yield [import_id, trans_handle, stmts, last_import_info ]
 
-                puts "okay, done, closing things up"
-                stmts.values.each { |h| h.close }                
+                stmts.values.each { |stmt| stmt.close }
                 finalize_import(trans_handle,import_id,parser)
             end
         end
