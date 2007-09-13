@@ -2,8 +2,7 @@ require File.join(File.dirname(__FILE__),"spec_helper.rb")
 
 describe HALog::HTTPLogMessage do
     before(:each) do
-        # @row_data = '127.0.0.1:59791 [11/Sep/2007:16:46:47.787] http-forward http-forward/http0 2/7/39/58/1203 200 130 - JSESSIONID=96BB0AB0AEC812CAFBDDC ---- 3/5/7/9 11/13 {|curl/7.16.2 (i386-apple-darwin8.|*/*} {no-cache||0|Apache-Coyote/1.1|NSC_MC_QH_XFCBQQ=e2422cb129a0;ex} "GET / HTTP/1.1"'
-        @row_data = '127.0.0.1:59791 [11/Sep/2007:16:46:47.787] http-forward http-forward/http0 2/7/39/58/1203 200 130 - JSESSIONID=96BB0AB0AEC812CAFBDDC ---- 3/5/7/9 11/13 "GET / HTTP/1.1"'
+        @row_data = '127.0.0.1:59791 [11/Sep/2007:16:46:47.787] http-forward http-forward/http0 2/7/39/58/1203 200 130 - JSESSIONID=96BB0AB0AEC812CAFBDDC ---- 3/5/7/9 11/13 {|curl/7.16.2 (i386-apple-darwin8.|*/*} {no-cache||0|Apache-Coyote/1.1|NSC_MC_QH_XFCBQQ=e2422cb129a0;ex} "GET / HTTP/1.1"'
         @msg = HALog::HTTPLogMessage.new(@row_data)
     end
     
@@ -36,10 +35,8 @@ describe HALog::HTTPLogMessage do
         :servers                => 9,
         :incoming_queue_size    => 11,
         :server_queue_size      => 13,
-      #  :request_headers        => "{|curl/7.16.2 (i386-apple-darwin8.|*/*}",
-        :request_headers        => nil,
-        # :response_headers       => "{no-cache||0|Apache-Coyote/1.1|NSC_MC_QH_XFCBQQ=e2422cb129a0;ex}",
-        :response_headers       => nil,
+        :request_headers        => "{|curl/7.16.2 (i386-apple-darwin8.|*/*}",
+        :response_headers       => "{no-cache||0|Apache-Coyote/1.1|NSC_MC_QH_XFCBQQ=e2422cb129a0;ex}",
         :http_request           => 'GET / HTTP/1.1'
         
     }
@@ -47,6 +44,11 @@ describe HALog::HTTPLogMessage do
         it "captures the #{meth}" do
             @msg.send(meth).should == result
         end
+    end
+    
+    it "can create a hash of fields" do
+        @msg.hash_of_fields(%w[ backend frontend server frontends ]).should == { 'backend' => 'http-forward', 'frontend' => 'http-forward',
+                                                                                  'server' => 'http0', 'frontends' => 5}
     end
     
     it "captures the date" do

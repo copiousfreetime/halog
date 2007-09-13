@@ -21,7 +21,7 @@ describe HALog::TCPLogMessage do
         :backend                => "smtp-forward",
         :server                 => "smtp0",
         :queue_time             => 0,
-        :connection_time        => 0,
+        :connect_time           => 0,
         :total_time             => 7061,
         :bytes_read             => 21,
         :termination_state      => "--",
@@ -39,7 +39,9 @@ describe HALog::TCPLogMessage do
         end
     end
     
-    
+    it "can create a hash of fields" do
+        @msg.hash_of_fields(%w[ year month day ]).should == { 'year' => 2007, 'month' => 9, 'day' => 11}
+    end
 
     it "captures the date" do
         @msg.date.should == Date.new(2007,9,11)

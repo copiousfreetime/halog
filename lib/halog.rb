@@ -1,6 +1,6 @@
 module HALog
     
-    ROOT_DIR        = File.expand_path(File.join(File.dirname(__FILE__),".."))
+    ROOT_DIR        = File.expand_path(File.join(File.dirname(__FILE__),"..")).freeze
     LIB_DIR         = File.join(ROOT_DIR,"lib").freeze
     RESOURCE_DIR    = File.join(ROOT_DIR,"resources").freeze
 

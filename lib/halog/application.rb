@@ -98,12 +98,13 @@ module HALog
             
             input_log_stream = @options.input_file ? File.open(@options.input_file) : $stdin
             
-            ds = DataStore.open(@options.database)
-            ds.import(input_log_stream)
-            if @options.report then
-                outfile = @options.output_file ? File.open(@options.output_file,"w+") : $stdout
-                outfile.write Report.run(@options.report).on(ds).to_s
-                outfile.close
+            DataStore.open(@options.database) do |ds|
+                ds.import(input_log_stream)
+                if @options.report then
+                    outfile = @options.output_file ? File.open(@options.output_file,"w+") : $stdout
+                    outfile.write Report.run(@options.report).on(ds).to_s
+                    outfile.close
+                end
             end
         end
     end

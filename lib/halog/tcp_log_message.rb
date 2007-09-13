@@ -37,11 +37,11 @@ module HALog
                     >x
                                             
         FIELDS =      %w[ client_address client_port day month year hour minute second usecond frontend backend server ]
-        FIELDS.concat %w[ queue_time connection_time total_time bytes_read termination_state ]
+        FIELDS.concat %w[ queue_time connect_time total_time bytes_read termination_state ]
         FIELDS.concat %w[ active_sessions frontend_connections backend_connections server_connections server_queue_size proxy_queue_size ]
         FIELDS.freeze
         
-        INT_FIELDS =      %w[ client_port day month year hour minute second usecond  queue_time connection_time total_time bytes_read ]
+        INT_FIELDS =      %w[ client_port day month year hour minute second usecond  queue_time connect_time total_time bytes_read ]
         INT_FIELDS.concat %w[ active_sessions frontend_connections backend_connections server_connections server_queue_size proxy_queue_size ]
         INT_FIELDS.freeze
         

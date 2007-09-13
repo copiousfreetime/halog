@@ -65,7 +65,7 @@ describe HALog::LogEntry do
         end
     
     it "captures the host" do
-        method_results_compare(:host,%w[ localhost.localdomain localhost.localdomain 127.0.0.1 127.0.0.1 127.0.0.1 127.0.0.1 ])
+        method_results_compare(:hostname,%w[ localhost.localdomain localhost.localdomain 127.0.0.1 127.0.0.1 127.0.0.1 127.0.0.1 ])
     end
     
     it "captures the process" do

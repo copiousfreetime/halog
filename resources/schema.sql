@@ -1,41 +1,54 @@
 -- holds meta informationa about each import run.
 CREATE TABLE imports (
-	id 						INTEGER PRIMARY KEY,
+	id 						INTEGER PRIMARY KEY AUTOINCREMENT,
 	import_started_on		TIMESTAMP,	-- timestamp of when the run was started
 	import_ended_on			TIMESTAMP, 	-- timestamp of when the run was finished
 	import_date				TEXT, 		-- inserted with trigger
 	entry_started_on		TIMESTAMP,  -- timestamp in the first log entry processed
 	entry_ended_on			TIMESTAMP,	-- timestamp in the last log entry processed
+	entry_start_offset		INTEGER,
+	entry_end_offset		INTEGER,
 	entry_count				INTEGER, 	-- line count of rows entered into the database
-	start_offset			INTEGER, 	-- byte offset in the file of the starting point of the run
-	end_offset				INTEGER, 	-- byte offset in the file of the ending pont of the run.
 	);
 CREATE INDEX imports_import_date_idx ON imports(import_date);
+CREATE TRIGGER imports_date_trigger AFTER INSERT ON imports
+	FOR EACH ROW
+	BEGIN
+		UPDATE imports SET import_date = date(new.import_started_on) WHERE id = new.id;
+	END
+;
 
 	
 -- The basic information from every line of the log file
 CREATE TABLE log_entries (
-	id						INTEGER PRIMARY KEY,
+	id						INTEGER PRIMARY KEY AUTOINCREMENT,
 	import_id				INTEGER NOT NULL,
-	recorded_on				TIMESTAMP NOT NULL,
-	recorded_on_date		TEXT NOT NULL, -- inserted with trigger
+	time       				TIMESTAMP NOT NULL,
+	date            		TEXT NOT NULL, -- inserted with trigger
 	hostname				TEXT NOT NULL,
 	process					TEXT NOT NULL,
 	pid						INTEGER,
 	message					TEXT NOT NULL
 	);
 CREATE INDEX log_entries_import_id_idx ON log_entries(import_id);
-CREATE INDEX log_entries_recorded_on_date_idx ON log_entries(recorded_on_date)
+CREATE INDEX log_entries_date_idx ON log_entries(date)
+CREATE TRIGGER log_entry_date_trigger AFTER INSERT ON log_entries
+	FOR EACH ROW
+	BEGIN
+		UPDATE log_entries SET date = date(new.time) WHERE id = new.id;
+	END
+;
 	
 -- The messages that are  TCP logs
 CREATE TABLE tcp_log_messages (
-	id						INTEGER PRIMARY KEY,
+	id						INTEGER PRIMARY KEY AUTOINCREMENT,
+	import_id				INTEGER NOT NULL,
 	log_entry_id			INTEGER NOT NULL,
 	client_address			TEXT NOT NULL,
 	client_port				INTEGER NOT NULL,
 	
-	recorded_on				TIMESTAMP NOT NULL,
-	recorded_on_date		TEXT NOT NULL, -- inserted with trigger
+	time       				TIMESTAMP NOT NULL,
+	date            		TEXT NOT NULL, -- inserted with trigger
 	
 	frontend				TEXT NOT NULL,
 	backend					TEXT NOT NULL,
@@ -57,20 +70,26 @@ CREATE TABLE tcp_log_messages (
 	proxy_queue_size		INTEGER NOT NULL
 	);
 CREATE INDEX tcp_log_messages_log_entry_id_idx ON tcp_log_messages(log_entry_id);
-CREATE INDEX tcp_log_messages_recorded_on_date_idx ON tcp_log_messages(recorded_on_date);
+CREATE INDEX tcp_log_messages_date_idx ON tcp_log_messages(date);
 CREATE INDEX tcp_log_messages_frontend_idx ON tcp_log_messages(frontend);
 CREATE INDEX tcp_log_messages_backend_idx ON tcp_log_messages(backend);
-
+CREATE TRIGGER tcp_log_messages_date_trigger AFTER INSERT ON tcp_log_messages
+	FOR EACH ROW
+	BEGIN
+		UPDATE tcp_log_messages SET date = date(new.time) WHERE id = new.id;
+	END
+;
 	
 -- The messages that are HTTP Logs	
 CREATE TABLE http_log_messages (
-		id						INTEGER PRIMARY KEY,
+		id						INTEGER PRIMARY KEY AUTOINCREMENT,
+		import_id				INTEGER NOT NULL,
 		log_entry_id			INTEGER NOT NULL,
 		client_address			TEXT NOT NULL,
 		client_port				INTEGER NOT NULL,
 		
-		recorded_on				TIMESTAMP NOT NULL,
-		recorded_on_date		TEXT NOT NULL, -- inserted with trigger
+		time				    TIMESTAMP NOT NULL,
+		date		            TEXT NOT NULL, -- inserted with trigger
 		
 		frontend				TEXT NOT NULL,
 		backend					TEXT NOT NULL,
@@ -104,8 +123,14 @@ CREATE TABLE http_log_messages (
 		http_request			TEXT NOT NULL
 		);
 CREATE INDEX http_log_messages_log_entry_id_idx ON http_log_messages(log_entry_id);
-CREATE INDEX http_log_messages_recorded_on_date_idx ON http_log_messages(recorded_on_date);
+CREATE INDEX http_log_messages_date_idx ON http_log_messages(date);
 CREATE INDEX http_log_messages_frontend_idx ON http_log_messages(frontend);
 CREATE INDEX http_log_messages_backend_idx ON http_log_messages(backend);
 CREATE INDEX http_log_messages_server_idx ON http_log_messages(server);
 CREATE INDEX http_log_messages_status_idx ON http_log_messages(status);
+CREATE TRIGGER http_log_messages_date_trigger AFTER INSERT ON http_log_messages
+	FOR EACH ROW
+	BEGIN
+		UPDATE http_log_messages SET date = date(new.time) WHERE id = new.id;
+	END
+;
