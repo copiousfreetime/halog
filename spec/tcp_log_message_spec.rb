@@ -7,7 +7,7 @@ describe HALog::TCPLogMessage do
         @msg = HALog::TCPLogMessage.new(@row_data)
     end
     
-    RESULTS = {
+    TCP_LOG_MESSAGE_RESULTS = {
         :client_address         => "127.0.0.1",
         :client_port            => 53407,
         :year                   => 2007,
@@ -33,7 +33,7 @@ describe HALog::TCPLogMessage do
         :proxy_queue_size       => 0
     }
     
-    RESULTS.each_pair do |meth,result|
+    TCP_LOG_MESSAGE_RESULTS.each_pair do |meth,result|
         it "captures the #{meth}" do
             @msg.send(meth).should == result
         end
@@ -49,6 +49,10 @@ describe HALog::TCPLogMessage do
 
     it "captures the time" do
         @msg.time.should == Time.mktime(2007,9,11,0,15,30,10)
+    end
+    
+    it "has an iso time string" do
+        @msg.iso_time == "2007-09-11T00:15:30.010"
     end
     
     

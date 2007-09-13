@@ -51,6 +51,10 @@ describe HALog::HTTPLogMessage do
                                                                                   'server' => 'http0', 'frontends' => 5}
     end
     
+    it "has an iso time string" do
+        @msg.iso_time.should == "2007-09-11T16:46:47.787"
+    end
+    
     it "captures the date" do
         @msg.date.should == Date.new(2007,9,11)
     end

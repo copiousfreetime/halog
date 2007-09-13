@@ -71,6 +71,10 @@ module HALog
         def time
             @time ||= Time.mktime(year,month,day,hour,minute,second,usecond)
         end
+        
+        def iso_time
+            time.strftime("%Y-%m-%dT%H:%M:%S.") + "%03d" % usecond
+        end
 
         class << self
             def parse(msg)

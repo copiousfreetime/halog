@@ -16,6 +16,15 @@ describe HALog::LogEntry do
         @row_data.collect { |row| HALog::LogEntry.new(row).send(method) }.should == results
     end
 
+    it "should return an iso_time string" do
+        method_results_compare(:iso_time, [ "2007-10-15T15:24:28",
+                                                "2007-09-06T00:24:41",
+                                                "2007-09-08T02:14:41",
+                                                "2007-09-08T02:14:41",
+                                                "2007-09-08T02:54:15",
+                                                "2007-09-08T02:54:15"
+                                                ])
+    end
     it "captures a month correctly" do
         method_results_compare(:month,[ 10, 9, 9, 9, 9, 9 ])
     end
@@ -102,5 +111,6 @@ describe HALog::LogEntry do
         HALog::LogEntry.parse(" this also does not parse ").should == nil
     end
     
+
     
 end

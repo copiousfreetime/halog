@@ -60,6 +60,10 @@ module HALog
         def time
             @time ||= Time.mktime(year,month,day,hour,minute,second)
         end
+        
+        def iso_time
+            time.strftime("%Y-%m-%dT%H:%M:%S")
+        end
 
         # this ovewrites the eval'd method of the same name
         def raw_message
