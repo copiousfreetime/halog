@@ -98,6 +98,8 @@ module HALog
                 input_log_stream = (@options.input_file == "-") ? $stdin : File.open(@options.input_file)
                 $stderr.puts "Reading input from #{@options.input_file}"
                 datastore.import(input_log_stream)
+                $stderr.puts datastore.perf_report
+                
             end 
         end
         

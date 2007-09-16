@@ -7,6 +7,7 @@ module HALog
     class DataStore
         attr_reader :db_loc
         attr_reader :db
+        attr_reader :perf_info
     
         def initialize(db_loc = ":memory:")
             @db_loc = db_loc
@@ -14,6 +15,13 @@ module HALog
             if @db.execute("SELECT count(*) AS cnt FROM sqlite_master").first['cnt'].to_i == 0 then
                 @db.execute_batch(IO.read(File.join(HALog::RESOURCE_DIR,"schema.sql")))
             end
+            @perf_info = {'log_entries_insert' => { 'count' => 0, 'time' => 0},
+                        'http_log_messages_insert' => { 'count' => 0, 'time' => 0},
+                        'tcp_log_messages_insert' => { 'count' => 0, 'time' => 0},
+                        'commit' => {'count' => 0, 'time' => 0 },
+                        'parser' => {'count' => 0, 'time' => 0 },
+                    }
+                        
         end
                 
         def close
@@ -24,7 +32,7 @@ module HALog
             def open(location)
                 result = ds = DataStore.new(location)
                 if block_given? then
-                    result = yield ds
+                    yield ds
                     ds.close
                 end
                 return result
@@ -89,13 +97,19 @@ module HALog
                 last_entry          = nil
                 
                 LogParser.new.parse(io,parse_options) do |entry|
+                    t1 = Time.now
                     stmts['log_entries'].execute!( log_entry_values.merge(entry.hash_of_fields(HALog::DataStore::log_entries_fields)) )
                     log_entry_id = handle.last_insert_row_id
+                    @perf_info['log_entries_insert']['count'] += 1
+                    @perf_info['log_entries_insert']['time'] += (Time.now - t1)
                     
                     message_values = { 'import_id' => import_id, 'log_entry_id' => log_entry_id }
+                    t3 = Time.now
                     case entry.message
                     when HTTPLogMessage
                         stmts['http_log_messages'].execute!( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::http_log_messages_fields)) )
+                        @perf_info['http_log_messages_insert']['count'] += 1
+                        @perf_info['http_log_messages_insert']['time'] += (Time.now - t3)
                     when TCPLogMessage
                         stmts['tcp_log_messages'].execute!( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::tcp_log_messages_fields)) )
                     when StringLogMessage
@@ -105,11 +119,29 @@ module HALog
                 end
             end
             
-        end        
+        end 
+        
+        def perf_report
+            report = StringIO.new
+            name_width = @perf_info.keys.collect { |k| k.length }.max
+            report.puts ["Stat".ljust(name_width), "Count".rjust(10), "Total Time".rjust(10), "Average Time".rjust(15)].join(" ")
+            report.puts "-" * (name_width + 10 + 10 + 15 + 3)
+            @perf_info.keys.sort.each do |stat|
+                values = @perf_info[stat]
+                avg = values['count'].to_f / values['time'].to_f
+                avg_s = "%0.2f" % avg
+                tt_s = "%0.2f" % values['time']
+                report.puts [stat.ljust(name_width), values['count'].to_s.rjust(10), tt_s.rjust(10), avg_s.rjust(15)].join(' ')
+            end
+            report.string
+        end
+               
         
         private
         
         def import_transaction(io) 
+
+            before = Time.now
             db.transaction do |trans_handle|
                 last_import_info    = {}
                 trans_handle.query("SELECT * FROM imports WHERE id = (SELECT max(id) FROM imports)") do |result|
@@ -126,10 +158,15 @@ module HALog
                 end
                 
                 parser = yield [import_id, trans_handle, stmts, last_import_info ]
+                @perf_info['parser']['count'] = parser.entry_count
+                @perf_info['parser']['time'] = parser.parse_time
 
                 stmts.values.each { |stmt| stmt.close }
                 finalize_import(trans_handle,import_id,parser)
+                before = Time.now
             end
+            @perf_info['commit']['count'] += 1
+            @perf_info['commit']['time'] += Time.now - before
         end
     end
 end

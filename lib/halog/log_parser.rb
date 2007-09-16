@@ -6,6 +6,7 @@ module HALog
         attr_reader :byte_count
         attr_reader :entry_count
         attr_reader :error_count
+        attr_reader :parse_time
 
         def initialize()
             @first_entry_time   = nil
@@ -14,6 +15,7 @@ module HALog
             @byte_count         = 0
             @entry_count        = 0
             @error_count        = 0
+            @parse_time         = 0
         end
         
         # parses the io stream yielding each valid LogEntry that is encountered.  Invalid lines
@@ -25,11 +27,14 @@ module HALog
             io.each do |line|
                 
                 @byte_count += line.size
-            
-                if entry = LogEntry.parse(line) then
+                before_parse = Time.now
+                entry = LogEntry.parse(line)
+                @parse_time += Time.now - before_parse
+                if entry then
                     @first_entry_time ||= entry.time
                     @last_entry_time = entry.time
-                    @entry_count += 1                        
+                    @entry_count += 1  
+                                          
                     yield entry
                 else
                     @error_count += 1
@@ -37,11 +42,12 @@ module HALog
                 end
                 
                 if @entry_count % 1000 == 0 then
-                    $stderr.print "."
+                    $stderr.print "parsing: #{@entry_count}\r"
                     $stderr.flush
                 end
                 
             end # io.each
+            $stderr.puts "parsed: #{@entry_count}    "
             return self
         end
     end    
