@@ -10,9 +10,10 @@ module HALog
         #    :limit_method -> one of 'days_back' or 'previous_runs'
         #    :limit_count  -> integer value > 1 as the number of 'days_back' or 'previous_runs'
         
-        class HTTPErrorSummary < Base
+        class HTTPError < Base
 
             attr_reader :options
+            attr_reader :results
 
             def default_options
                 {

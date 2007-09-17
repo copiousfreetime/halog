@@ -39,3 +39,4 @@ module HALog
 end
 
 require 'halog/report/http_error'
+require 'halog/report/nagios_alert'

@@ -53,19 +53,19 @@ describe HALog::Application do
     end     
     
     it "uses the :memory: database by default" do
-       HALog::Application.new(%W[ --input-file #{testing_logfile} --report httperror]).run
+       HALog::Application.new(%W[ --input-file #{testing_logfile_short} --report httperror]).run
        $stderr.string.size.should > 0
        $stdout.string.size.should > 0
     end        
     
     it "parses a file and runs a report" do
-        HALog::Application.new(%W[ --database :memory: --input-file #{testing_logfile} --report httperror ]).run
+        HALog::Application.new(%W[ --database :memory: --input-file #{testing_logfile_short} --report httperror ]).run
         $stderr.string.size.should > 0
         $stdout.string.size.should > 0
     end
     
     it "outputs the report to an output file if given" do
-        HALog::Application.new(%W[ --database #{@tmp_db.path} --input-file #{testing_logfile} --report httperror --output-file #{@tmp_outfile.path}]).run
+        HALog::Application.new(%W[ --database #{@tmp_db.path} --input-file #{testing_logfile_short} --report httperror --output-file #{@tmp_outfile.path}]).run
         $stderr.string.size.should > 0
         $stdout.string.size.should == 0
         @tmp_outfile.open

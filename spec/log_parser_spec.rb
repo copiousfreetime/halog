@@ -42,7 +42,7 @@ describe HALog::LogParser do
         lp.first_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2007-09-06 00:24:41"
         lp.last_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2007-10-15 15:24:28"
         
-        $stderr.string.should == "Failure to parse line : #{bad_line}\n"
+        $stderr.string.should =~ /^Failure to parse line : #{bad_line}$/m
         $stderr = old_stderr
         
     end

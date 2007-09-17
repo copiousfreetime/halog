@@ -38,6 +38,7 @@ module HALog
                     yield entry
                 else
                     @error_count += 1
+                    $stderr.puts 
                     $stderr.puts "Failure to parse line : #{line.rstrip}"
                 end
                 
