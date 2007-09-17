@@ -4,6 +4,8 @@ module HALog
         # message in the nagios message format
         class NagiosAlert < Base
             
+            attr_reader :error_counts
+            
             def initialize
                 @error_counts = {}
             end
@@ -14,10 +16,11 @@ module HALog
                           ,count(log.id) AS cnt
                       FROM http_log_messages AS log
                      WHERE log.import_id = (SELECT max(id) FROM imports WHERE import_ended_on IS NOT NULL)
-                  ORDER BY status
+                       AND log.http_status >= 500
                   GROUP BY status
+                  ORDER BY status
                 SQL
-                datastore.query(sql) do |result|
+                datastore.db.query(sql) do |result|
                     result.each do |row|
                         @error_counts[row['status']] = row['cnt'].to_i
                     end
