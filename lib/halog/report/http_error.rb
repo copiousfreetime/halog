@@ -69,7 +69,7 @@ module HALog
                 @results = {}
                 $stderr.puts "Running report..."
                 import_ids = find_import_ids
-                %w[ server client_address ].each do |column|
+                %w[ server client_address http_request ].each do |column|
                     @results[column] = code_count_for_column(column,import_ids)
                 end
                 self

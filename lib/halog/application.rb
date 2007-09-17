@@ -127,7 +127,7 @@ module HALog
                 $stderr.puts "Using #{@options.database} database."
                 import_new_data(ds)
                 run_report(ds)
-            end
+            end    
         end
     end
 end
