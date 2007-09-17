@@ -4,6 +4,12 @@ module HALog
         # message in the nagios message format
         class NagiosAlert < Base
             
+            STATE_OK        = 0
+            STATE_WARNING   = 1
+            STATE_CRITICAL  = 2
+            STATE_UNKNOWN   = 3
+            STATE_DEPENDENT = 4
+            
             attr_reader :error_counts
             
             def initialize
@@ -31,12 +37,13 @@ module HALog
 
             def to_s
                 report = StringIO.new
+                report.print "[#{Time.now.to_i}] PROCESS_SERVICE_CHECK_RESULT;cache1;haproxy-5xx-check;"
                 if @error_counts.size > 0 then
-                    @error_counts.each_pair do |status, count|
-                        report.puts "#{status} : #{count}"
-                    end
+                    report.print "#{STATE_CRITICAL};Critical - 5XX errors ("
+                    report.print @error_counts.collect { |s,c| "#{s} : #{c}" }.join(',')
+                    report.print ")"
                 else
-                    report.puts "OK"
+                    report.print "#{STATE_OK};OK - #{Time.now}"
                 end
                 report.string
             end

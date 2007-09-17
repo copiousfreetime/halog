@@ -31,6 +31,7 @@ module HALog
                 @default_options.show_version   = false
                 @default_options.show_help      = false
                 @default_options.input_file     = nil
+                @default_options.incremental    = false
                 @default_options.output_file    = nil
                 @default_options.cache_file     = nil
                 @default_options.report_type    = :none
@@ -49,11 +50,15 @@ module HALog
                 op.on("-h", "--help", "Display this text") do 
                     @parsed_options.show_help = true
                 end
-                
+            
                 op.on("-i", "--input-file FILE", "File to parse.", "  Use '-' to indicate stdin") do |infile|
                     @parsed_options.input_file = infile
                 end
                 
+                op.on("-n", "--incremental", "This is an incremental update to an already existing db") do |i|
+                    @parsed_options.incremental = true
+                end
+                                
                 op.on("-o", "--output-file FILE", "Where the output information should be sent.", "  Default: stdout") do |outfile|
                     @parsed_options.output_file = outfile
                 end
@@ -97,8 +102,12 @@ module HALog
             if @options.input_file then
                 input_log_stream = (@options.input_file == "-") ? $stdin : File.open(@options.input_file)
                 $stderr.puts "Reading input from #{@options.input_file}"
-                datastore.import(input_log_stream)
-                $stderr.puts datastore.perf_report
+                begin
+                    datastore.import(input_log_stream,{:incremental => @options.incremental})
+                    $stderr.puts datastore.perf_report
+                rescue DatastoreException => de
+                    $stderr.puts de.message
+                end
                 
             end 
         end
@@ -110,7 +119,7 @@ module HALog
                     outfile = File.open(@options.output_file,"w+")
                     $stderr.puts "Writing report to #{@options.output_file}"
                 end
-                outfile.write Report.run(@options.report).on(datastore).to_s
+                outfile.puts Report.run(@options.report).on(datastore).to_s
                 outfile.close                
             end
         end

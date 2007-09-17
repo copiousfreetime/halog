@@ -58,7 +58,7 @@ module HALog
             return io if options.size == 0
 
             %w[ byte_count starting_offset first_entry_time last_entry_time import_ended_on].each do |c| 
-                raise "Missing option '#{c}' from LogParser options." if options[c].nil?
+                raise "Missing option '#{c}' from LogParser options." if not options.keys.include?(c)
             end
 
             # if the file as a filesize that is less than the offset we would seek to, assume that the 

@@ -3,6 +3,7 @@ require 'arrayfields'
 require 'parsedate'
 
 module HALog
+    class DatastoreException < StandardError ; end;
     # permanent storage for the results of parsing the logfile.
     # this is backed by a SQLite 3 database with a few tables
     class DataStore
@@ -86,8 +87,6 @@ module HALog
         end
         
         def import(io,options = {})
-            # TODO: make sure to mark the position in the input stream or do whatever is necessary to roll forward
-            # to the point to start the parsing.
             
             import_transaction(io) do |import_id,handle,stmts,last_import_info|
                                 
@@ -143,31 +142,48 @@ module HALog
         def import_transaction(io) 
 
             before = Time.now
-            db.transaction do |trans_handle|
-                last_import_info    = {}
-                trans_handle.query("SELECT * FROM imports WHERE id = (SELECT max(id) FROM imports)") do |result|
-                    row = result.next 
-                    result.columns.each_with_index do |c,idx|
-                        last_import_info[c] = (row.nil?) ? nil : convert_type(row[c],result.types[idx])
-                    end
-                end
-                import_id           = next_import_id(trans_handle)
-                
-                stmts               = {}
-                %w[ log_entries tcp_log_messages http_log_messages ].each do |table|                    
-                    stmts[table] = trans_handle.prepare( HALog::DataStore::insert_sql_for(table) )
-                end
-                
-                parser = yield [import_id, trans_handle, stmts, last_import_info ]
+            
+            # Start the transaction, not using block format so that we can rollback sensibly if no items are found to
+            # insert as LogEntries
+            db.transaction
+            
+            import_id   = next_import_id(db)
+            stmts       = {}            
+            %w[ log_entries tcp_log_messages http_log_messages ].each do |table|                    
+                stmts[table] = db.prepare( HALog::DataStore::insert_sql_for(table) )
+            end
+            
+            parser = yield [import_id, db, stmts, last_import_info(db) ]
+            
+            stmts.values.each { |stmt| stmt.close }
+            
+            if parser.entry_count > 0
                 @perf_info['parser']['count'] = parser.entry_count
                 @perf_info['parser']['time'] = parser.parse_time
-
-                stmts.values.each { |stmt| stmt.close }
-                finalize_import(trans_handle,import_id,parser)
+            
+                finalize_import(db,import_id,parser)
+                @perf_info['commit']['count'] += 1
                 before = Time.now
+                db.commit
+                @perf_info['commit']['time'] += Time.now - before
+                
+            else
+                $stderr.puts "No Data to import"
+                db.rollback
             end
-            @perf_info['commit']['count'] += 1
-            @perf_info['commit']['time'] += Time.now - before
+                
+        end
+        
+        def last_import_info(db)
+            # Get all the information for the previous import
+            last_import_info    = {}
+            db.query("SELECT * FROM imports WHERE id = (SELECT max(id) FROM imports WHERE import_ended_on IS NOT NULL)") do |result|
+                row = result.next 
+                result.columns.each_with_index do |c,idx|
+                    last_import_info[c] = (row.nil?) ? 0 : convert_type(row[c],result.types[idx])
+                end
+            end
+            return last_import_info
         end
         
         def convert_type(value,type)
