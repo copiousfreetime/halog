@@ -78,7 +78,7 @@ module HALog
             def to_s
                 report = StringIO.new
                 @results.each_pair do |column, result|
-                    report.puts "#{"Error Code".center(10)} #{"Count".center(10)} #{"#{column}".center(20)} "
+                    report.puts "#{"Error Code".ljust(10)} #{"Count".rjust(10)} #{"#{column}".ljust(20)} "
                     report.puts "-" * 70
                     result.each_pair do |stat,code_counts|
                         code_counts.each_pair do |code,count|
