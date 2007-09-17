@@ -78,11 +78,11 @@ module HALog
             def to_s
                 report = StringIO.new
                 @results.each_pair do |column, result|
-                    report.puts "#{"#{column}".center(20)} #{"Error Code".center(10)} #{"Count".center(10)}"
+                    report.puts "#{"Error Code".center(10)} #{"Count".center(10)} #{"#{column}".center(20)} "
                     report.puts "-" * 70
-                    result.each_pair do |server,code_counts|
+                    result.each_pair do |stat,code_counts|
                         code_counts.each_pair do |code,count|
-                            report.puts "#{server.ljust(20)} #{code.to_s.ljust(10)} #{count.to_s.rjust(10)}"
+                            report.puts "#{code.to_s.ljust(10)} #{count.to_s.rjust(10)} #{stat.ljust(20)}"
                         end
                     end
                     report.puts
