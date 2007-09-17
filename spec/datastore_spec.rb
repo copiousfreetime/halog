@@ -49,6 +49,30 @@ describe HALog::DataStore do
         end
     end
     
+    it "can incrementally import rows" do
+        lines = IO.readlines(testing_logfile_part_1)
+        tmp_log = Tempfile.new("halog-log-parser_test")
+        tmp_log.write(lines[0..99])
+        tmp_log.rewind
+        
+        @ds.import(tmp_log)
+        
+        perf_info = @ds.perf_info.dup
+        
+        sleep 1
+        
+        tmp_log.open
+        tmp_log.seek(0,IO::SEEK_END)
+        tmp_log.write(lines[100..199])
+        tmp_log.rewind
+        
+        @ds.import(tmp_log,{ :incremental => true })
+        @ds.db.execute("SELECT count(*) FROM log_entries").first[0].should == "200"
+    end
+        
+        
+        
+    
     
     
 end

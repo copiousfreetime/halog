@@ -46,4 +46,26 @@ describe HALog::LogParser do
         $stderr = old_stderr
         
     end
+    
+    it "advances to the appropriate location in the file if parsing incrementally" do
+        lines = IO.readlines(testing_logfile_part_1)
+        tmp_log = Tempfile.new("halog-log-parser_test")
+        tmp_log.write(lines[0..100])
+        tmp_log.close
+        tmp_log.open
+        
+        lp = HALog::LogParser.new.parse(tmp_log) { |e| nil }
+        lp.starting_offset.should == 0
+        lp.byte_count.should > 0
+        
+        options = lp.hash_of_fields(%w[ byte_count starting_offset first_entry_time last_entry_time import_ended_on])
+        options['import_ended_on'] = Time.now
+        tmp_log.write(lines[100..200])
+        tmp_log.close
+        tmp_log.open
+        
+        lp.parse(tmp_log,options) { |e| nil }
+        lp.starting_offset.should == options['starting_offset'] + options['byte_count']
+        
+    end
 end

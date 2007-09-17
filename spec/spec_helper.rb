@@ -18,6 +18,6 @@ end
     
 
 require 'tmpdir'
-require 'mktemp'
+require 'tempfile'
 require 'fileutils'
 

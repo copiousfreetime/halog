@@ -1,5 +1,6 @@
 require 'sqlite3'
 require 'arrayfields'
+require 'parsedate'
 
 module HALog
     # permanent storage for the results of parsing the logfile.
@@ -146,8 +147,8 @@ module HALog
                 last_import_info    = {}
                 trans_handle.query("SELECT * FROM imports WHERE id = (SELECT max(id) FROM imports)") do |result|
                     row = result.next 
-                    result.columns.each do |c|
-                        last_import_info[c] = (row.nil?) ? nil : row[c]
+                    result.columns.each_with_index do |c,idx|
+                        last_import_info[c] = (row.nil?) ? nil : convert_type(row[c],result.types[idx])
                     end
                 end
                 import_id           = next_import_id(trans_handle)
@@ -167,6 +168,20 @@ module HALog
             end
             @perf_info['commit']['count'] += 1
             @perf_info['commit']['time'] += Time.now - before
+        end
+        
+        def convert_type(value,type)
+            case type.downcase
+            when 'integer'
+                return Integer(value)
+            when 'timestamp'
+                return Time.mktime(*ParseDate.parsedate(value))
+            when 'date'
+                return Date.new(*ParseDate.parsedate(value)[0..2])
+            else
+                return value
+            end
+            
         end
     end
 end
