@@ -3,7 +3,6 @@ require 'arrayfields'
 require 'parsedate'
 
 module HALog
-    class DatastoreException < StandardError ; end;
     # permanent storage for the results of parsing the logfile.
     # this is backed by a SQLite 3 database with a few tables
     class DataStore
@@ -168,7 +167,7 @@ module HALog
                 @perf_info['commit']['time'] += Time.now - before
                 
             else
-                $stderr.puts "No Data to import"
+                $stderr.puts "No data imported."
                 db.rollback
             end
                 

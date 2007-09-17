@@ -102,13 +102,8 @@ module HALog
             if @options.input_file then
                 input_log_stream = (@options.input_file == "-") ? $stdin : File.open(@options.input_file)
                 $stderr.puts "Reading input from #{@options.input_file}"
-                begin
-                    datastore.import(input_log_stream,{:incremental => @options.incremental})
-                    $stderr.puts datastore.perf_report
-                rescue DatastoreException => de
-                    $stderr.puts de.message
-                end
-                
+                datastore.import(input_log_stream,{:incremental => @options.incremental})
+                $stderr.puts datastore.perf_report
             end 
         end
         

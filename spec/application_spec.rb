@@ -59,7 +59,7 @@ describe HALog::Application do
     end        
     
     it "parses a file and runs a report" do
-        HALog::Application.new(%W[ --database :memory: --input-file #{testing_logfile_short} --report httperror ]).run
+        HALog::Application.new(%W[ --incremental --database :memory: --input-file #{testing_logfile_short} --report httperror ]).run
         $stderr.string.size.should > 0
         $stdout.string.size.should > 0
     end
