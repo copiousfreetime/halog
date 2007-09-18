@@ -4,13 +4,6 @@ module HALog
         # message in the nagios message format
         class NagiosAlert < Base
             
-            
-            STATE_OK        = 0
-            STATE_WARNING   = 1
-            STATE_CRITICAL  = 2
-            STATE_UNKNOWN   = 3
-            STATE_DEPENDENT = 4
-            
             attr_reader :error_counts
             
             def initialize
@@ -43,7 +36,7 @@ module HALog
                     report.print "CRITICAL : "
                     report.print @error_counts.collect { |s,c| "#{s} => #{c}" }.join(',')
                 else
-                    report.print "#{STATE_OK} : OK : No HTTP 5XX errors found."
+                    report.print "OK : No HTTP 5XX errors found."
                 end
                 report.string
             end
