@@ -17,7 +17,7 @@ module HALog
 
             def default_options
                 {
-                    'limit_method' => 'previous_runs',
+                    'limit_method' => 'days_back',
                     'limit_count'  => 1
                 }
             end
