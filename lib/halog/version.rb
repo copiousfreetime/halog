@@ -2,7 +2,7 @@ module HALog
     class Version
         MAJOR   = 0
         MINOR   = 1
-        BUILD   = 5
+        BUILD   = 6
 
         class << self
             def to_a
