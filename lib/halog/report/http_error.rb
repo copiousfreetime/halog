@@ -38,7 +38,7 @@ module HALog
                      WHERE import_id IN (#{ids.join(',')})
                        AND http_status >= 400
                   GROUP BY #{column},http_status
-                  ORDER BY #{column},http_status ASC
+                  ORDER BY http_status,cnt,#{column} ASC
                   SQL
                 summary = {}
                 @ds.db.execute(sql) do |row|
