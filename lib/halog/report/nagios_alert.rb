@@ -43,7 +43,7 @@ module HALog
                     report.print "CRITICAL : "
                     report.print @error_counts.collect { |s,c| "#{s} : #{c}" }.join(',')
                 else
-                    report.print "#{STATE_OK} : OK"
+                    report.print "#{STATE_OK} : OK : No HTTP 5XX errors found."
                 end
                 report.string
             end
