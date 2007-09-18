@@ -37,13 +37,13 @@ module HALog
                       FROM http_log_messages
                      WHERE import_id IN (#{ids.join(',')})
                        AND http_status >= 400
-                  GROUP BY #{column},http_status
+                  GROUP BY http_status,#{column}
                   ORDER BY http_status,cnt,#{column} ASC
                   SQL
                 summary = {}
                 @ds.db.execute(sql) do |row|
-                    column_statuses = summary[row[column]] ||= {}
-                    column_statuses[row['http_status']] = row['cnt']
+                    http_codes = summary[row['http_status']] ||= {}
+                    http_codes[row[column]] = row['cnt']  
                 end
                 return summary
             end
@@ -80,9 +80,9 @@ module HALog
                 @results.each_pair do |column, result|
                     report.puts "#{"Error Code".ljust(10)} #{"Count".rjust(10)} #{"#{column}".ljust(20)} "
                     report.puts "-" * 70
-                    result.each_pair do |stat,code_counts|
-                        code_counts.each_pair do |code,count|
-                            report.puts "#{code.to_s.ljust(10)} #{count.to_s.rjust(10)} #{stat.ljust(20)}"
+                    result.keys.sort.each do |status_code|
+                        result[status_code].each_pair do |stat,count|
+                            report.puts "#{status_code.to_s.ljust(10)} #{count.to_s.rjust(10)} #{stat.ljust(20)}"
                         end
                     end
                     report.puts
