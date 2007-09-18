@@ -2,6 +2,7 @@ require 'optparse'
 require 'ostruct'
 require 'halog'
 require 'date'
+require 'time'
 require 'net/smtp'
 
 module HALog
@@ -119,6 +120,7 @@ module HALog
                 outfile = $stdout
                 if @options.mail_to then
                     outfile = StringIO.new
+                    $stderr.puts "Sending report to #{@options.mail_to.join(',')}"
                 elsif @options.output_file then
                     outfile = File.open(@options.output_file,"w+")
                     $stderr.puts "Writing report to #{@options.output_file}"
@@ -126,7 +128,7 @@ module HALog
                 outfile.puts Report.run(@options.report).on(datastore).to_s
                 outfile.close                
                 
-                if @options.email_to then
+                if @options.mail_to then
                     email_report(outfile.string)
                 end
             end
@@ -134,11 +136,12 @@ module HALog
         
         def email_report(report)
             $stderr.puts "Sending reports by email to #{@options.mail_to.join(',')}"
-            Net::SMTP.start("localhost",25) do |smtp|
+            Net::SMTP.start("mail.collectiveintellect.com",25) do |smtp|
                 msg = <<MSG
 To: #{@options.mail_to.join(',')}
 From: HALog Reporter <invalid@collectiveintellect.com>
 Subject: HALog HTTP Error Report - #{Date.today.to_s}
+Date: #{Time.now.rfc2822}
 
 #{report}
 MSG
