@@ -1,6 +1,8 @@
 require 'optparse'
 require 'ostruct'
 require 'halog'
+require 'date'
+require 'net/smtp'
 
 module HALog
     class Application
@@ -35,6 +37,7 @@ module HALog
                 @default_options.output_file    = nil
                 @default_options.cache_file     = nil
                 @default_options.report_type    = :none
+                @default_options.mail_to        = nil
             end
             return @default_options
         end
@@ -53,6 +56,10 @@ module HALog
             
                 op.on("-i", "--input-file FILE", "File to parse.", "  Use '-' to indicate stdin") do |infile|
                     @parsed_options.input_file = infile
+                end
+                
+                op.on("-m", "--mail-to ADDRESSES", Array, "Comma Separated email address") do |addresses|
+                    @parsed_options.mail_to = addresses
                 end
                 
                 op.on("-n", "--incremental", "This is an incremental update to an already existing db") do |i|
@@ -110,12 +117,32 @@ module HALog
         def run_report(datastore)
             if @options.report then
                 outfile = $stdout
-                if @options.output_file then
+                if @options.mail_to then
+                    outfile = StringIO.new
+                elsif @options.output_file then
                     outfile = File.open(@options.output_file,"w+")
                     $stderr.puts "Writing report to #{@options.output_file}"
                 end
                 outfile.puts Report.run(@options.report).on(datastore).to_s
                 outfile.close                
+                
+                if @options.email_to then
+                    email_report(outfile.string)
+                end
+            end
+        end
+        
+        def email_report(report)
+            $stderr.puts "Sending reports by email to #{@options.mail_to.join(',')}"
+            Net::SMTP.start("localhost",25) do |smtp|
+                msg = <<MSG
+To: #{@options.mail_to.join(',')}
+From: HALog Reporter <invalid@collectiveintellect.com>
+Subject: HALog HTTP Error Report - #{Date.today.to_s}
+
+#{report}
+MSG
+                smtp.send_message(msg, "HALog Reporter <invalid@collectiveintellect.com>", *@options.mail_to)
             end
         end
         
