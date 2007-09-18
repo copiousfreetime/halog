@@ -41,7 +41,7 @@ module HALog
                 report.print "HAPROXY 5XX CHECK : "
                 if @error_counts.size > 0 then
                     report.print "CRITICAL : "
-                    report.print @error_counts.collect { |s,c| "#{s} : #{c}" }.join(',')
+                    report.print @error_counts.collect { |s,c| "#{s} => #{c}" }.join(',')
                 else
                     report.print "#{STATE_OK} : OK : No HTTP 5XX errors found."
                 end
