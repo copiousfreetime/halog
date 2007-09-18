@@ -6,7 +6,7 @@ module HALog
             
             attr_reader :error_counts
             
-            def initialize
+            def initialize(options = {})
                 @error_counts = {}
             end
             

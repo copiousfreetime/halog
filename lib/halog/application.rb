@@ -38,6 +38,7 @@ module HALog
                 @default_options.output_file    = nil
                 @default_options.cache_file     = nil
                 @default_options.report_type    = :none
+                @default_options.report_options = {}
                 @default_options.mail_to        = nil
             end
             return @default_options
@@ -74,6 +75,14 @@ module HALog
                 op.on("-r", "--report TYPE", Report.types, "Display one of the available report types",
                                         "  #{Report.types.join(',')}") do |report|
                     @parsed_options.report = report
+                end
+                
+                op.on("--report-options OPTIONS","Options to send to the report","name=value,name=value") do |report_options|
+                    @parsed_options.report_options = {}
+                    report_options.split(",").each do |pair|
+                        key,value = pair.split("=")
+                        @parsed_options.report_options[key] = value
+                    end
                 end
                 
                 op.on("-V", "--version", "Show version") do 
@@ -125,10 +134,11 @@ module HALog
                     outfile = File.open(@options.output_file,"w+")
                     $stderr.puts "Writing report to #{@options.output_file}"
                 end
-                outfile.puts Report.run(@options.report).on(datastore).to_s
+                report_text = Report.run(@options.report,@options.report_options).on(datastore).to_s
+                outfile.puts report_text if report_text.size > 0  
                 outfile.close                
                 
-                if @options.mail_to then
+                if @options.mail_to and outfile.string.size > 0 then
                     email_report(outfile.string)
                 end
             end
@@ -140,7 +150,7 @@ module HALog
                 msg = <<MSG
 To: #{@options.mail_to.join(',')}
 From: HALog Reporter <invalid@collectiveintellect.com>
-Subject: HALog HTTP Error Report - #{Date.today.to_s}
+Subject: HALog HTTP Error Report - #{Time.now.strftime("%Y-%m-%d %H:%M:%S")}
 Date: #{Time.now.rfc2822}
 
 #{report}

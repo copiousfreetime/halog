@@ -55,13 +55,13 @@ describe HALog::Application do
     it "uses the :memory: database by default" do
        HALog::Application.new(%W[ --input-file #{testing_logfile_short} --report httperror]).run
        $stderr.string.size.should > 0
-       $stdout.string.size.should > 0
+       $stdout.string.size.should == 0 # no output if no errors
     end        
     
     it "parses a file and runs a report" do
         HALog::Application.new(%W[ --incremental --database :memory: --input-file #{testing_logfile_short} --report httperror ]).run
         $stderr.string.size.should > 0
-        $stdout.string.size.should > 0
+        $stdout.string.size.should == 0 # no output if no errors
     end
     
     it "outputs the report to an output file if given" do
@@ -70,6 +70,6 @@ describe HALog::Application do
         $stdout.string.size.should == 0
         @tmp_outfile.open
         @tmp_outfile.rewind
-        @tmp_outfile.read.size.should > 0
+        @tmp_outfile.read.size.should == 0 # no output if no errors
     end 
 end

@@ -16,8 +16,8 @@ module HALog
                     report_classes.keys
                 end
             
-                def run(report)
-                    report_classes[report.to_s.downcase].new
+                def run(report,options = {})
+                    report_classes[report.to_s.downcase].new(options)
                 end
             end
         
@@ -26,8 +26,8 @@ module HALog
             end
         end
         
-        def run(report)
-            Base.run(report)
+        def run(report,options = {})
+            Base.run(report,options)
         end
         module_function :run
         
