@@ -26,7 +26,7 @@ describe HALog::Report::HTTPError do
     
     it "reports an error report" do
         @report.on(@ds).results.size.should > 0
-        @report.on(@ds).to_s.should =~ /client_address    Error Code   Count/m
+        @report.on(@ds).to_s.should =~ /Error Code      Count client_address/m
     end
 
     it "can be configured to go back by multiple days" do

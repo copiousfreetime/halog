@@ -16,13 +16,13 @@ describe HALog::Report::NagiosAlert do
     
     it "reports error on stdout in nagios format when there is a 5XX error code" do
         @report.on(@ds).error_counts.size.should > 0
-        @report.on(@ds).to_s.should =~ /Critical - 5XX errors/m
+        @report.on(@ds).to_s.should =~ /CRITICAL/m
     end
 
     it "reports an okay message if everything is fine" do
         @ds.import(File.open(testing_logfile_part_2))
         r = @report.on(@ds)
         r.error_counts.size.should == 0
-        r.to_s.should =~ /OK -/m
+        r.to_s.should =~ /OK/m
     end
 end
