@@ -32,6 +32,7 @@ module HALog
                 # add dependencies
                 spec.add_dependency("sqlite3-ruby", ">= 1.2.1")
                 spec.add_dependency("arrayfields", ">= 3.7.0")
+                spec.add_dependency("rake", ">= 0.7.3")
                 
                 spec.platform           = Gem::Platform::RUBY
 
