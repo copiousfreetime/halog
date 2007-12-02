@@ -81,7 +81,7 @@ module HALog
         end
 
         def date
-            @date ||= Date.new(year,month,day)
+            @date ||= time.strftime("%Y-%m-%d")
         end
 
         def time
@@ -89,7 +89,7 @@ module HALog
         end
         
         def iso_time
-            time.strftime("%Y-%m-%dT%H:%M:%S.") + "%03d" % usecond
+            @iso_time ||= (time.strftime("%Y-%m-%dT%H:%M:%S.") + "%03d" % usecond)
         end
 
         class << self

@@ -29,9 +29,11 @@ module HALog
             io.each do |line|
                 
                 @byte_count += line.size
-                before_parse = Time.now
-                entry = LogEntry.parse(line)
-                @parse_time += Time.now - before_parse
+                # before_parse = Time.now
+                entry = nil
+                b = Benchmark.measure { entry = LogEntry.parse(line) }
+                # @parse_time += Time.now - before_parse
+                @parse_time += b
                 if entry then
                     @first_entry_time ||= entry.time
                     @last_entry_time = entry.time
@@ -57,15 +59,17 @@ module HALog
                     status = [
                         "parsed lines: #{@entry_count} (#{"%.2f" % rps} rps)",
                         "byte count: #{num_to_bytes(completed_bytes)}/#{num_to_bytes(bytes_left)} (#{num_to_bytes(bps)}/s)",
-                        "time left: #{time_from_now(time_left)}"
+                        "time elapsed: #{hms_from_seconds(elapsed_time)}",
+                        "time left: #{hms_from_seconds(time_left)}"
                         ]
                     
-                    #$stderr.print "%-40s %-40s %-25s #{' '*10}\r" % status
-                    #$stderr.flush
+                    $stderr.print "%-40s %-40s %-30s %-25s #{' '*10}\r" % status
+                    $stderr.flush
                 end
                 
             end # io.each
-            #$stderr.puts "parsed lines: #{@entry_count}    " # extra space to blank out potential other characters.
+            $stderr.puts
+            $stderr.puts "Done. parsed lines: #{@entry_count}"
             return self
         end
         
@@ -112,7 +116,7 @@ module HALog
             end
         end
         
-        def time_from_now(seconds)
+        def hms_from_seconds(seconds)
             hms = [0, 0, 0]
             hms[2] = seconds % 60
             min_left = (seconds - hms[2]) / 60

@@ -52,11 +52,11 @@ module HALog
         
         # create a full Date instance, year is not in the log entry so use the year the log was parsed
         def year
-            TODAY.year
+            @year ||= TODAY.year
         end
         
         def date
-            @date ||= Date.civil(year, month, day)
+            @date ||= time.strftime("%Y-%m-%d")
         end
         
         def time
@@ -64,7 +64,7 @@ module HALog
         end
         
         def iso_time
-            time.strftime("%Y-%m-%dT%H:%M:%S")
+            @iso_time ||= time.strftime("%Y-%m-%dT%H:%M:%S")
         end
 
         # this ovewrites the eval'd method of the same name

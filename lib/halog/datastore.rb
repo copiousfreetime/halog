@@ -1,6 +1,7 @@
 require 'sqlite3'
 require 'arrayfields'
 require 'parsedate'
+require 'benchmark'
 
 module HALog
     # permanent storage for the results of parsing the logfile.
@@ -13,9 +14,12 @@ module HALog
         def initialize(db_loc = ":memory:")
             @db_loc = db_loc
             @db = ::SQLite3::Database.new(db_loc)
+            #@db.trace() { |data,stmt| puts "sql stmt : #{stmt} "}
             if @db.execute("SELECT count(*) AS cnt FROM sqlite_master").first['cnt'].to_i == 0 then
                 @db.execute_batch(IO.read(File.join(HALog::DATA_DIR,"schema.sql")))
             end
+            
+            
             @perf_info = { 'log_entries_insert'         => { 'count' => 0, 'time' => Benchmark::Tms.new },
                            'http_log_messages_insert'   => { 'count' => 0, 'time' => Benchmark::Tms.new },
                            'tcp_log_messages_insert'    => { 'count' => 0, 'time' => Benchmark::Tms.new },
@@ -40,11 +44,11 @@ module HALog
             end
             
             def log_entries_fields
-                @log_entries_fields ||= %w[ iso_time hostname process pid raw_message ]
+                @log_entries_fields ||= %w[ iso_time date hostname process pid raw_message ]
             end
             
             def tcp_log_messages_fields
-                @tcp_log_messages_fields ||= %w[ log_entry_id client_address client_port iso_time
+                @tcp_log_messages_fields ||= %w[ log_entry_id client_address client_port iso_time date
                     frontend backend queue_time connect_time total_time bytes_read 
                     termination_state active_sessions frontend_connections backend_connections
                     server_connections server_queue_size proxy_queue_size ]
@@ -99,42 +103,57 @@ module HALog
                 i                   = 0
                 
                 LogParser.new.parse(io,parse_options) do |entry|
-                    t1 = Time.now
-                    stmts['log_entries'].execute!( log_entry_values.merge(entry.hash_of_fields(HALog::DataStore::log_entries_fields)) )
+                    # t1 = Time.now
+                    #stmts['log_entries'].execute!( log_entry_values.merge(entry.hash_of_fields(HALog::DataStore::log_entries_fields)) )
+                    b1 = Benchmark.measure { stmts['log_entries'].execute!( log_entry_values.merge(entry.hash_of_fields(HALog::DataStore::log_entries_fields)))  }
                     log_entry_id = handle.last_insert_row_id
                     @perf_info['log_entries_insert']['count'] += 1
-                    @perf_info['log_entries_insert']['time'] += (Time.now - t1)
+                    # @perf_info['log_entries_insert']['time'] += (Time.now - t1)
+                    @perf_info['log_entries_insert']['time'] += b1
                     
                     message_values = { 'import_id' => import_id, 'log_entry_id' => log_entry_id }
-                    t3 = Time.now
+                    # t3 = Time.now
                     case entry.message
                     when HTTPLogMessage
-                        stmts['http_log_messages'].execute!( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::http_log_messages_fields)) )
+                        b2 = Benchmark.measure { stmts['http_log_messages'].execute!( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::http_log_messages_fields)) )}
                         @perf_info['http_log_messages_insert']['count'] += 1
-                        @perf_info['http_log_messages_insert']['time'] += (Time.now - t3)
+                        # @perf_info['http_log_messages_insert']['time'] += (Time.now - t3)
+                        @perf_info['http_log_messages_insert']['time'] += b2
                     when TCPLogMessage
                         stmts['tcp_log_messages'].execute!( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::tcp_log_messages_fields)) )
                     when StringLogMessage
                         # do nothing
                         nil
                     end
+                    
+                    i += 1
+                    if (i % 5000 == 0) then 
+                        @perf_info['commit']['count'] += 1
+                        @perf_info['commit']['time']  += Benchmark.measure do 
+                                                                db.commit
+                                                                db.transaction
+                                                         end
+                    end
                 end
             end
-            
         end 
         
+                
         def perf_report
             require 'stringio'
             report = ::StringIO.new
             name_width = @perf_info.keys.collect { |k| k.length }.max
-            report.puts ["Stat".ljust(name_width), "Count".rjust(10), "Total Time".rjust(10), "Average Time".rjust(15)].join(" ")
-            report.puts "-" * (name_width + 10 + 10 + 15 + 3)
+            report.puts ["Stat".ljust(name_width), "Count".rjust(10), "User".rjust(10), "System".rjust(10), "Total".rjust(10), "Real".rjust(12)].join(" ")
+            report.puts "-" * (name_width + (10 * 5) + 7)
             @perf_info.keys.sort.each do |stat|
-                values = @perf_info[stat]
-                avg = values['count'].to_f / values['time'].to_f
-                avg_s = "%0.2f" % avg
-                tt_s = "%0.2f" % values['time']
-                report.puts [stat.ljust(name_width), values['count'].to_s.rjust(10), tt_s.rjust(10), avg_s.rjust(15)].join(' ')
+                # values = @perf_info[stat]
+                # avg = values['count'].to_f / values['time'].to_f
+                # avg_s = "%0.2f" % avg
+                # tt_s = "%0.2f" % values['time']
+                # report.puts [stat.ljust(name_width), values['count'].to_s.rjust(10), tt_s.rjust(10), avg_s.rjust(15)].join(' ')
+                
+                tms = @perf_info[stat]['time']
+                report.puts [stat.ljust(name_width), @perf_info[stat]['count'].to_s.rjust(10), tms.format("%10.6u %10.6y %10.6t %10.6r")].join(" ")
             end
             report.string
         end
@@ -168,8 +187,9 @@ module HALog
                 finalize_import(db,import_id,parser)
                 @perf_info['commit']['count'] += 1
                 before = Time.now
-                db.commit
-                @perf_info['commit']['time'] += Time.now - before
+                b = Benchmark.measure { db.commit }
+                # @perf_info['commit']['time'] += Time.now - before
+                @perf_info['commit']['time'] += b
                 
             else
                 $stderr.puts "No data imported."
@@ -190,6 +210,14 @@ module HALog
             return last_import_info
         end
         
+        def last_log_entry_id(db)
+            return db.execute("SELECT max(id) AS max_id FROM log_entries").first['max_id'].to_i
+        end
+        
+        def last_http_log_messages_id(db)
+            return db.execute("SELECT max(id) AS max_id FROM http_log_messages").first['max_id'].to_i
+        end
+             
         def convert_type(value,type)
             case type.downcase
             when 'integer'

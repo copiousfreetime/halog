@@ -3,7 +3,7 @@ CREATE TABLE imports (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,
     import_started_on   TIMESTAMP,  -- timestamp of when the run was started
     import_ended_on     TIMESTAMP,  -- timestamp of when the run was finished
-    import_date         TEXT,       -- inserted with trigger
+    import_date         DATE,       -- inserted with trigger
     first_entry_time    TIMESTAMP,  -- timestamp in the first log entry processed
     last_entry_time     TIMESTAMP,  -- timestamp in the last log entry processed
     starting_offset     INTEGER,
@@ -30,7 +30,7 @@ CREATE TABLE log_entries (
     id                      INTEGER PRIMARY KEY AUTOINCREMENT,
     import_id               INTEGER NOT NULL,
     iso_time                TIMESTAMP NOT NULL,
-    date                    TEXT, -- inserted with trigger
+    date                    DATE NOT NULL,
     hostname                TEXT NOT NULL,
     process                 TEXT NOT NULL,
     pid                     INTEGER,
@@ -40,13 +40,13 @@ CREATE TABLE log_entries (
     
 CREATE INDEX log_entries_import_id_idx ON log_entries(import_id);
 CREATE INDEX log_entries_date_idx ON log_entries(date);
-CREATE TRIGGER log_entry_date_trigger BEFORE INSERT ON log_entries
-    FOR EACH ROW
-    BEGIN
-        UPDATE log_entries SET date = date(new.iso_time) WHERE id = new.id
-        ;
-    END
-;
+-- CREATE TRIGGER log_entry_date_trigger BEFORE INSERT ON log_entries
+--     FOR EACH ROW
+--     BEGIN
+--         UPDATE log_entries SET date = date(new.iso_time) WHERE id = new.id
+--         ;
+--     END
+-- ;
 
 -- BATCH END
     
@@ -59,7 +59,7 @@ CREATE TABLE tcp_log_messages (
     client_port             INTEGER NOT NULL,
     
     iso_time                TIMESTAMP NOT NULL,
-    date                    TEXT, -- inserted with trigger
+    date                    DATE NOT NULL,
     
     frontend                TEXT NOT NULL,
     backend                 TEXT NOT NULL,
@@ -86,13 +86,13 @@ CREATE INDEX tcp_log_messages_log_entry_id_idx ON tcp_log_messages(log_entry_id)
 CREATE INDEX tcp_log_messages_date_idx ON tcp_log_messages(date);
 CREATE INDEX tcp_log_messages_frontend_idx ON tcp_log_messages(frontend);
 CREATE INDEX tcp_log_messages_backend_idx ON tcp_log_messages(backend);
-CREATE TRIGGER tcp_log_messages_date_trigger AFTER INSERT ON tcp_log_messages
-    FOR EACH ROW
-    BEGIN
-        UPDATE tcp_log_messages SET date = date(new.iso_time) WHERE id = new.id
-        ;
-    END
-;
+-- CREATE TRIGGER tcp_log_messages_date_trigger AFTER INSERT ON tcp_log_messages
+--     FOR EACH ROW
+--     BEGIN
+--         UPDATE tcp_log_messages SET date = date(new.iso_time) WHERE id = new.id
+--         ;
+--     END
+-- ;
     
 -- The messages that are HTTP Logs  
 CREATE TABLE http_log_messages (
@@ -103,7 +103,7 @@ CREATE TABLE http_log_messages (
     client_port             INTEGER NOT NULL,
     
     iso_time                TIMESTAMP NOT NULL,
-    date                    TEXT, -- inserted with trigger
+    date                    DATE NOT NULL,
     
     frontend                TEXT NOT NULL,
     backend                 TEXT NOT NULL,
@@ -137,15 +137,15 @@ CREATE TABLE http_log_messages (
     http_request            TEXT NOT NULL
         )
 ;
+-- CREATE TRIGGER http_log_messages_date_trigger AFTER INSERT ON http_log_messages
+--     FOR EACH ROW
+--     BEGIN
+--         UPDATE http_log_messages SET date = date(new.iso_time) WHERE id = new.id
+--         ;
+--     END
+-- ;
 CREATE INDEX http_log_messages_import_id_idx ON http_log_messages(import_id);
 CREATE INDEX http_log_messages_log_entry_id_idx ON http_log_messages(log_entry_id);
 CREATE INDEX http_log_messages_date_idx ON http_log_messages(date);
 CREATE INDEX http_log_messages_server_idx ON http_log_messages(server);
 CREATE INDEX http_log_messages_status_idx ON http_log_messages(http_status);
-CREATE TRIGGER http_log_messages_date_trigger AFTER INSERT ON http_log_messages
-    FOR EACH ROW
-    BEGIN
-        UPDATE http_log_messages SET date = date(new.iso_time) WHERE id = new.id
-        ;
-    END
-;
