@@ -3,8 +3,7 @@ class Object
         h = {}
         field_list.each do |field|
             begin
-                value = self.send(field)
-                h[field] = value
+                h[field] = self.send(field)
             rescue NoMethodError
             end
         end

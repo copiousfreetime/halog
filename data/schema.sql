@@ -8,7 +8,7 @@ CREATE TABLE imports (
     last_entry_time     TIMESTAMP,  -- timestamp in the last log entry processed
     starting_offset     INTEGER,
     byte_count          INTEGER,
-    entry_count         INTEGER,     -- line count of rows entered into the database
+    entry_count         INTEGER,    -- line count of rows entered into the database
     error_count         INTEGER     -- count of error lines skipped from input
     )
 ;
@@ -140,8 +140,6 @@ CREATE TABLE http_log_messages (
 CREATE INDEX http_log_messages_import_id_idx ON http_log_messages(import_id);
 CREATE INDEX http_log_messages_log_entry_id_idx ON http_log_messages(log_entry_id);
 CREATE INDEX http_log_messages_date_idx ON http_log_messages(date);
-CREATE INDEX http_log_messages_frontend_idx ON http_log_messages(frontend);
-CREATE INDEX http_log_messages_backend_idx ON http_log_messages(backend);
 CREATE INDEX http_log_messages_server_idx ON http_log_messages(server);
 CREATE INDEX http_log_messages_status_idx ON http_log_messages(http_status);
 CREATE TRIGGER http_log_messages_date_trigger AFTER INSERT ON http_log_messages

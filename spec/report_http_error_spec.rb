@@ -34,7 +34,7 @@ describe HALog::Report::HTTPError do
         report.on(@ds).results.size.should > 0
     end
     
-    it "can be configured to go back by multipel runs" do
+    it "can be configured to go back by multiple runs" do
         report = HALog::Report::HTTPError.new({ 'limit_method' => 'previous_runs', 'count' => 3})
         report.on(@ds).results.size.should > 0
     end

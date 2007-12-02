@@ -36,6 +36,8 @@ module HALog
             code
         end
         
+        TODAY = Date.today
+        
         def initialize(line)
             @md = REGEX.match(line)
             raise InvalidLogEntryError.new("#{line} is not a LogEntry") if not @md
@@ -48,13 +50,13 @@ module HALog
             @month ||= Date::ABBR_MONTHNAMES.index(@md[1])
         end
         
+        # create a full Date instance, year is not in the log entry so use the year the log was parsed
         def year
-            date.year
+            TODAY.year
         end
         
-        # create a full Date instance, year is not in the log entry so use the year the log was parsed
         def date
-            @date ||= Date.civil(Date.today.year, month, day)
+            @date ||= Date.civil(year, month, day)
         end
         
         def time
@@ -72,7 +74,7 @@ module HALog
         
         # convert the text of the message into a more knowledgable class
         # StringLogMessage is a failsafe, it just wraps up a String with a 
-        # dukctype call for parse
+        # ducktype call for parse
         def message
             if not @message then
                 [HTTPLogMessage, TCPLogMessage, StringLogMessage].each do |klass|

@@ -14,14 +14,14 @@ module HALog
             @db_loc = db_loc
             @db = ::SQLite3::Database.new(db_loc)
             if @db.execute("SELECT count(*) AS cnt FROM sqlite_master").first['cnt'].to_i == 0 then
-                @db.execute_batch(IO.read(File.join(HALog::RESOURCE_DIR,"schema.sql")))
+                @db.execute_batch(IO.read(File.join(HALog::DATA_DIR,"schema.sql")))
             end
-            @perf_info = {'log_entries_insert' => { 'count' => 0, 'time' => 0},
-                        'http_log_messages_insert' => { 'count' => 0, 'time' => 0},
-                        'tcp_log_messages_insert' => { 'count' => 0, 'time' => 0},
-                        'commit' => {'count' => 0, 'time' => 0 },
-                        'parser' => {'count' => 0, 'time' => 0 },
-                    }
+            @perf_info = { 'log_entries_insert'         => { 'count' => 0, 'time' => Benchmark::Tms.new },
+                           'http_log_messages_insert'   => { 'count' => 0, 'time' => Benchmark::Tms.new },
+                           'tcp_log_messages_insert'    => { 'count' => 0, 'time' => Benchmark::Tms.new },
+                           'commit'                     => { 'count' => 0, 'time' => Benchmark::Tms.new },
+                           'parser'                     => { 'count' => 0, 'time' => Benchmark::Tms.new },
+                          }
                         
         end
                 
@@ -44,7 +44,7 @@ module HALog
             end
             
             def tcp_log_messages_fields
-                @tcp_log_messages_fields ||= %w[ log_entry_id client_address client_port iso_time 
+                @tcp_log_messages_fields ||= %w[ log_entry_id client_address client_port iso_time
                     frontend backend queue_time connect_time total_time bytes_read 
                     termination_state active_sessions frontend_connections backend_connections
                     server_connections server_queue_size proxy_queue_size ]
@@ -61,6 +61,7 @@ module HALog
                 params = fields.collect { |f| ":#{f}" }.join(',')
                 "INSERT INTO #{table}(#{fields.join(',')}) VALUES (#{params})"
             end
+            
         end
         
         def next_import_id(handle = nil)
@@ -95,6 +96,8 @@ module HALog
                 first_entry         = nil
                 last_entry          = nil
                 
+                i                   = 0
+                
                 LogParser.new.parse(io,parse_options) do |entry|
                     t1 = Time.now
                     stmts['log_entries'].execute!( log_entry_values.merge(entry.hash_of_fields(HALog::DataStore::log_entries_fields)) )
@@ -121,7 +124,8 @@ module HALog
         end 
         
         def perf_report
-            report = StringIO.new
+            require 'stringio'
+            report = ::StringIO.new
             name_width = @perf_info.keys.collect { |k| k.length }.max
             report.puts ["Stat".ljust(name_width), "Count".rjust(10), "Total Time".rjust(10), "Average Time".rjust(15)].join(" ")
             report.puts "-" * (name_width + 10 + 10 + 15 + 3)
@@ -150,6 +154,7 @@ module HALog
             stmts       = {}            
             %w[ log_entries tcp_log_messages http_log_messages ].each do |table|                    
                 stmts[table] = db.prepare( HALog::DataStore::insert_sql_for(table) )
+                # puts "SQL FOR #{table}: #{HALog::DataStore::insert_sql_for(table)}"
             end
             
             parser = yield [import_id, db, stmts, last_import_info(db) ]

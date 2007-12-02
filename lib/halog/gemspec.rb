@@ -13,9 +13,9 @@ module HALog
                 spec.email              = "jeremy@hinegardner.org"
                 spec.homepage           = "http://copiousfreetime.rubyforge.org/"
 
-                spec.summary            = "A Summary of halog."
+                spec.summary            = "A log parser and analyzer for HAproxy logs."
                 spec.description        = <<-DESC
-                A longer more detailed description of halog.
+                A log parser and analyzer for HAproxy logs.
                 DESC
 
                 spec.extra_rdoc_files   = FileList["[A-Z]*"]
@@ -23,9 +23,9 @@ module HALog
                 spec.rdoc_main          = "README"
                 spec.rdoc_options       = [ "--line-numbers" , "--inline-source" ]
 
-                spec.test_files         = FileList["spec/**/*.rb", "test/**/*.rb"]
+                spec.test_files         = FileList["spec/**/*.rb"]
                 spec.files              = spec.test_files + spec.extra_rdoc_files + 
-                                          FileList["lib/**/*.rb", "resources/**/*"]
+                                          FileList["lib/**/*.rb", "data/**/*"]
                 
                 spec.executable         = spec.name
                 
@@ -37,12 +37,12 @@ module HALog
                 spec.platform           = Gem::Platform::RUBY
 
                 spec.local_rdoc_dir     = "doc/rdoc"
-                spec.remote_rdoc_dir    = "rdoc"
+                spec.remote_rdoc_dir    = ""
                 spec.local_coverage_dir = "doc/coverage"
-                spec.remote_coverage_dir= "coverage"
+                spec.remote_coverage_dir= ""
 
                 spec.remote_user        = "jjh"
-                spec.remote_site_dir    = ""
+                spec.remote_site_dir    = "#{spec.name}/"
 
            end
 end

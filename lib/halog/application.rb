@@ -39,6 +39,7 @@ module HALog
                 @default_options.cache_file     = nil
                 @default_options.report_type    = :none
                 @default_options.report_options = {}
+                @default_options.smtp_server    = "localhost"
                 @default_options.mail_to        = nil
             end
             return @default_options
@@ -72,8 +73,7 @@ module HALog
                     @parsed_options.output_file = outfile
                 end
 
-                op.on("-r", "--report TYPE", Report.types, "Display one of the available report types",
-                                        "  #{Report.types.join(',')}") do |report|
+                op.on("-r", "--report TYPE", Report.types, "Display one of the available report types","  #{Report.types.join(',')}") do |report|
                     @parsed_options.report = report
                 end
                 
@@ -83,6 +83,10 @@ module HALog
                         key,value = pair.split("=")
                         @parsed_options.report_options[key] = value
                     end
+                end
+                
+                op.on("-s", "--smtp-server SERVER", "Hostname of the smtp server to send email through", "  (default: localhost)") do |server|
+                    @parsed_options.smtp_server = server
                 end
                 
                 op.on("-V", "--version", "Show version") do 
@@ -146,17 +150,25 @@ module HALog
         
         def email_report(report)
             $stderr.puts "Sending reports by email to #{@options.mail_to.join(',')}"
-            Net::SMTP.start("mail.collectiveintellect.com",25) do |smtp|
+            Net::SMTP.start(@options.smtp_server,25) do |smtp|
                 msg = <<MSG
 To: #{@options.mail_to.join(',')}
-From: HALog Reporter <invalid@collectiveintellect.com>
-Subject: HALog HTTP Error Report - #{Time.now.strftime("%Y-%m-%d %H:%M:%S")}
+From: #{from_email_address}
+Subject: HALog Error Report (#{hostname}) - #{Time.now.strftime("%Y-%m-%d %H:%M:%S")}
 Date: #{Time.now.rfc2822}
 
 #{report}
 MSG
-                smtp.send_message(msg, "HALog Reporter <invalid@collectiveintellect.com>", *@options.mail_to)
+                smtp.send_message(msg, from_email_address, *@options.mail_to)
             end
+        end
+        
+        def hostname
+            @hostaname ||= Socket.gethostname
+        end
+        
+        def from_email_address
+            @from_email_address ||= "HALog on #{hostname} <halog@#{hostname}>"
         end
         
         def run

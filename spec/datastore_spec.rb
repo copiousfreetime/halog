@@ -85,11 +85,4 @@ describe HALog::DataStore do
         @ds.import(tmp_log,{:incremental => true})
         @ds.db.execute("SELECT count(*) FROM log_entries").first[0].should == "100"
     end
-        
-        
-        
-        
-    
-    
-    
 end
