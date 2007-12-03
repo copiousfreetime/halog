@@ -12,6 +12,9 @@ module HALog
         attr_reader :error_count
         attr_reader :parse_time
 
+        SAMPLE_EVERY = 100
+        REPORT_EVERY = 2000
+        
         def initialize()
             @first_entry_time   = nil
             @last_entry_time    = nil
@@ -44,9 +47,16 @@ module HALog
             io.each do |line|
                 
                 @byte_count += line.size
-                before_parse = Time.now
-                entry = LogEntry.parse(line) 
-                @parse_time += Time.now - before_parse
+                
+                # sample the time it takes every N rows
+                if @entry_count % SAMPLE_EVERY == 0 then
+                  before_parse = Time.now
+                  entry = LogEntry.parse(line) 
+                  @parse_time += ( (Time.now - before_parse) * SAMPLE_EVERY )
+                else
+                  entry = LogEntry.parse(line) 
+                end
+                
                 if entry then
                     @first_entry_time ||= entry.time
                     @last_entry_time = entry.time
@@ -59,7 +69,7 @@ module HALog
                     $stderr.puts "Failure to parse line : #{line.rstrip}"
                 end
 
-                if @entry_count % 1000 == 0 then 
+                if @entry_count % REPORT_EVERY == 0 then 
                     current_pos       = io.pos
                     completed_bytes   = current_pos - @starting_offset
                     elapsed_time      = Time.now - start_time
