@@ -1,5 +1,9 @@
+require 'halog/utils'
 module HALog 
     class LogParser
+        
+        include Util
+        
         attr_reader :first_entry_time 
         attr_reader :last_entry_time 
         attr_reader :starting_offset
@@ -25,6 +29,17 @@ module HALog
             @starting_offset = io.pos
             total_bytes      = io.stat.size - @starting_offset
             start_time       = Time.now
+            
+            $stderr.puts [
+                          "Lines".rjust(10), 
+                          "Row rate".rjust(10),
+                          "Byte rate".rjust(12),
+                          "Progress".rjust(20),
+                          "% Done".rjust(8),
+                          "Timer".rjust(10),
+                          "Time left".rjust(10)
+                          ].join(' ')
+            $stderr.puts '-' * (10 + 10 + 12 + 20 + 8 + 10 + 10 + 6)
             
             io.each do |line|
                 
@@ -53,15 +68,19 @@ module HALog
                     time_left         = bytes_left / byte_rate
                     rps               = @entry_count / elapsed_time
                     bps               = completed_bytes / elapsed_time
+                    percent_complete  = (completed_bytes.to_f / total_bytes) * 100.0
                     
                     status = [
-                        "parsed lines: #{@entry_count} (#{"%.2f" % rps} rps)",
-                        "byte count: #{num_to_bytes(completed_bytes)}/#{num_to_bytes(bytes_left)} (#{num_to_bytes(bps)}/s)",
-                        "time elapsed: #{hms_from_seconds(elapsed_time)}",
-                        "time left: #{hms_from_seconds(time_left)}"
+                        "#{@entry_count}".rjust(10),
+                        "#{"%.0f" % rps} rps".rjust(10),
+                        "#{num_to_bytes(bps)}/s".rjust(12),
+                        "#{num_to_bytes(completed_bytes)}/#{num_to_bytes(total_bytes)}".rjust(20),
+                        "#{"%.2f" % percent_complete}%".rjust(8),
+                        hms_from_seconds(elapsed_time).rjust(10),
+                        hms_from_seconds(time_left).rjust(10)
                         ]
                     
-                    $stderr.print "%-40s %-40s %-30s %-25s #{' '*10}\r" % status
+                    $stderr.print "#{status.join(' ')}\r"
                     $stderr.flush
                 end
                 
@@ -94,35 +113,5 @@ module HALog
             
             return io
         end
-        
-        
-        # essentially this is strfbytes from facets
-        def num_to_bytes(num,fmt="%.2f")
-           case
-            when num < 1024
-              "#{num} bytes"
-            when num < 1024**2
-              "#{fmt % (num.to_f / 1024)} KB"
-            when num < 1024**3
-              "#{fmt % (num.to_f / 1024**2)} MB"
-            when num < 1024**4
-              "#{fmt % (num.to_f / 1024**3)} GB"
-            when num < 1024**5
-              "#{fmt % (num.to_f / 1024**4)} TB"
-            else
-              "#{num} bytes"
-            end
-        end
-        
-        def hms_from_seconds(seconds)
-            hms = [0, 0, 0]
-            hms[2] = seconds % 60
-            min_left = (seconds - hms[2]) / 60
-            
-            hms[1]    = min_left % 60
-            hms[0]    = (min_left - hms[1]) / 60
-            return "%02d:%02d:%02d" % hms
-        end
-
     end    
 end

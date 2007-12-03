@@ -4,11 +4,15 @@ require 'parsedate'
 require 'halog/http_log_message_statement'
 require 'halog/tcp_log_message_statement'
 require 'halog/log_entry_statement'
+require 'halog/utils'
 
 module HALog
     # permanent storage for the results of parsing the logfile.
     # this is backed by a SQLite 3 database with a few tables
     class DataStore
+      
+        include Util
+        
         attr_reader :db_loc
         attr_reader :db
         attr_reader :perf_info
@@ -132,14 +136,15 @@ module HALog
             require 'stringio'
             report = ::StringIO.new
             name_width = @perf_info.keys.collect { |k| k.length }.max
-            report.puts p"Stat".ljust(name_width), "Count".rjust(15), "Time".rjust(10), "Average".rjust(10)
-            report.puts "-" * (name_width + (10 * 5) + 7)
+            report.puts
+            report.puts ["Method".ljust(name_width), "Call count".rjust(15), "Time in call".rjust(15), "Calls per sec".rjust(15)].join(' ')
+            report.puts "-" * (name_width + 45 + 3)
             @perf_info.keys.sort.each do |stat|
                 values = @perf_info[stat]
                 avg = values['count'].to_f / values['time'].to_f
                 avg_s = "%0.2f" % avg
-                tt_s = "%0.2f" % values['time']
-                report.puts [stat.ljust(name_width), values['count'].to_s.rjust(10), tt_s.rjust(10), avg_s.rjust(15)].join(' ')                
+                tt_s = hms_from_seconds(values['time'])
+                report.puts [stat.ljust(name_width), values['count'].to_s.rjust(15), tt_s.rjust(15), avg_s.rjust(15)].join(' ')                
             end
             report.string
         end
