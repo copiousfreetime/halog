@@ -15,7 +15,7 @@ module HALog
             @byte_count         = 0
             @entry_count        = 0
             @error_count        = 0
-            @parse_time         = Benchmark::Tms.new
+            @parse_time         = 0
         end
         
         # parses the io stream yielding each valid LogEntry that is encountered.  Invalid lines
@@ -29,11 +29,9 @@ module HALog
             io.each do |line|
                 
                 @byte_count += line.size
-                # before_parse = Time.now
-                entry = nil
-                b = Benchmark.measure { entry = LogEntry.parse(line) }
-                # @parse_time += Time.now - before_parse
-                @parse_time += b
+                before_parse = Time.now
+                entry = LogEntry.parse(line) 
+                @parse_time += Time.now - before_parse
                 if entry then
                     @first_entry_time ||= entry.time
                     @last_entry_time = entry.time
@@ -63,13 +61,13 @@ module HALog
                         "time left: #{hms_from_seconds(time_left)}"
                         ]
                     
-                    # $stderr.print "%-40s %-40s %-30s %-25s #{' '*10}\r" % status
-                    # $stderr.flush
+                    $stderr.print "%-40s %-40s %-30s %-25s #{' '*10}\r" % status
+                    $stderr.flush
                 end
                 
             end # io.each
-            # $stderr.puts
-            # $stderr.puts "Done. parsed lines: #{@entry_count}"
+            $stderr.puts
+            $stderr.puts "Done. parsed lines: #{@entry_count}"
             return self
         end
         
