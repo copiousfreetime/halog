@@ -58,8 +58,8 @@ module HALog
                     $stderr.puts 
                     $stderr.puts "Failure to parse line : #{line.rstrip}"
                 end
-                
-                if @entry_count % 1000 == 0 then
+
+                if @entry_count % 1000 == 0 then 
                     current_pos       = io.pos
                     completed_bytes   = current_pos - @starting_offset
                     elapsed_time      = Time.now - start_time
