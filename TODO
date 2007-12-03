@@ -1,3 +1,4 @@
 * variable commit points, so process can restart 
 * signal handling to commit and finalize when killed
 * update documentation
+* webapp to do analysis of the information
