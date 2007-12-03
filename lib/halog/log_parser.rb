@@ -33,6 +33,7 @@ module HALog
             total_bytes      = io.stat.size - @starting_offset
             start_time       = Time.now
             
+            $stderr.puts
             $stderr.puts [
                           "Lines".rjust(10), 
                           "Row rate".rjust(10),
@@ -113,12 +114,12 @@ module HALog
             # file should be scanned from the beginning.
             seek_to = options['starting_offset'] + options['byte_count']
             if io.stat.size < seek_to then
-                $stderr.print "Looks like file has been rotated, starting from the beginning."
+                $stderr.puts "Looks like log file has been rotated, starting from the beginning."
                 return io if io.stat.size < seek_to
             end
 
             # now we assume that we are using the same file as before so seek to the appropriate location
-            $stderr.print "Jumping to offset #{seek_to} in file of size #{io.stat.size}."
+            $stderr.puts "Jumping to offset #{seek_to} in file of size #{io.stat.size}."
             io.seek(seek_to,IO::SEEK_SET)
             
             return io
