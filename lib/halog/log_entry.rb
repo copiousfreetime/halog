@@ -1,4 +1,5 @@
 require 'date'
+
 module HALog
     class InvalidLogEntryError < ::StandardError; end
     class InvalidLogMessageError < ::StandardError; end
@@ -83,6 +84,18 @@ module HALog
                 end
             end
             return @message
+        end
+        
+        # this turns out to be faster than using #send
+        def to_sql_hash
+            { 
+                'iso_time'      => iso_time,
+                'date'          => date,
+                'hostname'      => hostname,
+                'process'       => process,
+                'pid'           => pid,
+                'raw_message'   => raw_message
+            }
         end
         
         class << self

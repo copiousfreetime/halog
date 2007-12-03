@@ -2,6 +2,9 @@ require 'sqlite3'
 require 'arrayfields'
 require 'parsedate'
 require 'benchmark'
+require 'halog/http_log_message_statement'
+require 'halog/tcp_log_message_statement'
+require 'halog/log_entry_statement'
 
 module HALog
     # permanent storage for the results of parsing the logfile.
@@ -101,11 +104,11 @@ module HALog
                 last_entry          = nil
                 
                 i                   = 0
-                
                 LogParser.new.parse(io,parse_options) do |entry|
                     # t1 = Time.now
                     #stmts['log_entries'].execute!( log_entry_values.merge(entry.hash_of_fields(HALog::DataStore::log_entries_fields)) )
-                    b1 = Benchmark.measure { stmts['log_entries'].execute!( log_entry_values.merge(entry.hash_of_fields(HALog::DataStore::log_entries_fields)))  }
+                    b1 = Benchmark.measure { stmts['log_entries'].execute!( log_entry_values.merge(entry.to_sql_hash) )  }
+                    # b1 = Benchmark.measure { stmts['log_entries'].execute!( log_entry_values.merge(entry.hash_of_fields(HALog::DataStore::log_entries_fields)))  }
                     log_entry_id = handle.last_insert_row_id
                     @perf_info['log_entries_insert']['count'] += 1
                     # @perf_info['log_entries_insert']['time'] += (Time.now - t1)
@@ -115,7 +118,8 @@ module HALog
                     # t3 = Time.now
                     case entry.message
                     when HTTPLogMessage
-                        b2 = Benchmark.measure { stmts['http_log_messages'].execute!( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::http_log_messages_fields)) )}
+                        # b2 = Benchmark.measure { stmts['http_log_messages'].execute!( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::http_log_messages_fields)) )}
+                        b2 = Benchmark.measure { stmts['http_log_messages'].execute!( message_values.merge(entry.message.to_sql_hash) )}
                         @perf_info['http_log_messages_insert']['count'] += 1
                         # @perf_info['http_log_messages_insert']['time'] += (Time.now - t3)
                         @perf_info['http_log_messages_insert']['time'] += b2
@@ -171,10 +175,15 @@ module HALog
             
             import_id   = next_import_id(db)
             stmts       = {}            
-            %w[ log_entries tcp_log_messages http_log_messages ].each do |table|                    
-                stmts[table] = db.prepare( HALog::DataStore::insert_sql_for(table) )
-                # puts "SQL FOR #{table}: #{HALog::DataStore::insert_sql_for(table)}"
-            end
+            # %w[ log_entries tcp_log_messages http_log_messages ].each do |table|                    
+            #     # stmts[table] = db.prepare( HALog::DataStore::insert_sql_for(table) )
+            #     stmts[table] = ::SQLite3::FasterStatement.new(db,HALog::DataStore::insert_sql_for(table))
+            #     # puts "SQL FOR #{table}: #{HALog::DataStore::insert_sql_for(table)}"
+            # end
+            
+            stmts['log_entries'] = HALog::LogEntryStatement.new(db)
+            stmts['tcp_log_messages'] = HALog::TCPLogMessageStatement.new(db)
+            stmts['http_log_messages'] = HALog::HTTPLogMessageStatement.new(db)
             
             parser = yield [import_id, db, stmts, last_import_info(db) ]
             
@@ -208,14 +217,6 @@ module HALog
                 end
             end
             return last_import_info
-        end
-        
-        def last_log_entry_id(db)
-            return db.execute("SELECT max(id) AS max_id FROM log_entries").first['max_id'].to_i
-        end
-        
-        def last_http_log_messages_id(db)
-            return db.execute("SELECT max(id) AS max_id FROM http_log_messages").first['max_id'].to_i
         end
              
         def convert_type(value,type)

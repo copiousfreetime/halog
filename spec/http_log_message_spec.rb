@@ -57,7 +57,8 @@ describe HALog::HTTPLogMessage do
     end
     
     it "captures the date" do
-        @msg.date.should == Date.new(2007,9,11)
+        @msg.date.should == Date.new(2007,9,11).to_s
+        
     end
     it "captures the time" do
         @msg.time.should == Time.mktime(2007,9,11,16,46,47,787)

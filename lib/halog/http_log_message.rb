@@ -91,6 +91,38 @@ module HALog
         def iso_time
             @iso_time ||= (time.strftime("%Y-%m-%dT%H:%M:%S.") + "%03d" % usecond)
         end
+        
+        def to_sql_hash
+            {
+                'client_address'          => client_address ,
+                'client_port'             => client_port ,
+                'iso_time'                => iso_time ,
+                'date'                    => date,
+                'frontend'                => frontend ,
+                'backend'                 => backend ,
+                'queue_time'              => queue_time ,
+                'connect_time'            => connect_time ,
+                'total_time'              => total_time ,
+                'bytes_read'              => bytes_read ,
+                'termination_state'       => termination_state ,
+                'active_sessions'         => active_sessions ,
+                'frontend_connections'    => frontend_connections ,
+                'backend_connections'     => backend_connections,
+                'server_connections'      => server_connections ,
+                'server_queue_size'       => server_queue_size ,
+                'server'                  => server ,
+                'request_time'            => request_time ,
+                'response_time'           => response_time,
+                'http_status'             => http_status ,
+                'request_cookie'          => request_cookie, 
+                'response_cookie'         => response_cookie, 
+                'incoming_queue_size'     => incoming_queue_size,
+                'request_headers'         => request_headers, 
+                'response_headers'        => response_headers, 
+                'http_request'            => http_request,     
+                                                               
+            }
+        end
 
         class << self
             def parse(msg)

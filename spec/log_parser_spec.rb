@@ -1,4 +1,5 @@
 require File.join(File.dirname(__FILE__),"spec_helper.rb")
+require 'ostruct'
 
 describe HALog::LogParser do
     before(:each) do
@@ -12,8 +13,14 @@ describe HALog::LogParser do
             "Oct 15 15:24:28 localhost.localdomain haproxy[18989]: 127.0.0.1:34550 [15/Oct/2007:15:24:28.123] relais-tcp relais-backend/Srv1 0/0/5007 0 -- 1/1/1/1 0/0",
             ]
         @input = StringIO.new
+
         @good_bytes = @input.write(good_row_data.join("\n") + "\n")
         @input.rewind
+        class << @input
+          def stat
+            return OpenStruct.new({:size => self.size })
+          end
+        end
     end
     
     it "parses log data from the start of a stream" do

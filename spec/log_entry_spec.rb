@@ -40,12 +40,12 @@ describe HALog::LogEntry do
     it "creates the correct date" do
         this_year = Date.today.year
         method_results_compare(:date,[
-            Date.new(this_year,10,15),
-            Date.new(this_year,9,6),
-            Date.new(this_year,9,8),
-            Date.new(this_year,9,8),
-            Date.new(this_year,9,8),
-            Date.new(this_year,9,8),
+            Date.new(this_year,10,15).to_s,
+            Date.new(this_year,9,6).to_s,
+            Date.new(this_year,9,8).to_s,
+            Date.new(this_year,9,8).to_s,
+            Date.new(this_year,9,8).to_s,
+            Date.new(this_year,9,8).to_s,
             ])
     end
     

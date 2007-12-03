@@ -63,13 +63,13 @@ module HALog
                         "time left: #{hms_from_seconds(time_left)}"
                         ]
                     
-                    $stderr.print "%-40s %-40s %-30s %-25s #{' '*10}\r" % status
-                    $stderr.flush
+                    # $stderr.print "%-40s %-40s %-30s %-25s #{' '*10}\r" % status
+                    # $stderr.flush
                 end
                 
             end # io.each
-            $stderr.puts
-            $stderr.puts "Done. parsed lines: #{@entry_count}"
+            # $stderr.puts
+            # $stderr.puts "Done. parsed lines: #{@entry_count}"
             return self
         end
         
