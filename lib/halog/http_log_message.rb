@@ -1,6 +1,6 @@
 module HALog
     class HTTPLogMessage
-        
+                
         # Regular expression to match this portion of a log entry
         #
         # 127.0.0.1:59791 [11/Sep/2007:16:46:47.787] http-forward http-forward/http0 0/0/39/58/1203 200 130 - JSESSIONID=96BB0AB0AEC812CAFBDDC ---- 0/0/0/0 0/0 {|curl/7.16.2 (i386-apple-darwin8.|*/*} {no-cache||0|Apache-Coyote/1.1|NSC_MC_QH_XFCBQQ=e2422cb129a0;ex} "GET / HTTP/1.1"

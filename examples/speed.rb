@@ -1,4 +1,6 @@
-$: << "./lib"
+ROOT = File.expand_path( File.join( File.dirname( __FILE__ ), ".." ) )
+$: << File.join(ROOT,"lib")
+
 require 'rubygems'
 require 'benchmark'
 
@@ -7,7 +9,7 @@ require 'halog'
 require 'date'
 
 
-TEST_LOG = "tmp/test.log"
+TEST_LOG = File.join(ROOT, "tmp", "10k.log")
 #TEST_LOG = "tmp/10k.log"
 #TEST_LOG = "tmp/500.log"
 #TEST_LOG = "tmp/1000.log"
@@ -48,21 +50,12 @@ bm(40) do |x|
 
     File.open(TEST_LOG) do |tl|
         x.report("HALog::Datastore.import") do 
-            HALog::DataStore.open("tmp/speed.db") do |ds|
+            HALog::DataStore.open("speed.db") do |ds|
                 ds.import(tl)
                 db_perf[' HALog::Datastore.import '] = ds.perf_report
             end
         end
     end
-
-#    File.open(TEST_LOG) do |tl|
-#        x.report("HALog::Datastore.import_csvs") do 
-#            HALog::DataStore.open(":memory:") do |ds|
-#                ds.import_csvs(tl)
-#                db_perf['HALog::Datastore.import_csvs'] = ds.perf_report
-#            end
-#        end
-#    end
 end
 
 db_perf.each do |key,report|

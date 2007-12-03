@@ -1,5 +1,6 @@
 module HALog
     class TCPLogMessage
+              
         # Regular expression to parse a row like this.
         #
         #   '127.0.0.1:53407 [11/Sep/2007:00:15:30.010] smtp-forward smtp-forward/smtp0 0/0/7061 21 -- 0/0/0/0 0/0'

@@ -1,5 +1,3 @@
-require 'date'
-
 module HALog
     class InvalidLogEntryError < ::StandardError; end
     class InvalidLogMessageError < ::StandardError; end
