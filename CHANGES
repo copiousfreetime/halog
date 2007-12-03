@@ -1,5 +1,10 @@
 = Changelog
 
-== Version 0.2.3 - 2007-11-26
+== Version 0.3.0 - 2007-12-03
 
-* Initial public release
+* Added nice progession output
+* Improved rows parsing performance 
+* Reorder directories
+* Prep for public release
+* Added configurable SMTP server for alerts
+

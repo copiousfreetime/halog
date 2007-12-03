@@ -23,6 +23,7 @@ module HALog
             @entry_count        = 0
             @error_count        = 0
             @parse_time         = 0
+            @start_time         = 0
         end
         
         # parses the io stream yielding each valid LogEntry that is encountered.  Invalid lines
@@ -31,19 +32,10 @@ module HALog
             io = advance_io(io,options)
             @starting_offset = io.pos
             total_bytes      = io.stat.size - @starting_offset
-            start_time       = Time.now
-            
+            @start_time       = Time.now
+
             $stderr.puts
-            $stderr.puts [
-                          "Lines".rjust(10), 
-                          "Row rate".rjust(10),
-                          "Byte rate".rjust(12),
-                          "Progress".rjust(20),
-                          "% Done".rjust(8),
-                          "Timer".rjust(10),
-                          "Time left".rjust(10)
-                          ].join(' ')
-            $stderr.puts '-' * (10 + 10 + 12 + 20 + 8 + 10 + 10 + 6)
+            $stderr.puts status_header
             
             io.each do |line|
                 
@@ -71,34 +63,53 @@ module HALog
                 end
 
                 if @entry_count % REPORT_EVERY == 0 then 
-                    current_pos       = io.pos
-                    completed_bytes   = current_pos - @starting_offset
-                    elapsed_time      = Time.now - start_time
-                    bytes_left        = total_bytes - completed_bytes
-                    byte_rate         = completed_bytes.to_f / elapsed_time
-                    time_left         = bytes_left / byte_rate
-                    rps               = @entry_count / elapsed_time
-                    bps               = completed_bytes / elapsed_time
-                    percent_complete  = (completed_bytes.to_f / total_bytes) * 100.0
-                    
-                    status = [
-                        "#{@entry_count}".rjust(10),
-                        "#{"%.0f" % rps} rps".rjust(10),
-                        "#{num_to_bytes(bps)}/s".rjust(12),
-                        "#{num_to_bytes(completed_bytes)}/#{num_to_bytes(total_bytes)}".rjust(20),
-                        "#{"%.2f" % percent_complete}%".rjust(8),
-                        hms_from_seconds(elapsed_time).rjust(10),
-                        hms_from_seconds(time_left).rjust(10)
-                        ]
-                    
-                    $stderr.print "#{status.join(' ')}\r"
-                    $stderr.flush
+                    $stderr.print "#{status_output(io.pos,total_bytes)}\r"
                 end
                 
             end # io.each
+            $stderr.puts status_output(io.pos,total_bytes)
             $stderr.puts
-            $stderr.puts "Done. parsed lines: #{@entry_count}"
+            
             return self
+        end
+        
+        def status_header   
+            output = StringIO.new
+            header = [
+                      "Lines".rjust(10), 
+                      "Row rate".rjust(10),
+                      "Byte rate".rjust(12),
+                      "Progress".rjust(20),
+                      "% Done".rjust(8),
+                      "Timer".rjust(10),
+                      "Time left".rjust(10)
+                      ].join(' ')
+            output.puts header
+            output.print "-" * header.size
+            output.string
+        end
+        
+        def status_output(current_pos,total_bytes)
+          completed_bytes   = current_pos - @starting_offset
+          elapsed_time      = Time.now - @start_time
+          bytes_left        = total_bytes - completed_bytes
+          byte_rate         = completed_bytes.to_f / elapsed_time
+          time_left         = bytes_left / byte_rate
+          rps               = @entry_count / elapsed_time
+          bps               = completed_bytes / elapsed_time
+          percent_complete  = (completed_bytes.to_f / total_bytes) * 100.0
+          
+          status = [
+              "#{@entry_count}".rjust(10),
+              "#{"%.0f" % rps} rps".rjust(10),
+              "#{num_to_bytes(bps)}/s".rjust(12),
+              "#{num_to_bytes(completed_bytes)}/#{num_to_bytes(total_bytes)}".rjust(20),
+              "#{"%.2f" % percent_complete}%".rjust(8),
+              hms_from_seconds(elapsed_time).rjust(10),
+              hms_from_seconds(time_left).rjust(10)
+              ]
+          
+          status.join(' ')
         end
         
         # advance the IO forward if it looks like this logfile has already been parsed.

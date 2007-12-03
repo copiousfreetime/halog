@@ -122,7 +122,7 @@ module HALog
         def import_new_data(datastore)
             if @options.input_file then
                 input_log_stream = (@options.input_file == "-") ? $stdin : File.open(@options.input_file)
-                $stderr.puts "Reading input from #{@options.input_file}"
+                $stderr.puts "Input file : #{@options.input_file}"
                 datastore.import(input_log_stream,{:incremental => @options.incremental})
                 $stderr.puts datastore.perf_report
             end 
@@ -176,7 +176,7 @@ MSG
             merge_options
 
             DataStore.open(@options.database) do |ds|
-                $stderr.puts "Using #{@options.database} database."
+                $stderr.puts "Database   : #{@options.database}"
                 import_new_data(ds)
                 run_report(ds)
             end    

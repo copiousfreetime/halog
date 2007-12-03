@@ -1,1 +1,3 @@
-* Add in progress meter to show how much of file is still left to parse.
+* variable commit points, so process can restart 
+* signal handling to commit and finalize when killed
+* update documentation

@@ -136,9 +136,13 @@ module HALog
             require 'stringio'
             report = ::StringIO.new
             name_width = @perf_info.keys.collect { |k| k.length }.max
+            header     =  ["Method".ljust(name_width), "Call count".rjust(15), "Time in call".rjust(15), "Calls per sec".rjust(15)].join(' ')
+
             report.puts
-            report.puts ["Method".ljust(name_width), "Call count".rjust(15), "Time in call".rjust(15), "Calls per sec".rjust(15)].join(' ')
-            report.puts "-" * (name_width + 45 + 3)
+            report.puts "PERFORMANCE STATS".center(header.size)
+            report.puts header
+            report.puts "-" * header.size
+
             @perf_info.keys.sort.each do |stat|
                 values = @perf_info[stat]
                 avg = values['count'].to_f / values['time'].to_f
