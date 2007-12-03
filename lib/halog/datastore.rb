@@ -132,7 +132,6 @@ module HALog
             require 'stringio'
             report = ::StringIO.new
             name_width = @perf_info.keys.collect { |k| k.length }.max
-            # report.puts ["Stat".ljust(name_width), "Count".rjust(10), "User".rjust(10), "System".rjust(10), "Total".rjust(10), "Real".rjust(12)].join(" ")
             report.puts p"Stat".ljust(name_width), "Count".rjust(15), "Time".rjust(10), "Average".rjust(10)
             report.puts "-" * (name_width + (10 * 5) + 7)
             @perf_info.keys.sort.each do |stat|
@@ -140,10 +139,7 @@ module HALog
                 avg = values['count'].to_f / values['time'].to_f
                 avg_s = "%0.2f" % avg
                 tt_s = "%0.2f" % values['time']
-                report.puts [stat.ljust(name_width), values['count'].to_s.rjust(10), tt_s.rjust(10), avg_s.rjust(15)].join(' ')
-                
-                # tms = @perf_info[stat]['time']
-                # report.puts [stat.ljust(name_width), @perf_info[stat]['count'].to_s.rjust(10), tms.format("%10.6u %10.6y %10.6t %10.6r")].join(" ")
+                report.puts [stat.ljust(name_width), values['count'].to_s.rjust(10), tt_s.rjust(10), avg_s.rjust(15)].join(' ')                
             end
             report.string
         end
@@ -161,11 +157,6 @@ module HALog
             
             import_id   = next_import_id(db)
             stmts       = {}            
-            # %w[ log_entries tcp_log_messages http_log_messages ].each do |table|                    
-            #     # stmts[table] = db.prepare( HALog::DataStore::insert_sql_for(table) )
-            #     stmts[table] = ::SQLite3::FasterStatement.new(db,HALog::DataStore::insert_sql_for(table))
-            #     # puts "SQL FOR #{table}: #{HALog::DataStore::insert_sql_for(table)}"
-            # end
             
             stmts['log_entries'] = HALog::LogEntryStatement.new(db)
             stmts['tcp_log_messages'] = HALog::TCPLogMessageStatement.new(db)
