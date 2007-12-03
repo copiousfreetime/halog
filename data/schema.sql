@@ -40,15 +40,6 @@ CREATE TABLE log_entries (
     
 CREATE INDEX log_entries_import_id_idx ON log_entries(import_id);
 CREATE INDEX log_entries_date_idx ON log_entries(date);
--- CREATE TRIGGER log_entry_date_trigger BEFORE INSERT ON log_entries
---     FOR EACH ROW
---     BEGIN
---         UPDATE log_entries SET date = date(new.iso_time) WHERE id = new.id
---         ;
---     END
--- ;
-
--- BATCH END
     
 -- The messages that are  TCP logs
 CREATE TABLE tcp_log_messages (
@@ -86,13 +77,6 @@ CREATE INDEX tcp_log_messages_log_entry_id_idx ON tcp_log_messages(log_entry_id)
 CREATE INDEX tcp_log_messages_date_idx ON tcp_log_messages(date);
 CREATE INDEX tcp_log_messages_frontend_idx ON tcp_log_messages(frontend);
 CREATE INDEX tcp_log_messages_backend_idx ON tcp_log_messages(backend);
--- CREATE TRIGGER tcp_log_messages_date_trigger AFTER INSERT ON tcp_log_messages
---     FOR EACH ROW
---     BEGIN
---         UPDATE tcp_log_messages SET date = date(new.iso_time) WHERE id = new.id
---         ;
---     END
--- ;
     
 -- The messages that are HTTP Logs  
 CREATE TABLE http_log_messages (
@@ -137,15 +121,11 @@ CREATE TABLE http_log_messages (
     http_request            TEXT NOT NULL
         )
 ;
--- CREATE TRIGGER http_log_messages_date_trigger AFTER INSERT ON http_log_messages
---     FOR EACH ROW
---     BEGIN
---         UPDATE http_log_messages SET date = date(new.iso_time) WHERE id = new.id
---         ;
---     END
--- ;
+
 CREATE INDEX http_log_messages_import_id_idx ON http_log_messages(import_id);
 CREATE INDEX http_log_messages_log_entry_id_idx ON http_log_messages(log_entry_id);
 CREATE INDEX http_log_messages_date_idx ON http_log_messages(date);
+CREATE INDEX http_log_messages_frontend_idx ON http_log_messages(frontend);
+CREATE INDEX http_log_messages_backend_idx ON http_log_messages(backend);
 CREATE INDEX http_log_messages_server_idx ON http_log_messages(server);
 CREATE INDEX http_log_messages_status_idx ON http_log_messages(http_status);

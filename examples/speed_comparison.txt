@@ -1,0 +1,66 @@
+# normal speed
+                                             user     system      total        real
+Iterate over lines                        0.010000   0.010000   0.020000 (  0.020874)
+HALog::LogEntry.parse                     0.680000   0.340000   1.020000 (  1.016608)
+HALog::LogParser.parse                    1.430000   0.410000   1.840000 (  1.855228)
+HALog::Datastore.import                  12.020000   0.720000  12.740000 ( 13.436058)
+
+=========================== HALog::Datastore.import ============================
+Stat                          Count       User     System      Total         Real
+---------------------------------------------------------------------------------
+commit                            3   0.010000   0.040000   0.050000 (  0.351764)
+http_log_messages_insert      10000   6.170000   0.040000   6.210000 (  6.409301)
+log_entries_insert            10000   2.220000   0.060000   2.280000 (  2.520044)
+parser                        10000   1.280000   0.490000   1.770000 (  1.726011)
+tcp_log_messages_insert           0   0.000000   0.000000   0.000000 (  0.000000)
+
+
+# speeds using the FasterStatement.
+
+                                              user     system      total        real
+Iterate over lines                        0.010000   0.000000   0.010000 (  0.020497)
+HALog::LogEntry.parse                     0.680000   0.330000   1.010000 (  1.014518)
+HALog::LogParser.parse                    1.420000   0.420000   1.840000 (  1.844294)
+HALog::Datastore.import                   9.830000   0.710000  10.540000 ( 10.716001)
+
+=========================== HALog::Datastore.import ============================
+Stat                          Count       User     System      Total         Real
+---------------------------------------------------------------------------------
+commit                            3   0.010000   0.040000   0.050000 (  0.141110)
+http_log_messages_insert      10000   4.930000   0.070000   5.000000 (  4.943817)
+log_entries_insert            10000   1.690000   0.070000   1.760000 (  1.863798)
+parser                        10000   1.000000   0.460000   1.460000 (  1.481556)
+tcp_log_messages_insert           0   0.000000   0.000000   0.000000 (  0.000000)
+
+# speeds using CustomStatement
+                                              user     system      total        real
+Iterate over lines                        0.020000   0.010000   0.030000 (  0.020646)
+HALog::LogEntry.parse                     0.680000   0.350000   1.030000 (  1.030152)
+HALog::LogParser.parse                    1.420000   0.420000   1.840000 (  1.860530)
+HALog::Datastore.import                   8.820000   0.700000   9.520000 (  9.700135)
+
+
+=========================== HALog::Datastore.import ============================
+Stat                          Count       User     System      Total         Real
+---------------------------------------------------------------------------------
+commit                            3   0.010000   0.040000   0.050000 (  0.172302)
+http_log_messages_insert      10000   3.600000   0.080000   3.680000 (  3.990364)
+log_entries_insert            10000   1.870000   0.050000   1.920000 (  1.727464)
+parser                        10000   1.010000   0.470000   1.480000 (  1.651734)
+tcp_log_messages_insert           0   0.000000   0.000000   0.000000 (  0.000000)
+
+# speeds using unrolled custom
+                                              user     system      total        real
+Iterate over lines                        0.020000   0.010000   0.030000 (  0.020698)
+HALog::LogEntry.parse                     0.690000   0.340000   1.030000 (  1.035634)
+HALog::LogParser.parse                    1.420000   0.410000   1.830000 (  1.857104)
+HALog::Datastore.import                   7.960000   0.690000   8.650000 (  8.894299)
+
+=========================== HALog::Datastore.import ============================
+Stat                          Count       User     System      Total         Real
+---------------------------------------------------------------------------------
+commit                            3   0.010000   0.040000   0.050000 (  0.225303)
+http_log_messages_insert      10000   2.860000   0.050000   2.910000 (  3.086138)
+log_entries_insert            10000   1.630000   0.050000   1.680000 (  1.705945)
+parser                        10000   1.270000   0.450000   1.720000 (  1.713957)
+tcp_log_messages_insert           0   0.000000   0.000000   0.000000 (  0.000000)
