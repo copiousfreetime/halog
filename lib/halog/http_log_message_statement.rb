@@ -5,7 +5,7 @@ require 'halog/tcp_log_message_statement'
 module HALog
   class HTTPLogMessageStatement < EvilCustomStatement
     TABLE  = "http_log_messages"
-    FIELDS = [ %w[ import_id            bind_int ],
+    FIELDS = [ %w[ import_id            bind_int   ],
                %w[ log_entry_id         bind_int   ],
                %w[ client_address       bind_text  ],
                %w[ client_port          bind_int   ],
@@ -33,7 +33,6 @@ module HALog
                %w[ request_headers      bind_text  ],
                %w[ response_headers     bind_text  ],
                %w[ http_request         bind_text  ],
-             ].freeze  
-
+    ].freeze  
   end
 end

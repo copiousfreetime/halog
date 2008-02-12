@@ -22,7 +22,7 @@ module HALog
                %w[ server_connections   bind_int   ],
                %w[ server_queue_size    bind_int   ],
                %w[ proxy_queue_size     bind_int   ],
-            ].freeze
+    ].freeze
   end
 end
-  
+

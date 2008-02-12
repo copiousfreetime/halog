@@ -12,6 +12,6 @@ module HALog
                %w[ process              bind_text  ],
                %w[ pid                  bind_int   ],
                %w[ raw_message          bind_text  ],
-            ].freeze
+    ].freeze
   end
 end
