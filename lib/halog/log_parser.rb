@@ -91,14 +91,14 @@ module HALog
 
     def status_output(current_pos,total_bytes)
       completed_bytes   = current_pos - @starting_offset
-      elapsed_time      = Time.now - @start_time
+      elapsed_time      = [ 1, Time.now - @start_time].max
       bytes_left        = total_bytes - completed_bytes
       byte_rate         = completed_bytes.to_f / elapsed_time
-      time_left         = bytes_left / byte_rate
+      time_left         = bytes_left / (( byte_rate == 0 ) ? 1 : byte_rate )
       rps               = @entry_count / elapsed_time
       bps               = completed_bytes / elapsed_time
       percent_complete  = (completed_bytes.to_f / total_bytes) * 100.0
-
+     
       status = [
               "#{@entry_count}".rjust(10),
               "#{"%.0f" % rps} rps".rjust(10),

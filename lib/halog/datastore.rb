@@ -103,8 +103,8 @@ module HALog
         results             = {}
         first_entry         = nil
         last_entry          = nil
-
         i                   = 0
+
         LogParser.new.parse(io,parse_options) do |entry|
           t1 = Time.now
           stmts['log_entries'].execute!( log_entry_values.merge( entry.to_sql_hash ) ) 
