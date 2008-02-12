@@ -7,10 +7,13 @@ module HALog
     #
     # options may be passed in 
     #
-    #    :limit_method -> one of 'days_back' or 'previous_runs'
-    #    :limit_count  -> integer value > 1 as the number of 'days_back' or 'previous_runs'
-
-
+    #    :limit_method 
+    #         -> one of 'days_back' or 'previous_runs'
+    #    :limit_count  
+    #         -> integer value > 1 as the number of 'days_back' or 'previous_runs'
+    #    :minimum_http_status 
+    #         -> integer value indicating the minimum http status to run the report for
+    #
     class HTTPError < Base
 
       attr_reader :options
@@ -18,9 +21,9 @@ module HALog
 
       def default_options
         {
-                    'limit_method'        => 'days_back',
-                    'limit_count'         => 1,
-                    'minimum_http_status' => 500
+          'limit_method'        => 'days_back',
+          'limit_count'         => 1,
+          'minimum_http_status' => 500
         }
       end
 

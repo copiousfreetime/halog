@@ -1,4 +1,9 @@
 = Changelog
+== Version 0.4.0 - 2008-02-12
+
+* added 'minimum_http_status' option to HTTPError report
+* fixed divide by zero errors in status output
+* reformatted to 2 space indentation
 
 == Version 0.3.0 - 2007-12-03
 
