@@ -84,4 +84,17 @@ describe HALog::DataStore do
     @ds.import(tmp_log,{:incremental => true})
     @ds.db.execute("SELECT count(*) FROM log_entries").first[0].should == "100"
   end
+
+  it "can handle imports with large counts" do
+    parser = OpenStruct.new
+    parser.first_entry_time = ( Time.now - 3600 ).strftime("%Y-%m-%d %H:%M:%S")
+    parser.last_entry_time  = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+    parser.starting_offset  = 42
+    parser.byte_count       = 2300280254
+    parser.entry_count      = 9_000_000
+    parser.error_count      = 0
+
+    last_import_id = @ds.next_import_id
+    @ds.finalize_import( @ds.db, last_import_id, parser )
+  end
 end

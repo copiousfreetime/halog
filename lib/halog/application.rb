@@ -172,13 +172,18 @@ smtp.send_message(msg, from_email_address, *@options.mail_to)
     end
 
     def run
-      error_version_help
-      merge_options
+      begin
+        error_version_help
+        merge_options
 
-      DataStore.open(@options.database) do |ds|
-        $stderr.puts "Database   : #{@options.database}"
-        import_new_data(ds)
-        run_report(ds)
+        DataStore.open(@options.database) do |ds|
+          $stderr.puts "Database   : #{@options.database}"
+          import_new_data(ds)
+          run_report(ds)
+        end
+      rescue => e
+        $stderr.puts "Error during operation : #{e}"
+        $stderr.puts e.backtrace.join("\n")
       end    
     end
   end

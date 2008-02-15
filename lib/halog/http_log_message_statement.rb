@@ -1,4 +1,3 @@
-require 'halog/custom_statement'
 require 'halog/evil_custom_statement'
 require 'halog/tcp_log_message_statement'
 

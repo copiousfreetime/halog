@@ -10,5 +10,3 @@ require 'rake/contrib/sshpublisher'
 require 'halog'
 
 load 'tasks/setup.rb'
-
-

@@ -7,7 +7,7 @@ module SQLite3
   #  * only calls must_be_open, reset! and active? once per statement execution
   #  * bind param is not called 2x for every binding
   #
-  class FasterStatement < Statement
+  class FasterStatement < ::SQLite3::Statement
     def initialize( db, sql, utf16=false )
       super(db,sql,utf16)
       @param_index_cache = {}

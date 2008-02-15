@@ -64,6 +64,7 @@ module HALog
                                             request_headers response_headers http_request ] - %w[ proxy_queue_size ]
       end
 
+      # generate the SQL statement for insertion into a table
       def insert_sql_for(table)
         fields = %w[ import_id ] + send("#{table}_fields")
         params = fields.collect { |f| ":#{f}" }.join(',')
@@ -106,30 +107,35 @@ module HALog
         i                   = 0
 
         LogParser.new.parse(io,parse_options) do |entry|
-          t1 = Time.now
-          stmts['log_entries'].execute!( log_entry_values.merge( entry.to_sql_hash ) ) 
-          log_entry_id = handle.last_insert_row_id
-          @perf_info['log_entries_insert']['count'] += 1
-          @perf_info['log_entries_insert']['time'] += (Time.now - t1)                    
-          message_values = { 'import_id' => import_id, 'log_entry_id' => log_entry_id }
-          case entry.message
-          when HTTPLogMessage
-            t3 = Time.now
-            stmts['http_log_messages'].execute!( message_values.merge(entry.message.to_sql_hash) )
-            @perf_info['http_log_messages_insert']['count'] += 1
-            @perf_info['http_log_messages_insert']['time'] += (Time.now - t3)
-          when TCPLogMessage
-            t3 = Time.now
-            stmts['tcp_log_messages'].execute!( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::tcp_log_messages_fields)) )
-            @perf_info['tcp_log_messages_insert']['count'] += 1
-            @perf_info['tcp_log_messages_insert']['time'] += (Time.now - t3)
-          when StringLogMessage
-            # do nothing
-            nil
+          begin
+            t1 = Time.now
+            stmts['log_entries'].execute!( log_entry_values.merge( entry.to_sql_hash ) ) 
+            log_entry_id = handle.last_insert_row_id
+            @perf_info['log_entries_insert']['count'] += 1
+            @perf_info['log_entries_insert']['time'] += (Time.now - t1)                    
+            message_values = { 'import_id' => import_id, 'log_entry_id' => log_entry_id }
+            case entry.message
+            when HTTPLogMessage
+              t3 = Time.now
+              stmts['http_log_messages'].execute!( message_values.merge(entry.message.to_sql_hash) )
+              @perf_info['http_log_messages_insert']['count'] += 1
+              @perf_info['http_log_messages_insert']['time'] += (Time.now - t3)
+            when TCPLogMessage
+              t3 = Time.now
+              stmts['tcp_log_messages'].execute!( message_values.merge(entry.message.hash_of_fields(HALog::DataStore::tcp_log_messages_fields)) )
+              @perf_info['tcp_log_messages_insert']['count'] += 1
+              @perf_info['tcp_log_messages_insert']['time'] += (Time.now - t3)
+            when StringLogMessage
+              # do nothing
+              nil
+            end
+          rescue ::StandardError => se
+            $stderr.puts "Error during log entry parsing and insertion : #{se}"
+            $stderr.puts "Log Entry in which it happened : #{entry.inspect}"
           end
         end
-      end
-    end 
+      end 
+    end
 
 
     def perf_report
@@ -175,20 +181,25 @@ module HALog
 
       stmts.values.each { |stmt| stmt.close }
 
-      if parser.entry_count > 0
-        @perf_info['parser']['count'] = parser.entry_count
-        @perf_info['parser']['time'] = parser.parse_time
+      begin
+        if parser.entry_count > 0
+          @perf_info['parser']['count'] = parser.entry_count
+          @perf_info['parser']['time'] = parser.parse_time
 
-        finalize_import(db,import_id,parser)
-        @perf_info['commit']['count'] += 1
-        before = Time.now
-        db.commit
-        @perf_info['commit']['time'] += Time.now - before                
-      else
-        $stderr.puts "No data imported."
+          finalize_import(db,import_id,parser)
+          @perf_info['commit']['count'] += 1
+          before = Time.now
+          db.commit
+          @perf_info['commit']['time'] += Time.now - before                
+        else
+          $stderr.puts "No data imported."
+          db.rollback
+        end
+      rescue StandardError => se
+        $stderr.puts "Error during finalization : #{se}"
+        $stderr.puts "Parser during infalization : #{parser.inspect}"
         db.rollback
       end
-
     end
 
     def last_import_info(db)

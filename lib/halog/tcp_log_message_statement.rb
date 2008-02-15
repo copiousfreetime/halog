@@ -1,4 +1,3 @@
-require 'halog/custom_statement'
 require 'halog/evil_custom_statement'
 module HALog
   class TCPLogMessageStatement < EvilCustomStatement
