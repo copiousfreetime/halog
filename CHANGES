@@ -1,4 +1,8 @@
 = Changelog
+== Version 0.4.1 - 2008-02-25
+
+* add more error catching 
+
 == Version 0.4.0 - 2008-02-12
 
 * added 'minimum_http_status' option to HTTPError report
