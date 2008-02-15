@@ -5,7 +5,7 @@ describe HALog::DataStore do
     @ds = HALog::DataStore.new(":memory:")
     @log_lines = IO.readlines(testing_logfile_short)
     @io = File.open(testing_logfile_short)
-    # @ds.db.trace() { |data,stmt| puts "sql stmt : #{stmt} "}
+    #@ds.db.trace() { |data,stmt| puts "sql stmt : #{stmt} "}
   end
 
   after(:each) do
@@ -87,14 +87,16 @@ describe HALog::DataStore do
 
   it "can handle imports with large counts" do
     parser = OpenStruct.new
-    parser.first_entry_time = ( Time.now - 3600 ).strftime("%Y-%m-%d %H:%M:%S")
-    parser.last_entry_time  = Time.now.strftime("%Y-%m-%d %H:%M:%S")
-    parser.starting_offset  = 42
-    parser.byte_count       = 2300280254
-    parser.entry_count      = 9_000_000
+    parser.first_entry_time = Time.at 1203067885
+    parser.last_entry_time  = Time.at 1203073991
+    parser.starting_offset  = 0
+    parser.byte_count       = 2736709396
+    parser.entry_count      = 11170274
     parser.error_count      = 0
 
     last_import_id = @ds.next_import_id
     @ds.finalize_import( @ds.db, last_import_id, parser )
+    $stderr.puts @ds.db.execute("SELECT * from imports").inspect
+    @ds.db.execute("SELECT count(*) from imports").first[0].should == "1"
   end
 end

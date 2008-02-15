@@ -2,3 +2,4 @@
 * signal handling to commit and finalize when killed
 * update documentation
 * webapp to do analysis of the information
+* update the timer based on new file size

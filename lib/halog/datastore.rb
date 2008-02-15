@@ -92,7 +92,10 @@ module HALog
             WHERE id = #{import_id}
             SQL
             fields = %w[ first_entry_time last_entry_time starting_offset byte_count entry_count error_count ]
-            handle.execute(update_sql,parser.hash_of_fields(fields))
+            stmt = SQLite3::Statement.new(handle, update_sql )
+            stmt.execute!( parser.hash_of_fields(fields) )
+            stmt.close
+            #handle.execute(update_sql,parser.hash_of_fields(fields))
     end
 
     def import(io,options = {})
@@ -173,8 +176,8 @@ module HALog
       import_id   = next_import_id(db)
       stmts       = {}            
 
-      stmts['log_entries'] = HALog::LogEntryStatement.new(db)
-      stmts['tcp_log_messages'] = HALog::TCPLogMessageStatement.new(db)
+      stmts['log_entries']       = HALog::LogEntryStatement.new(db)
+      stmts['tcp_log_messages']  = HALog::TCPLogMessageStatement.new(db)
       stmts['http_log_messages'] = HALog::HTTPLogMessageStatement.new(db)
 
       parser = yield [import_id, db, stmts, last_import_info(db) ]
@@ -197,7 +200,8 @@ module HALog
         end
       rescue ::StandardError => se
         $stderr.puts "Error during finalization : #{se}"
-        $stderr.puts "Parser during infalization : #{parser.inspect}"
+        $stderr.puts "Parser during finalization : #{parser.inspect}"
+        $stderr.puts se.backtrace.join("\n")
         db.rollback
       end
     end
