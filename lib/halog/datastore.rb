@@ -195,7 +195,7 @@ module HALog
           $stderr.puts "No data imported."
           db.rollback
         end
-      rescue StandardError => se
+      rescue ::StandardError => se
         $stderr.puts "Error during finalization : #{se}"
         $stderr.puts "Parser during infalization : #{parser.inspect}"
         db.rollback
