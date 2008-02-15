@@ -92,10 +92,7 @@ module HALog
             WHERE id = #{import_id}
             SQL
             fields = %w[ first_entry_time last_entry_time starting_offset byte_count entry_count error_count ]
-            stmt = SQLite3::Statement.new(handle, update_sql )
-            stmt.execute!( parser.hash_of_fields(fields) )
-            stmt.close
-            #handle.execute(update_sql,parser.hash_of_fields(fields))
+            handle.execute(update_sql,parser.hash_of_fields(fields))
     end
 
     def import(io,options = {})
