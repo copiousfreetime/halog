@@ -2,7 +2,7 @@ module HALog
   module Version
     MAJOR   = 0
     MINOR   = 4
-    BUILD   = 1
+    BUILD   = 2
 
     def to_a
       [MAJOR, MINOR, BUILD]
