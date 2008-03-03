@@ -181,7 +181,7 @@ smtp.send_message(msg, from_email_address, *@options.mail_to)
           import_new_data(ds)
           run_report(ds)
         end
-      rescue ::StandardError => e
+      rescue ::StandardError => se
         $stderr.puts "Error during operation : #{se}"
         $stderr.puts se.backtrace.join("\n")
       end    
