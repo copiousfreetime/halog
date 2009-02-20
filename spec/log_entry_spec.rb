@@ -22,12 +22,12 @@ describe HALog::LogEntry do
 
 
     it "should return an iso_time string" do
-      method_results_compare(:iso_time, [ "2008-10-15T15:24:28",
-                                          "2008-09-06T00:24:41",
-                                          "2008-09-08T02:14:41",
-                                          "2008-09-08T02:14:41",
-                                          "2008-09-08T02:54:15",
-                                          "2008-09-08T02:54:15"
+      method_results_compare(:iso_time, [ "2009-10-15T15:24:28",
+                                          "2009-09-06T00:24:41",
+                                          "2009-09-08T02:14:41",
+                                          "2009-09-08T02:14:41",
+                                          "2009-09-08T02:54:15",
+                                          "2009-09-08T02:54:15"
       ])
     end
     it "captures a month correctly" do
