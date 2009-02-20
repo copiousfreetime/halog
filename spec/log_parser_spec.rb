@@ -29,8 +29,8 @@ describe HALog::LogParser do
     lp.byte_count.should == @good_bytes
     lp.entry_count.should == 7
     lp.error_count.should == 0
-    lp.first_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2008-09-06 00:24:41"
-    lp.last_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2008-10-15 15:24:28"
+    lp.first_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2009-09-06 00:24:41"
+    lp.last_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2009-10-15 15:24:28"
   end
 
   it "can record error rows and spit them to stdout" do
@@ -46,8 +46,8 @@ describe HALog::LogParser do
     lp.byte_count.should == @good_bytes + bad_line.size + 1
     lp.entry_count.should == 7
     lp.error_count.should == 1
-    lp.first_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2008-09-06 00:24:41"
-    lp.last_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2008-10-15 15:24:28"
+    lp.first_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2009-09-06 00:24:41"
+    lp.last_entry_time.strftime("%Y-%m-%d %H:%M:%S").should == "2009-10-15 15:24:28"
 
     $stderr.string.should =~ /^Failure to parse line : #{bad_line}$/m
     $stderr = old_stderr
